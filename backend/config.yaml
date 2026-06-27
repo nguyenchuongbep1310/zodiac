@@ -1,0 +1,31 @@
+app:
+  name: zodiac-api
+  environment: development
+  port: 8080
+  debug: true
+  read_timeout: 15s
+  write_timeout: 15s
+  ephe_path: "./ephe"
+
+database:
+  dsn: "postgres://zodiac_user:zodiac_pass@localhost:5432/zodiac_db?sslmode=disable"
+  max_open_conns: 25
+  max_idle_conns: 10
+  conn_max_lifetime: 5m
+  migrations_path: "file://migrations"
+
+redis:
+  address: "localhost:6379"
+  password: ""
+  db: 0
+  pool_size: 10
+  dial_timeout: 5s
+
+jwt:
+  secret: "change-me-to-a-32-char-secret-key!!"
+  access_token_ttl: 15m
+  refresh_token_ttl: 168h
+
+log:
+  level: debug
+  format: console

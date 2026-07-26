@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS birth_profiles (
+CREATE TABLE IF NOT EXISTS natal_charts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
@@ -29,13 +29,6 @@ CREATE TABLE IF NOT EXISTS birth_profiles (
     latitude DOUBLE PRECISION NOT NULL,
     longitude DOUBLE PRECISION NOT NULL,
     city VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-CREATE TABLE IF NOT EXISTS natal_charts (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    profile_id UUID REFERENCES birth_profiles(id) ON DELETE CASCADE,
     house_system VARCHAR(50) NOT NULL,
     zodiac_system VARCHAR(50) NOT NULL,
     is_rectified BOOLEAN NOT NULL DEFAULT FALSE,

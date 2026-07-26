@@ -22,8 +22,8 @@
 import React, { useCallback, useRef, useState, useMemo } from 'react';
 import type { ChartResponse } from '@/lib/types/api';
 import { buildChartRenderData } from '@/lib/chart/renderer';
-import type { RenderedPlanet } from '@/lib/chart/renderer';
-import { CX, CY, VIEWBOX_SIZE, R } from '@/lib/chart/constants';
+import type { RenderedPlanet, RenderedHouse, RenderedAspect } from '@/lib/chart/renderer';
+import { CX, CY, VIEWBOX_SIZE, R, PLANET_CIRCLE_R } from '@/lib/chart/constants';
 import { fmt } from '@/lib/chart/geometry';
 import { ZodiacRing } from './ZodiacRing';
 import { HouseRing } from './HouseRing';
@@ -68,6 +68,8 @@ export function ChartWheel({
 
   // ── Hover state ──────────────────────────────────────────────────────────
   const [hoveredPlanet, setHoveredPlanet] = useState<RenderedPlanet | null>(null);
+  const [hoveredHouse, setHoveredHouse] = useState<RenderedHouse | null>(null);
+  const [hoveredAspect, setHoveredAspect] = useState<RenderedAspect | null>(null);
 
   // ── Tooltip state ────────────────────────────────────────────────────────
   const [tooltip, setTooltip] = useState<{
@@ -131,7 +133,33 @@ export function ChartWheel({
         ? {
             text: planet.label,
             x: planet.glyphCenter.x,
-            y: planet.glyphCenter.y - R.PLANET_CIRCLE_R - 8,
+            y: planet.glyphCenter.y - PLANET_CIRCLE_R - 8,
+          }
+        : null
+    );
+  }, []);
+
+  const handleHouseHover = useCallback((house: RenderedHouse | null) => {
+    setHoveredHouse(house);
+    setTooltip(
+      house
+        ? {
+            text: `House ${house.house.house_number} (${house.house.sign})`,
+            x: house.labelPos.x,
+            y: house.labelPos.y - 12,
+          }
+        : null
+    );
+  }, []);
+
+  const handleAspectHover = useCallback((aspect: RenderedAspect | null) => {
+    setHoveredAspect(aspect);
+    setTooltip(
+      aspect
+        ? {
+            text: `${aspect.aspect.planet_1} ${aspect.style.label ?? aspect.aspect.aspect_type} ${aspect.aspect.planet_2}`,
+            x: (aspect.p1.x + aspect.p2.x) / 2,
+            y: (aspect.p1.y + aspect.p2.y) / 2 - 8,
           }
         : null
     );
@@ -142,6 +170,9 @@ export function ChartWheel({
 
   // Simplify: zoom from center (CX, CY)
   const zoomTransform = `translate(${CX + transform.tx}, ${CY + transform.ty}) scale(${transform.scale}) translate(${-CX}, ${-CY})`;
+
+  const getAspectId = (ra: RenderedAspect) => 
+    `${ra.aspect.planet_1}-${ra.aspect.aspect_type}-${ra.aspect.planet_2}`;
 
   return (
     <div className={`relative select-none ${className}`}>
@@ -186,12 +217,18 @@ export function ChartWheel({
           <ZodiacRing signs={renderData.zodiacSigns} ticks={renderData.degreeTicks} />
 
           {/* ── 2. House ring ─────────────────────────────────────────────── */}
-          <HouseRing houses={renderData.houses} />
+          <HouseRing 
+            houses={renderData.houses} 
+            highlightHouse={hoveredHouse?.house.house_number ?? null}
+            onHover={handleHouseHover}
+          />
 
           {/* ── 3. Aspect lines (inside house inner) ─────────────────────── */}
           <AspectLines
             aspects={renderData.aspects}
             highlightPlanet={hoveredPlanet?.planet.planet ?? null}
+            highlightAspect={hoveredAspect ? getAspectId(hoveredAspect) : null}
+            onHover={handleAspectHover}
           />
 
           {/* ── 4. Center circle (over aspects, under planets) ───────────── */}
@@ -281,11 +318,11 @@ export function ChartWheel({
       {/* ── Legend: aspect colors ────────────────────────────────────────────── */}
       <div className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1">
         {[
-          { color: '#3b82f6', label: 'Trine' },
-          { color: '#60a5fa', label: 'Sextile' },
-          { color: '#ef4444', label: 'Square' },
-          { color: '#dc2626', label: 'Opposition' },
-          { color: '#9ca3af', label: 'Conjunction' },
+          { color: '#819a96', label: 'Trine' },
+          { color: '#8fa3b5', label: 'Sextile' },
+          { color: '#bc8f8f', label: 'Square' },
+          { color: '#d97b7b', label: 'Opposition' },
+          { color: '#a67c7e', label: 'Conjunction' },
         ].map(({ color, label }) => (
           <span key={label} className="flex items-center gap-1.5 text-xs text-slate-400">
             <span

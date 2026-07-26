@@ -6,8 +6,13 @@ import "time"
 //
 //	@Description	Trigger a natal chart calculation for a birth profile
 type CalculateChartRequest struct {
-	// ProfileID is the UUID of the BirthProfile to calculate the chart for.
-	ProfileID string `json:"profile_id" binding:"required,uuid"`
+	Name         string  `json:"name" binding:"required"`
+	BirthDate    string  `json:"birth_date" binding:"required"` // e.g. "2000-01-01"
+	BirthTime    string  `json:"birth_time" binding:"required"` // e.g. "12:00:00"
+	Timezone     string  `json:"timezone" binding:"required"`
+	Latitude     float64 `json:"latitude" binding:"required"`
+	Longitude    float64 `json:"longitude" binding:"required"`
+	City         string  `json:"city"`
 	// HouseSystem selects the house division method.
 	// Allowed values: "placidus" (default), "koch", "whole_sign", "equal".
 	HouseSystem string `json:"house_system" binding:"omitempty,oneof=placidus koch whole_sign equal"`
@@ -21,7 +26,14 @@ type CalculateChartRequest struct {
 //	@Description	Full natal chart with planets, houses, and aspects
 type ChartResponse struct {
 	ID           string                   `json:"id"`
-	ProfileID    string                   `json:"profile_id"`
+	UserID       *string                  `json:"user_id,omitempty"`
+	Name         string                   `json:"name"`
+	BirthDate    string                   `json:"birth_date"`
+	BirthTime    string                   `json:"birth_time"`
+	Timezone     string                   `json:"timezone"`
+	Latitude     float64                  `json:"latitude"`
+	Longitude    float64                  `json:"longitude"`
+	City         string                   `json:"city"`
 	HouseSystem  string                   `json:"house_system"`
 	ZodiacSystem string                   `json:"zodiac_system"`
 	IsRectified  bool                     `json:"is_rectified"`

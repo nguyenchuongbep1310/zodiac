@@ -28,7 +28,6 @@ import (
 type InterpretationService struct {
 	interpRepo domrepo.InterpretationRepository
 	chartRepo  domrepo.ChartRepository
-	profileRepo domrepo.ProfileRepository
 	log        *zap.Logger
 }
 
@@ -36,13 +35,11 @@ type InterpretationService struct {
 func NewInterpretationService(
 	interpRepo domrepo.InterpretationRepository,
 	chartRepo domrepo.ChartRepository,
-	profileRepo domrepo.ProfileRepository,
 	log *zap.Logger,
 ) *InterpretationService {
 	return &InterpretationService{
 		interpRepo:  interpRepo,
 		chartRepo:   chartRepo,
-		profileRepo: profileRepo,
 		log:         log,
 	}
 }
@@ -53,7 +50,6 @@ func NewInterpretationService(
 func (s *InterpretationService) Interpret(
 	ctx context.Context,
 	chartID uuid.UUID,
-	requestingUserID uuid.UUID,
 	language string,
 ) (*domain.ChartInterpretation, error) {
 	// 1. Resolve and normalise language.
@@ -65,14 +61,7 @@ func (s *InterpretationService) Interpret(
 		return nil, fmt.Errorf("interpretationService.Interpret chart: %w", err)
 	}
 
-	// 3. Authorise via owning profile.
-	profile, err := s.profileRepo.GetByID(ctx, chart.ProfileID)
-	if err != nil {
-		return nil, fmt.Errorf("interpretationService.Interpret profile: %w", err)
-	}
-	if profile.UserID != requestingUserID {
-		return nil, domain.ErrForbidden("you do not own this chart")
-	}
+	// 3. (Profile check removed since auth is removed)
 
 	// 4. Build lookup factors.
 	factors := buildFactors(chart)
@@ -97,15 +86,19 @@ func (s *InterpretationService) Interpret(
 // ── Factor construction ───────────────────────────────────────────────────────
 
 // buildFactors constructs the flat slice of LookupFactor for every astrological
-// component in the chart (planet-in-sign, planet-in-house, aspect).
+// component in the chart (planet-in-sign, planet-in-house, house-in-sign, aspect).
 func buildFactors(chart *domain.NatalChart) []domain.LookupFactor {
-	// Pre-allocate: 2 factors per planet + 1 per aspect.
-	capacity := 2*len(chart.Planets) + len(chart.Aspects)
+	// Pre-allocate: 2 factors per planet + 1 per house + 1 per aspect.
+	capacity := 2*len(chart.Planets) + len(chart.Houses) + len(chart.Aspects)
 	factors := make([]domain.LookupFactor, 0, capacity)
 
 	for _, p := range chart.Planets {
 		factors = append(factors, buildPlanetInSignFactor(p))
 		factors = append(factors, buildPlanetInHouseFactor(p))
+	}
+
+	for _, h := range chart.Houses {
+		factors = append(factors, buildHouseInSignFactor(h))
 	}
 
 	for _, a := range chart.Aspects {
@@ -129,6 +122,7 @@ func assemble(
 
 		PlanetInSign:  make([]domain.PlanetInSignInterpretation, 0, len(chart.Planets)),
 		PlanetInHouse: make([]domain.PlanetInHouseInterpretation, 0, len(chart.Planets)),
+		HouseInSign:   make([]domain.HouseInSignInterpretation, 0, len(chart.Houses)),
 		Aspects:       make([]domain.AspectInterpretation, 0, len(chart.Aspects)),
 	}
 
@@ -145,6 +139,15 @@ func assemble(
 			Planet:      p.PlanetName,
 			HouseNumber: p.HousePosition,
 			Template:    templates[houseKey],
+		})
+	}
+
+	for _, h := range chart.Houses {
+		houseInSignKey := buildHouseInSignFactor(h).Key()
+		interp.HouseInSign = append(interp.HouseInSign, domain.HouseInSignInterpretation{
+			HouseNumber: h.HouseNumber,
+			Sign:        h.Sign,
+			Template:    templates[houseInSignKey],
 		})
 	}
 
@@ -178,6 +181,14 @@ func buildPlanetInHouseFactor(p domain.PlanetPosition) domain.LookupFactor {
 		FactorType:   domain.FactorPlanetInHouse,
 		FactorValue1: p.PlanetName,
 		FactorValue2: strconv.Itoa(p.HousePosition),
+	}
+}
+
+func buildHouseInSignFactor(h domain.HouseCusp) domain.LookupFactor {
+	return domain.LookupFactor{
+		FactorType:   domain.FactorHouseInSign,
+		FactorValue1: strconv.Itoa(h.HouseNumber),
+		FactorValue2: h.Sign,
 	}
 }
 

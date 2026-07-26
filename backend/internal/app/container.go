@@ -22,14 +22,10 @@ type Container struct {
 	Redis  *redis.Client
 
 	// Repositories
-	UserRepo           domrepo.UserRepository
-	ProfileRepo        domrepo.ProfileRepository
 	ChartRepo          domrepo.ChartRepository
 	InterpretationRepo domrepo.InterpretationRepository
 
 	// Services
-	AuthService            *service.AuthService
-	ProfileService         *service.ProfileService
 	ChartService           *service.ChartService
 	InterpretationService  *service.InterpretationService
 }
@@ -45,8 +41,6 @@ func NewContainer(
 	zapLog := log.Logger
 
 	// ── Repositories ──────────────────────────────────────────────────────────
-	userRepo := adapterrepo.NewPostgresUserRepository(db)
-	profileRepo := adapterrepo.NewPostgresProfileRepository(db)
 	chartRepo := adapterrepo.NewPostgresChartRepository(db)
 	interpRepo := adapterrepo.NewPostgresInterpretationRepository(db)
 
@@ -54,10 +48,8 @@ func NewContainer(
 	calculator := astrology.NewNatalChartCalculator(cfg.App.EphePath)
 
 	// ── Services ──────────────────────────────────────────────────────────────
-	authSvc := service.NewAuthService(userRepo, cfg, redisClient, zapLog)
-	profileSvc := service.NewProfileService(profileRepo, zapLog)
-	chartSvc := service.NewChartService(chartRepo, profileRepo, calculator, cfg.App.EphePath, zapLog)
-	interpSvc := service.NewInterpretationService(interpRepo, chartRepo, profileRepo, zapLog)
+	chartSvc := service.NewChartService(chartRepo, calculator, cfg.App.EphePath, zapLog)
+	interpSvc := service.NewInterpretationService(interpRepo, chartRepo, zapLog)
 
 	return &Container{
 		Config: cfg,
@@ -65,13 +57,9 @@ func NewContainer(
 		DB:     db,
 		Redis:  redisClient,
 
-		UserRepo:           userRepo,
-		ProfileRepo:        profileRepo,
 		ChartRepo:          chartRepo,
 		InterpretationRepo: interpRepo,
 
-		AuthService:           authSvc,
-		ProfileService:        profileSvc,
 		ChartService:          chartSvc,
 		InterpretationService: interpSvc,
 	}

@@ -56,14 +56,14 @@ export const ZODIAC_GLYPHS: Record<string, string> = {
 };
 
 export const ASPECT_COLORS: Record<string, string> = {
-  conjunction: "#f59e0b",
-  opposition: "#f43f5e",
-  trine: "#34d399",
-  square: "#f43f5e",
-  sextile: "#60a5fa",
-  quincunx: "#c084fc",
-  semisquare: "#fb923c",
-  sesquiquadrate: "#fb923c",
+  conjunction: "#a67c7e", // Dusty Rose
+  opposition: "#d97b7b", // Soft Coral
+  trine: "#819a96", // Soft Teal / Sage
+  square: "#bc8f8f", // Rosy Brown
+  sextile: "#8fa3b5", // Muted Slate Blue
+  quincunx: "#b09eaf", // Soft Lavender
+  semisquare: "#c4a482", // Muted Gold / Sand
+  sesquiquadrate: "#c4a482", // Muted Gold / Sand
 };
 
 export const ZODIAC_ELEMENTS: Record<string, string> = {
@@ -74,10 +74,10 @@ export const ZODIAC_ELEMENTS: Record<string, string> = {
 };
 
 export const ELEMENT_COLORS: Record<string, string> = {
-  fire: "#f59e0b",
-  earth: "#34d399",
-  air: "#60a5fa",
-  water: "#818cf8",
+  fire: "#d4a373", // Warm Sand / Gold
+  earth: "#a3b18a", // Soft Olive / Sage
+  air: "#a4b8c4", // Soft Slate Blue
+  water: "#8ba3b5", // Muted Cerulean
 };
 
 export const ZODIAC_SIGNS = [

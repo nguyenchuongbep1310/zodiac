@@ -13,14 +13,20 @@ import (
 	domrepo "github.com/zodiac/backend/internal/domain/repository"
 )
 
-// chartRecord is the flat DB model for natal_charts rows.
 type chartRecord struct {
-	ID           uuid.UUID `db:"id"`
-	ProfileID    uuid.UUID `db:"profile_id"`
-	HouseSystem  string    `db:"house_system"`
-	ZodiacSystem string    `db:"zodiac_system"`
-	IsRectified  bool      `db:"is_rectified"`
-	CreatedAt    time.Time `db:"created_at"`
+	ID           uuid.UUID  `db:"id"`
+	UserID       *uuid.UUID `db:"user_id"`
+	Name         string     `db:"name"`
+	BirthDate    time.Time  `db:"birth_date"`
+	BirthTime    string     `db:"birth_time"`
+	Timezone     string     `db:"timezone"`
+	Latitude     float64    `db:"latitude"`
+	Longitude    float64    `db:"longitude"`
+	City         string     `db:"city"`
+	HouseSystem  string     `db:"house_system"`
+	ZodiacSystem string     `db:"zodiac_system"`
+	IsRectified  bool       `db:"is_rectified"`
+	CreatedAt    time.Time  `db:"created_at"`
 }
 
 // planetRecord is the flat DB model for planets rows.
@@ -77,12 +83,17 @@ func (r *PostgresChartRepository) Save(ctx context.Context, chart *domain.NatalC
 	defer tx.Rollback()
 
 	const insertChart = `
-		INSERT INTO natal_charts (id, profile_id, house_system, zodiac_system, is_rectified)
-		VALUES ($1, $2, $3, $4, $5)
+		INSERT INTO natal_charts (
+			id, user_id, name, birth_date, birth_time, timezone, latitude, longitude, city,
+			house_system, zodiac_system, is_rectified
+		)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
 		RETURNING created_at`
 
 	row := tx.QueryRowContext(ctx, insertChart,
-		chart.ID, chart.ProfileID, chart.HouseSystem, chart.ZodiacSystem, chart.IsRectified,
+		chart.ID, chart.UserID, chart.Name, chart.BirthDate, chart.BirthTime,
+		chart.Timezone, chart.Latitude, chart.Longitude, chart.City,
+		chart.HouseSystem, chart.ZodiacSystem, chart.IsRectified,
 	)
 	if err := row.Scan(&chart.CreatedAt); err != nil {
 		return nil, fmt.Errorf("chartRepo.Save insert chart: %w", err)
@@ -109,7 +120,9 @@ func (r *PostgresChartRepository) Save(ctx context.Context, chart *domain.NatalC
 
 func (r *PostgresChartRepository) GetByID(ctx context.Context, id uuid.UUID) (*domain.NatalChart, error) {
 	const query = `
-		SELECT id, profile_id, house_system, zodiac_system, is_rectified, created_at
+		SELECT 
+			id, user_id, name, birth_date, birth_time, timezone, latitude, longitude, city,
+			house_system, zodiac_system, is_rectified, created_at
 		FROM natal_charts WHERE id = $1`
 
 	var rec chartRecord
@@ -123,30 +136,16 @@ func (r *PostgresChartRepository) GetByID(ctx context.Context, id uuid.UUID) (*d
 	return r.hydrateChart(ctx, &rec)
 }
 
-func (r *PostgresChartRepository) GetByProfileID(ctx context.Context, profileID uuid.UUID) (*domain.NatalChart, error) {
+func (r *PostgresChartRepository) ListByUserID(ctx context.Context, userID uuid.UUID) ([]*domain.NatalChart, error) {
 	const query = `
-		SELECT id, profile_id, house_system, zodiac_system, is_rectified, created_at
-		FROM natal_charts WHERE profile_id = $1 ORDER BY created_at DESC LIMIT 1`
-
-	var rec chartRecord
-	if err := r.db.GetContext(ctx, &rec, query, profileID); err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, domain.ErrNotFound("natal chart")
-		}
-		return nil, fmt.Errorf("chartRepo.GetByProfileID: %w", err)
-	}
-
-	return r.hydrateChart(ctx, &rec)
-}
-
-func (r *PostgresChartRepository) ListByProfileID(ctx context.Context, profileID uuid.UUID) ([]*domain.NatalChart, error) {
-	const query = `
-		SELECT id, profile_id, house_system, zodiac_system, is_rectified, created_at
-		FROM natal_charts WHERE profile_id = $1 ORDER BY created_at DESC`
+		SELECT 
+			id, user_id, name, birth_date, birth_time, timezone, latitude, longitude, city,
+			house_system, zodiac_system, is_rectified, created_at
+		FROM natal_charts WHERE user_id = $1 ORDER BY created_at DESC`
 
 	var recs []chartRecord
-	if err := r.db.SelectContext(ctx, &recs, query, profileID); err != nil {
-		return nil, fmt.Errorf("chartRepo.ListByProfileID: %w", err)
+	if err := r.db.SelectContext(ctx, &recs, query, userID); err != nil {
+		return nil, fmt.Errorf("chartRepo.ListByUserID: %w", err)
 	}
 
 	charts := make([]*domain.NatalChart, 0, len(recs))
@@ -178,9 +177,21 @@ func (r *PostgresChartRepository) Delete(ctx context.Context, id uuid.UUID) erro
 
 // hydrateChart fetches and attaches all child entities to a NatalChart.
 func (r *PostgresChartRepository) hydrateChart(ctx context.Context, rec *chartRecord) (*domain.NatalChart, error) {
+	bt, _ := time.Parse("15:04:05", rec.BirthTime)
+	if bt.IsZero() {
+		bt, _ = time.Parse("15:04:05Z07:00", rec.BirthTime) // sometimes driver gives timestamp with tz formatting
+	}
+	
 	chart := &domain.NatalChart{
 		ID:           rec.ID,
-		ProfileID:    rec.ProfileID,
+		UserID:       rec.UserID,
+		Name:         rec.Name,
+		BirthDate:    rec.BirthDate,
+		BirthTime:    bt,
+		Timezone:     rec.Timezone,
+		Latitude:     rec.Latitude,
+		Longitude:    rec.Longitude,
+		City:         rec.City,
 		HouseSystem:  rec.HouseSystem,
 		ZodiacSystem: rec.ZodiacSystem,
 		IsRectified:  rec.IsRectified,

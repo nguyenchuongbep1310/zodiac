@@ -13,81 +13,107 @@ import type { RenderedHouse } from '@/lib/chart/renderer';
 
 interface HouseRingProps {
   houses: RenderedHouse[];
+  highlightHouse?: number | null;
+  onHover?: (house: RenderedHouse | null) => void;
+  onClick?: (house: RenderedHouse) => void;
 }
 
-export const HouseRing = memo(function HouseRing({ houses }: HouseRingProps) {
+export const HouseRing = memo(function HouseRing({ 
+  houses,
+  highlightHouse,
+  onHover,
+  onClick,
+}: HouseRingProps) {
   return (
     <g id="house-ring">
       {/* ── House band background ─────────────────────────────────────────── */}
-      <circle cx={CX} cy={CY} r={R.HOUSE_OUTER} fill="rgba(8,8,22,0.55)" />
+      <circle cx={CX} cy={CY} r={R.HOUSE_OUTER} fill="var(--wheel-house-outer)" />
       <circle
         cx={CX} cy={CY} r={R.HOUSE_INNER}
-        fill="rgba(4,4,14,0.75)"
-        stroke="rgba(55,48,163,0.45)"
+        fill="var(--wheel-house-inner)"
+        stroke="var(--wheel-house-stroke)"
         strokeWidth={0.5}
       />
 
-      {/* ── House cusp lines ──────────────────────────────────────────────── */}
-      {houses.map(({ house, cuspSvgAngle, isAngular }) => {
+      {/* ── House groups (lines & labels) ──────────────────────────────────── */}
+      {houses.map((renderedHouse) => {
+        const { house, cuspSvgAngle, labelPos, isAngular } = renderedHouse;
         const outer = polarToCartesian(CX, CY, R.HOUSE_OUTER, cuspSvgAngle);
         const inner = polarToCartesian(CX, CY, R.HOUSE_INNER, cuspSvgAngle);
+        
+        const isHighlighted = highlightHouse === house.house_number;
+        const isDimmed = highlightHouse !== null && highlightHouse !== undefined && !isHighlighted;
+
         return (
-          <line
-            key={`cusp-${house.house_number}`}
-            x1={fmt(outer.x)} y1={fmt(outer.y)}
-            x2={fmt(inner.x)} y2={fmt(inner.y)}
-            stroke={isAngular ? '#f59e0b' : 'rgba(40,40,100,0.85)'}
-            strokeWidth={isAngular ? 1.6 : 0.7}
-            strokeLinecap="round"
-          />
-        );
-      })}
+          <g
+            key={`house-group-${house.house_number}`}
+            className="house-group group"
+            style={{ 
+              cursor: 'pointer', 
+              opacity: isDimmed ? 0.35 : 1, 
+              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+            onMouseEnter={() => onHover?.(renderedHouse)}
+            onMouseLeave={() => onHover?.(null)}
+            onClick={() => onClick?.(renderedHouse)}
+          >
+            {/* Invisible thicker line for easier hovering */}
+            <line
+              x1={fmt(outer.x)} y1={fmt(outer.y)}
+              x2={fmt(inner.x)} y2={fmt(inner.y)}
+              stroke="transparent"
+              strokeWidth={8}
+            />
+            {/* Visible cusp line */}
+            <line
+              x1={fmt(outer.x)} y1={fmt(outer.y)}
+              x2={fmt(inner.x)} y2={fmt(inner.y)}
+              stroke={isAngular ? '#f59e0b' : 'var(--wheel-house-stroke)'}
+              strokeWidth={isAngular ? 1.6 : 0.7}
+              strokeLinecap="round"
+              className="group-hover:stroke-amber-400 group-hover:stroke-[2px] transition-all"
+            />
 
-      {/* ── House number labels ───────────────────────────────────────────── */}
-      {houses.map(({ house, labelPos, isAngular }) => (
-        <text
-          key={`label-${house.house_number}`}
-          x={fmt(labelPos.x)}
-          y={fmt(labelPos.y)}
-          textAnchor="middle"
-          dominantBaseline="central"
-          fontSize={isAngular ? '8' : '7'}
-          fontWeight={isAngular ? '700' : '400'}
-          fill={isAngular ? '#fbbf24' : 'rgba(120,120,180,0.85)'}
-          style={{ userSelect: 'none', fontFamily: 'var(--font-sans, sans-serif)' }}
-        >
-          {ROMAN[house.house_number]}
-        </text>
-      ))}
-
-      {/* ── Axis labels (ASC / IC / DSC / MC) ────────────────────────────── */}
-      {houses
-        .filter((h) => h.isAngular)
-        .map(({ house, cuspSvgAngle }) => {
-          const labelR = R.HOUSE_OUTER + 13;
-          const pos = polarToCartesian(CX, CY, labelR, cuspSvgAngle);
-          return (
+            {/* Roman numeral label */}
             <text
-              key={`axis-${house.house_number}`}
-              x={fmt(pos.x)}
-              y={fmt(pos.y)}
+              x={fmt(labelPos.x)}
+              y={fmt(labelPos.y)}
               textAnchor="middle"
               dominantBaseline="central"
-              fontSize="6"
-              fontWeight="700"
-              fill="#f59e0b"
-              fillOpacity={0.85}
-              letterSpacing="0.06em"
-              style={{
-                userSelect: 'none',
-                fontFamily: 'var(--font-sans, sans-serif)',
-                textTransform: 'uppercase',
-              }}
+              fontSize={isAngular ? '8' : '7'}
+              fontWeight={isAngular ? '700' : '400'}
+              fill={isAngular ? '#f59e0b' : 'var(--wheel-text-dim)'}
+              style={{ userSelect: 'none', fontFamily: 'var(--font-sans, sans-serif)' }}
+              className="group-hover:fill-amber-400 transition-colors"
             >
-              {AXIS_LABEL[house.house_number]}
+              {ROMAN[house.house_number]}
             </text>
-          );
-        })}
+
+            {/* Axis label if angular */}
+            {isAngular && (
+              <text
+                x={fmt(polarToCartesian(CX, CY, R.HOUSE_OUTER + 13, cuspSvgAngle).x)}
+                y={fmt(polarToCartesian(CX, CY, R.HOUSE_OUTER + 13, cuspSvgAngle).y)}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontSize="6"
+                fontWeight="700"
+                fill="#f59e0b"
+                fillOpacity={0.85}
+                letterSpacing="0.06em"
+                style={{
+                  userSelect: 'none',
+                  fontFamily: 'var(--font-sans, sans-serif)',
+                  textTransform: 'uppercase',
+                }}
+                className="group-hover:fill-amber-300 transition-colors"
+              >
+                {AXIS_LABEL[house.house_number]}
+              </text>
+            )}
+          </g>
+        );
+      })}
     </g>
   );
 });

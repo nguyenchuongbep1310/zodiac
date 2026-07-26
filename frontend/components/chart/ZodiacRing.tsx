@@ -20,7 +20,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
   return (
     <g id="zodiac-ring">
       {/* ── Background fill ────────────────────────────────────────────────── */}
-      <circle cx={CX} cy={CY} r={R.ZODIAC_OUTER} fill="rgba(6,6,20,0.95)" />
+      <circle cx={CX} cy={CY} r={R.ZODIAC_OUTER} fill="var(--wheel-zodiac-bg)" />
 
       {/* ── Sector fills ─────────────────────────────────────────────────── */}
       {signs.map(({ sign, sectorPath, fill, borderColor }) => (
@@ -37,7 +37,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
       <circle
         cx={CX} cy={CY} r={R.ZODIAC_OUTER}
         fill="none"
-        stroke="rgba(55,48,163,0.8)"
+        stroke="var(--wheel-border)"
         strokeWidth={1}
       />
 
@@ -45,7 +45,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
       <circle
         cx={CX} cy={CY} r={R.ZODIAC_INNER}
         fill="none"
-        stroke="rgba(55,48,163,0.5)"
+        stroke="var(--wheel-border-inner)"
         strokeWidth={0.6}
       />
 
@@ -58,7 +58,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
             key={`boundary-${sign.name}`}
             x1={fmt(outer.x)} y1={fmt(outer.y)}
             x2={fmt(inner.x)} y2={fmt(inner.y)}
-            stroke="rgba(55,48,163,0.7)"
+            stroke="var(--wheel-border-inner)"
             strokeWidth={0.7}
           />
         );
@@ -73,7 +73,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
             key={i}
             x1={fmt(outer.x)} y1={fmt(outer.y)}
             x2={fmt(inner.x)} y2={fmt(inner.y)}
-            stroke="rgba(200,200,255,0.9)"
+            stroke="var(--wheel-tick)"
             strokeWidth={tick.strokeWidth}
             strokeOpacity={tick.opacity}
           />
@@ -89,7 +89,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
           textAnchor="middle"
           dominantBaseline="central"
           fontSize="14"
-          fill={glyphColor}
+          fill="var(--wheel-text-glyph)"
           style={{ userSelect: 'none', fontFamily: 'serif', fontWeight: '400' }}
         >
           {sign.glyph}

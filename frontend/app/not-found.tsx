@@ -14,10 +14,10 @@ export default function NotFoundPage() {
           This celestial body has drifted out of our reach. Let the stars guide you back.
         </p>
         <Link
-          href="/dashboard"
+          href="/"
           className="inline-flex items-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-500 px-6 py-3 text-sm font-medium text-white transition-colors shadow-glow"
         >
-          Return to dashboard
+          Return to home
         </Link>
       </div>
     </div>

@@ -26,8 +26,8 @@ export default function GlobalErrorPage({
         </p>
         <div className="flex gap-3 justify-center">
           <Button onClick={reset}>Try again</Button>
-          <Button variant="ghost" onClick={() => (window.location.href = "/dashboard")}>
-            Go to dashboard
+          <Button variant="ghost" onClick={() => (window.location.href = "/")}>
+            Go to home
           </Button>
         </div>
       </div>

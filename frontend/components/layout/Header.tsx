@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import { useTranslation } from "@/lib/hooks/useI18n";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header() {
   const pathname = usePathname();
@@ -44,6 +45,8 @@ export function Header() {
         >
           VI
         </button>
+        <span className="text-slate-700 text-xs ml-1 mr-1">|</span>
+        <ThemeToggle />
       </div>
     </header>
   );

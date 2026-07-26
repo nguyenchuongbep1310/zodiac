@@ -12,6 +12,7 @@ type FactorType string
 const (
 	FactorPlanetInSign  FactorType = "planet_in_sign"
 	FactorPlanetInHouse FactorType = "planet_in_house"
+	FactorHouseInSign   FactorType = "house_in_sign"
 	FactorAspect        FactorType = "aspect"
 )
 
@@ -98,6 +99,12 @@ type AspectInterpretation struct {
 	Template   *PlacementInterpretation // nil when no template found
 }
 
+type HouseInSignInterpretation struct {
+	HouseNumber int
+	Sign        string
+	Template    *PlacementInterpretation
+}
+
 // ChartInterpretation is the aggregate returned by InterpretationService.
 // It groups all three interpretation kinds for a single chart + language.
 type ChartInterpretation struct {
@@ -106,6 +113,7 @@ type ChartInterpretation struct {
 
 	PlanetInSign  []PlanetInSignInterpretation
 	PlanetInHouse []PlanetInHouseInterpretation
+	HouseInSign   []HouseInSignInterpretation
 	Aspects       []AspectInterpretation
 }
 

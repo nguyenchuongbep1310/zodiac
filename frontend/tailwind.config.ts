@@ -11,23 +11,31 @@ const config: Config = {
     extend: {
       colors: {
         space: {
-          950: "#04040f",
-          900: "#0a0a1a",
-          800: "#0f0f2a",
-          700: "#151535",
-          600: "#1e1e4a",
-          500: "#2a2a5e",
+          950: "var(--color-space-950)",
+          900: "var(--color-space-900)",
+          800: "var(--color-space-800)",
+          700: "var(--color-space-700)",
+          600: "var(--color-space-600)",
+          500: "var(--color-space-500)",
         },
         violet: {
-          400: "#a78bfa",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
+          300: "var(--color-violet-300)",
+          400: "var(--color-violet-400)",
+          500: "var(--color-violet-500)",
+          600: "var(--color-violet-600)",
+          700: "var(--color-violet-700)",
         },
         amber: {
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
+          300: "var(--color-amber-300)",
+          400: "var(--color-amber-400)",
+          500: "var(--color-amber-500)",
+          600: "var(--color-amber-600)",
+        },
+        slate: {
+          200: "var(--color-slate-200)",
+          300: "var(--color-slate-300)",
+          400: "var(--color-slate-400)",
+          500: "var(--color-slate-500)",
         },
         rose: {
           400: "#fb7185",
@@ -40,18 +48,17 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-cinzel)", "Georgia", "serif"],
+        display: ["var(--font-playfair)", "Georgia", "serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "space-gradient":
-          "radial-gradient(ellipse at top, #1e1e4a 0%, #0a0a1a 60%, #04040f 100%)",
+        "space-gradient": "var(--bg-grad)",
         "violet-gradient":
-          "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #7c3aed 100%)",
+          "linear-gradient(135deg, var(--color-violet-500) 0%, var(--color-violet-400) 50%, var(--color-violet-500) 100%)",
         "gold-gradient":
-          "linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%)",
+          "linear-gradient(135deg, var(--color-amber-500) 0%, var(--color-amber-400) 50%, var(--color-amber-500) 100%)",
       },
       animation: {
         "fade-in": "fadeIn 0.4s ease-out",

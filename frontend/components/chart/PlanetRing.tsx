@@ -17,26 +17,28 @@ interface PlanetRingProps {
   planets: RenderedPlanet[];
   highlightPlanet?: string | null;
   onHover?: (planet: RenderedPlanet | null) => void;
+  onClick?: (planet: RenderedPlanet) => void;
 }
 
 export const PlanetRing = memo(function PlanetRing({
   planets,
   highlightPlanet,
   onHover,
+  onClick,
 }: PlanetRingProps) {
   return (
     <g id="planet-ring">
       {/* ── Planet track background rings ──────────────────────────────────── */}
       <circle
         cx={CX} cy={CY} r={R.PLANET_TRACK_OUTER}
-        fill="rgba(10,10,30,0.40)"
-        stroke="rgba(55,48,163,0.35)"
+        fill="var(--wheel-planet-track-outer)"
+        stroke="var(--wheel-planet-track-inner)"
         strokeWidth={0.4}
       />
       <circle
         cx={CX} cy={CY} r={R.PLANET_TRACK_INNER}
         fill="none"
-        stroke="rgba(55,48,163,0.25)"
+        stroke="var(--wheel-planet-track-inner)"
         strokeWidth={0.4}
       />
 
@@ -47,6 +49,7 @@ export const PlanetRing = memo(function PlanetRing({
           rp={rp}
           dimmed={!!highlightPlanet && rp.planet.planet !== highlightPlanet}
           onHover={onHover}
+          onClick={onClick}
         />
       ))}
     </g>
@@ -59,9 +62,10 @@ interface PlanetGlyphProps {
   rp: RenderedPlanet;
   dimmed: boolean;
   onHover?: (planet: RenderedPlanet | null) => void;
+  onClick?: (planet: RenderedPlanet) => void;
 }
 
-const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover }: PlanetGlyphProps) {
+const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover, onClick }: PlanetGlyphProps) {
   const {
     planet,
     glyphCenter,
@@ -87,16 +91,28 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover }: PlanetGly
 
   return (
     <g
-      className="planet-group"
-      style={{ cursor: 'pointer', opacity: dimmed ? 0.28 : 1, transition: 'opacity 0.2s' }}
-      onMouseEnter={() => onHover?.(rp)}
-      onMouseLeave={() => onHover?.(null)}
+      className="planet-group group"
+      style={{ 
+        cursor: 'pointer', 
+        opacity: dimmed ? 0.28 : 1, 
+        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+        transformOrigin: `${fmt(glyphCenter.x)}px ${fmt(glyphCenter.y)}px`
+      }}
+      onMouseEnter={(e) => {
+        onHover?.(rp);
+        e.currentTarget.style.transform = 'scale(1.2)';
+      }}
+      onMouseLeave={(e) => {
+        onHover?.(null);
+        e.currentTarget.style.transform = 'scale(1)';
+      }}
+      onClick={() => onClick?.(rp)}
     >
       {/* Eclipse tick line: zodiac inner ring → planet track outer */}
       <line
         x1={fmt(tickOuter.x)} y1={fmt(tickOuter.y)}
         x2={fmt(tickInner.x)} y2={fmt(tickInner.y)}
-        stroke="rgba(167,139,250,0.45)"
+        stroke="var(--wheel-border-inner)"
         strokeWidth={0.8}
       />
 
@@ -105,7 +121,7 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover }: PlanetGly
         <line
           x1={fmt(tickInner.x)} y1={fmt(tickInner.y)}
           x2={fmt(leaderTarget.x)} y2={fmt(leaderTarget.y)}
-          stroke="rgba(167,139,250,0.28)"
+          stroke="var(--wheel-border-inner)"
           strokeWidth={0.65}
           strokeDasharray="2.5 2"
         />
@@ -116,9 +132,10 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover }: PlanetGly
         cx={fmt(glyphCenter.x)}
         cy={fmt(glyphCenter.y)}
         r={PLANET_CIRCLE_R}
-        fill="#090916"
+        fill="var(--wheel-planet-bg)"
         stroke={borderColor}
         strokeWidth={1.0}
+        className="group-hover:drop-shadow-[0_0_4px_rgba(167,139,250,0.8)] transition-all"
       />
 
       {/* Planet glyph */}

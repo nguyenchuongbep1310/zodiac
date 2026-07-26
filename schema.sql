@@ -2,34 +2,16 @@
 -- Database: zodiac_db
 
 -- ENUMS
-CREATE TYPE user_status AS ENUM ('active', 'suspended', 'deleted');
 CREATE TYPE calculation_type AS ENUM ('planet', 'house', 'aspect', 'full_chart');
 
 -- 1. Roles
-CREATE TABLE roles (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(50) UNIQUE NOT NULL,
-    description TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
 
 -- 2. Users
-CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    role_id UUID NOT NULL REFERENCES roles(id) ON DELETE RESTRICT,
-    status user_status NOT NULL DEFAULT 'active',
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    last_login_at TIMESTAMPTZ
-);
 
--- 3. Birth Profiles
-CREATE TABLE birth_profiles (
+-- 4. Natal Charts
+CREATE TABLE natal_charts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_id UUID, -- Optional user association
     name VARCHAR(100) NOT NULL,
     birth_date DATE NOT NULL,
     birth_time TIME NOT NULL,
@@ -37,14 +19,6 @@ CREATE TABLE birth_profiles (
     latitude NUMERIC(9,6) NOT NULL,
     longitude NUMERIC(9,6) NOT NULL,
     city VARCHAR(100),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
--- 4. Natal Charts
-CREATE TABLE natal_charts (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    profile_id UUID NOT NULL REFERENCES birth_profiles(id) ON DELETE CASCADE,
     house_system VARCHAR(20) NOT NULL DEFAULT 'placidus',
     zodiac_system VARCHAR(20) NOT NULL DEFAULT 'tropical',
     is_rectified BOOLEAN NOT NULL DEFAULT false,
@@ -132,16 +106,13 @@ CREATE TABLE audit_logs (
 -- ==========================================
 
 -- Foreign Key Indexes
-CREATE INDEX idx_users_role_id ON users(role_id);
-CREATE INDEX idx_birth_profiles_user_id ON birth_profiles(user_id);
-CREATE INDEX idx_natal_charts_profile_id ON natal_charts(profile_id);
+CREATE INDEX idx_natal_charts_user_id ON natal_charts(user_id);
 CREATE INDEX idx_chart_calcs_chart_id ON chart_calculations(chart_id);
 CREATE INDEX idx_planets_chart_id ON planets(chart_id);
 CREATE INDEX idx_houses_chart_id ON houses(chart_id);
 CREATE INDEX idx_aspects_chart_id ON aspects(chart_id);
 
 -- Lookup/Search Indexes
-CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_interpretation_factors ON interpretation_templates(factor_type, factor_value_1, factor_value_2) WHERE is_active = true;
 
 -- BRIN Index for Append-Only Audit Logs (PostgreSQL Best Practice for time-series/logs)

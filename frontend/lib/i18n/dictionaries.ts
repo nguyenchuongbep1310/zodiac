@@ -2,15 +2,10 @@ export type Dictionary = Record<string, string>;
 
 export const en: Dictionary = {
   // Navigation
-  "nav.dashboard": "Dashboard",
   "nav.profiles": "Birth Profiles",
   "nav.charts": "Natal Charts",
   "nav.new": "New Profile",
   "nav.detail": "Detail",
-  
-  // Dashboard
-  "dashboard.title": "Welcome to Zodiac",
-  "dashboard.subtitle": "Explore your cosmic blueprint",
   
   // Profiles
   "profiles.title": "Birth Profiles",
@@ -48,6 +43,7 @@ export const en: Dictionary = {
   "charts.no_aspects": "No aspects calculated.",
   "charts.house_cusps": "House Cusps",
   "charts.house_system": "house system",
+  "charts.calculate_action": "View Chart",
   
   // Tables
   "table.planet": "Planet",
@@ -138,15 +134,10 @@ export const en: Dictionary = {
 
 export const vi: Dictionary = {
   // Navigation
-  "nav.dashboard": "Bảng Điều Khiển",
   "nav.profiles": "Hồ Sơ Sinh",
   "nav.charts": "Bản Đồ Sao",
   "nav.new": "Hồ Sơ Mới",
   "nav.detail": "Chi Tiết",
-  
-  // Dashboard
-  "dashboard.title": "Chào mừng đến với Zodiac",
-  "dashboard.subtitle": "Khám phá bản đồ vũ trụ của bạn",
   
   // Profiles
   "profiles.title": "Hồ Sơ Sinh",
@@ -184,6 +175,7 @@ export const vi: Dictionary = {
   "charts.no_aspects": "Không có góc chiếu nào được tính toán.",
   "charts.house_cusps": "Đỉnh Các Cung Địa Bàn",
   "charts.house_system": "hệ thống nhà",
+  "charts.calculate_action": "Xem Bản Đồ Sao",
   
   // Tables
   "table.planet": "Hành Tinh",

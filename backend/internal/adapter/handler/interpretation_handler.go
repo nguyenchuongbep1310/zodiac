@@ -7,7 +7,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/zodiac/backend/internal/adapter/middleware"
 	"github.com/zodiac/backend/internal/app/dto"
 	"github.com/zodiac/backend/internal/app/service"
 	"github.com/zodiac/backend/internal/domain"
@@ -30,13 +29,10 @@ func NewInterpretationHandler(interpSvc *service.InterpretationService, log *zap
 //	@Description	Returns astrological interpretations for every planet-in-sign, planet-in-house, and aspect in the specified natal chart. Supports "en" (default) and "vi" via ?lang= query param.
 //	@Tags			interpretations
 //	@Produce		json
-//	@Security		BearerAuth
 //	@Param			id		path		string	true	"Chart UUID"
 //	@Param			lang	query		string	false	"Language code: en (default) | vi"
 //	@Success		200		{object}	dto.ChartInterpretationResponse
 //	@Failure		400		{object}	middleware.ErrorResponse
-//	@Failure		401		{object}	middleware.ErrorResponse
-//	@Failure		403		{object}	middleware.ErrorResponse
 //	@Failure		404		{object}	middleware.ErrorResponse
 //	@Failure		500		{object}	middleware.ErrorResponse
 //	@Router			/api/v1/charts/{id}/interpretations [get]
@@ -58,12 +54,9 @@ func (h *InterpretationHandler) GetByChartID(c *gin.Context) {
 		req.Language = "en"
 	}
 
-	userID := middleware.GetUserID(c)
-
 	interp, err := h.interpSvc.Interpret(
 		c.Request.Context(),
 		id,
-		userID,
 		req.Language,
 	)
 	if err != nil {
@@ -82,6 +75,7 @@ func mapInterpretationToResponse(i *domain.ChartInterpretation) dto.ChartInterpr
 		Language:      i.Language,
 		PlanetInSign:  make([]dto.PlanetInSignResponse, 0, len(i.PlanetInSign)),
 		PlanetInHouse: make([]dto.PlanetInHouseResponse, 0, len(i.PlanetInHouse)),
+		HouseInSign:   make([]dto.HouseInSignResponse, 0, len(i.HouseInSign)),
 		Aspects:       make([]dto.AspectInterpretationResponse, 0, len(i.Aspects)),
 	}
 
@@ -105,6 +99,17 @@ func mapInterpretationToResponse(i *domain.ChartInterpretation) dto.ChartInterpr
 			entry.Interpretation = templateToContent(h.Template)
 		}
 		resp.PlanetInHouse = append(resp.PlanetInHouse, entry)
+	}
+
+	for _, h := range i.HouseInSign {
+		entry := dto.HouseInSignResponse{
+			HouseNumber: h.HouseNumber,
+			Sign:        h.Sign,
+		}
+		if h.Template != nil {
+			entry.Interpretation = templateToContent(h.Template)
+		}
+		resp.HouseInSign = append(resp.HouseInSign, entry)
 	}
 
 	for _, a := range i.Aspects {

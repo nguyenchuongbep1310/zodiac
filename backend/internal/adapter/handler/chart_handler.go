@@ -2,12 +2,12 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/zodiac/backend/internal/adapter/middleware"
 	"github.com/zodiac/backend/internal/app/dto"
 	"github.com/zodiac/backend/internal/app/service"
 	"github.com/zodiac/backend/internal/domain"
@@ -31,12 +31,9 @@ func NewChartHandler(chartSvc *service.ChartService, log *zap.Logger) *ChartHand
 //	@Tags			charts
 //	@Accept			json
 //	@Produce		json
-//	@Security		BearerAuth
 //	@Param			body	body		dto.CalculateChartRequest	true	"Chart calculation request"
 //	@Success		201		{object}	dto.ChartResponse
 //	@Failure		400		{object}	middleware.ErrorResponse
-//	@Failure		401		{object}	middleware.ErrorResponse
-//	@Failure		403		{object}	middleware.ErrorResponse
 //	@Failure		404		{object}	middleware.ErrorResponse
 //	@Failure		500		{object}	middleware.ErrorResponse
 //	@Router			/api/v1/charts/calculate [post]
@@ -47,17 +44,36 @@ func (h *ChartHandler) Calculate(c *gin.Context) {
 		return
 	}
 
-	profileID := uuid.MustParse(req.ProfileID)
+	birthDate, err := time.Parse(time.DateOnly, req.BirthDate)
+	if err != nil {
+		c.Error(domain.ErrValidation("invalid birth_date format, expected YYYY-MM-DD"))
+		return
+	}
 
-	userID := middleware.GetUserID(c)
+	birthTime, err := time.Parse(time.TimeOnly, req.BirthTime)
+	if err != nil {
+		// try with just hours and minutes
+		birthTime, err = time.Parse("15:04", req.BirthTime)
+		if err != nil {
+			c.Error(domain.ErrValidation("invalid birth_time format, expected HH:MM:SS or HH:MM"))
+			return
+		}
+	}
 
-	chart, err := h.chartSvc.Calculate(
-		c.Request.Context(),
-		profileID,
-		userID,
-		req.HouseSystem,
-		req.ZodiacSystem,
-	)
+	params := service.CalculateParams{
+		UserID:       nil, // Optional: Set if user is authenticated
+		Name:         req.Name,
+		BirthDate:    birthDate,
+		BirthTime:    birthTime,
+		Timezone:     req.Timezone,
+		Latitude:     req.Latitude,
+		Longitude:    req.Longitude,
+		City:         req.City,
+		HouseSystem:  req.HouseSystem,
+		ZodiacSystem: req.ZodiacSystem,
+	}
+
+	chart, err := h.chartSvc.Calculate(c.Request.Context(), params)
 	if err != nil {
 		c.Error(err)
 		return
@@ -69,15 +85,12 @@ func (h *ChartHandler) Calculate(c *gin.Context) {
 // GetByID godoc
 //
 //	@Summary		Get a natal chart
-//	@Description	Returns a previously calculated natal chart by its UUID. The chart must belong to the caller.
+//	@Description	Returns a previously calculated natal chart by its UUID.
 //	@Tags			charts
 //	@Produce		json
-//	@Security		BearerAuth
 //	@Param			id	path		string	true	"Chart UUID"
 //	@Success		200	{object}	dto.ChartResponse
 //	@Failure		400	{object}	middleware.ErrorResponse
-//	@Failure		401	{object}	middleware.ErrorResponse
-//	@Failure		403	{object}	middleware.ErrorResponse
 //	@Failure		404	{object}	middleware.ErrorResponse
 //	@Failure		500	{object}	middleware.ErrorResponse
 //	@Router			/api/v1/charts/{id} [get]
@@ -88,9 +101,7 @@ func (h *ChartHandler) GetByID(c *gin.Context) {
 		return
 	}
 
-	userID := middleware.GetUserID(c)
-
-	chart, err := h.chartSvc.GetByID(c.Request.Context(), id, userID)
+	chart, err := h.chartSvc.GetByID(c.Request.Context(), id)
 	if err != nil {
 		c.Error(err)
 		return
@@ -104,7 +115,13 @@ func (h *ChartHandler) GetByID(c *gin.Context) {
 func mapChartToResponse(chart *domain.NatalChart) dto.ChartResponse {
 	resp := dto.ChartResponse{
 		ID:           chart.ID.String(),
-		ProfileID:    chart.ProfileID.String(),
+		Name:         chart.Name,
+		BirthDate:    chart.BirthDate.Format(time.DateOnly),
+		BirthTime:    chart.BirthTime.Format(time.TimeOnly),
+		Timezone:     chart.Timezone,
+		Latitude:     chart.Latitude,
+		Longitude:    chart.Longitude,
+		City:         chart.City,
 		HouseSystem:  chart.HouseSystem,
 		ZodiacSystem: chart.ZodiacSystem,
 		IsRectified:  chart.IsRectified,
@@ -112,6 +129,11 @@ func mapChartToResponse(chart *domain.NatalChart) dto.ChartResponse {
 		Planets:      make([]dto.PlanetPositionResponse, 0, len(chart.Planets)),
 		Houses:       make([]dto.HouseCuspResponse, 0, len(chart.Houses)),
 		Aspects:      make([]dto.AspectResponse, 0, len(chart.Aspects)),
+	}
+
+	if chart.UserID != nil {
+		uid := chart.UserID.String()
+		resp.UserID = &uid
 	}
 
 	for _, p := range chart.Planets {

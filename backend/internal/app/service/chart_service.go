@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -15,7 +16,6 @@ import (
 // ChartService handles natal chart calculation and retrieval use-cases.
 type ChartService struct {
 	chartRepo   domrepo.ChartRepository
-	profileRepo domrepo.ProfileRepository
 	calculator  astrologydom.ChartCalculator
 	ephePath    string
 	log         *zap.Logger
@@ -24,46 +24,56 @@ type ChartService struct {
 // NewChartService constructs the service with all required dependencies.
 func NewChartService(
 	chartRepo domrepo.ChartRepository,
-	profileRepo domrepo.ProfileRepository,
 	calculator astrologydom.ChartCalculator,
 	ephePath string,
 	log *zap.Logger,
 ) *ChartService {
 	return &ChartService{
 		chartRepo:   chartRepo,
-		profileRepo: profileRepo,
 		calculator:  calculator,
 		ephePath:    ephePath,
 		log:         log,
 	}
 }
 
+type CalculateParams struct {
+	UserID       *uuid.UUID
+	Name         string
+	BirthDate    time.Time
+	BirthTime    time.Time
+	Timezone     string
+	Latitude     float64
+	Longitude    float64
+	City         string
+	HouseSystem  string
+	ZodiacSystem string
+}
+
 // Calculate fetches the birth profile (enforcing ownership), runs the
 // ephemeris-based calculation pipeline, and persists the resulting NatalChart.
 func (s *ChartService) Calculate(
 	ctx context.Context,
-	profileID uuid.UUID,
-	requestingUserID uuid.UUID,
-	houseSystem string,
-	zodiacSystem string,
+	params CalculateParams,
 ) (*domain.NatalChart, error) {
-	// 1. Fetch and authorise the profile.
-	profile, err := s.profileRepo.GetByID(ctx, profileID)
+	// 2. Resolve house system.
+	hs, houseSystemStr := resolveHouseSystem(params.HouseSystem)
+
+	loc, err := time.LoadLocation(params.Timezone)
 	if err != nil {
-		return nil, fmt.Errorf("chartService.Calculate profile fetch: %w", err)
-	}
-	if profile.UserID != requestingUserID {
-		return nil, domain.ErrForbidden("you do not own this profile")
+		return nil, fmt.Errorf("invalid timezone: %w", err)
 	}
 
-	// 2. Resolve house system.
-	hs, houseSystemStr := resolveHouseSystem(houseSystem)
+	utcTime := time.Date(
+		params.BirthDate.Year(), params.BirthDate.Month(), params.BirthDate.Day(),
+		params.BirthTime.Hour(), params.BirthTime.Minute(), params.BirthTime.Second(),
+		0, loc,
+	).UTC()
 
 	// 3. Build the calculation input.
 	input := astrologydom.ChartInput{
-		BirthTime:   profile.BirthTime.Date,
-		Latitude:    profile.Location.Latitude,
-		Longitude:   profile.Location.Longitude,
+		BirthTime:   utcTime,
+		Latitude:    params.Latitude,
+		Longitude:   params.Longitude,
 		HouseSystem: hs,
 		EphePath:    s.ephePath,
 	}
@@ -75,7 +85,7 @@ func (s *ChartService) Calculate(
 	}
 
 	// 5. Map output → domain NatalChart.
-	chart := mapOutputToChart(output, profileID, houseSystemStr, zodiacSystem)
+	chart := mapOutputToChart(output, params, houseSystemStr)
 
 	// 6. Persist to the database.
 	saved, err := s.chartRepo.Save(ctx, chart)
@@ -85,26 +95,16 @@ func (s *ChartService) Calculate(
 
 	s.log.Info("natal chart calculated and saved",
 		zap.String("chart_id", saved.ID.String()),
-		zap.String("profile_id", profileID.String()),
 	)
 
 	return saved, nil
 }
 
 // GetByID returns a NatalChart by its primary key.
-func (s *ChartService) GetByID(ctx context.Context, chartID uuid.UUID, requestingUserID uuid.UUID) (*domain.NatalChart, error) {
+func (s *ChartService) GetByID(ctx context.Context, chartID uuid.UUID) (*domain.NatalChart, error) {
 	chart, err := s.chartRepo.GetByID(ctx, chartID)
 	if err != nil {
 		return nil, fmt.Errorf("chartService.GetByID: %w", err)
-	}
-
-	// Authorise via the owning profile.
-	profile, err := s.profileRepo.GetByID(ctx, chart.ProfileID)
-	if err != nil {
-		return nil, fmt.Errorf("chartService.GetByID profile: %w", err)
-	}
-	if profile.UserID != requestingUserID {
-		return nil, domain.ErrForbidden("you do not own this chart")
 	}
 
 	return chart, nil
@@ -127,20 +127,26 @@ func resolveHouseSystem(hs string) (astrologydom.HouseSystem, string) {
 
 func mapOutputToChart(
 	out *astrologydom.ChartOutput,
-	profileID uuid.UUID,
+	params CalculateParams,
 	houseSystem string,
-	zodiacSystem string,
 ) *domain.NatalChart {
 
-	if zodiacSystem == "" {
-		zodiacSystem = "tropical"
+	if params.ZodiacSystem == "" {
+		params.ZodiacSystem = "tropical"
 	}
 
 	chart := &domain.NatalChart{
 		ID:           uuid.New(),
-		ProfileID:    profileID,
+		UserID:       params.UserID,
+		Name:         params.Name,
+		BirthDate:    params.BirthDate,
+		BirthTime:    params.BirthTime,
+		Timezone:     params.Timezone,
+		Latitude:     params.Latitude,
+		Longitude:    params.Longitude,
+		City:         params.City,
 		HouseSystem:  houseSystem,
-		ZodiacSystem: zodiacSystem,
+		ZodiacSystem: params.ZodiacSystem,
 		IsRectified:  false,
 	}
 

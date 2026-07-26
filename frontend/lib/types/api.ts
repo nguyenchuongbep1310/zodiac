@@ -38,41 +38,6 @@ export interface ResetPasswordRequest {
   new_password: string;
 }
 
-// ─── Profiles ─────────────────────────────────────────────────────────────────
-
-export interface LocationResponse {
-  latitude: number;
-  longitude: number;
-  city: string;
-}
-
-export interface ProfileResponse {
-  id: string;
-  user_id: string;
-  name: string;
-  birth_date: string;
-  birth_time: string;
-  timezone: string;
-  location: LocationResponse;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ProfileListResponse {
-  data: ProfileResponse[];
-  total: number;
-}
-
-export interface CreateProfileRequest {
-  name: string;
-  birth_date: string;
-  birth_time: string;
-  timezone: string;
-  latitude: number;
-  longitude: number;
-  city: string;
-}
-
 // ─── Charts ───────────────────────────────────────────────────────────────────
 
 export interface PlanetPositionResponse {
@@ -101,7 +66,14 @@ export interface AspectResponse {
 
 export interface ChartResponse {
   id: string;
-  profile_id: string;
+  user_id?: string;
+  name: string;
+  birth_date: string;
+  birth_time: string;
+  timezone: string;
+  latitude: number;
+  longitude: number;
+  city: string;
   house_system: string;
   zodiac_system: string;
   is_rectified: boolean;
@@ -112,7 +84,13 @@ export interface ChartResponse {
 }
 
 export interface CalculateChartRequest {
-  profile_id: string;
+  name: string;
+  birth_date: string;
+  birth_time: string;
+  timezone: string;
+  latitude: number;
+  longitude: number;
+  city?: string;
   house_system?: "placidus" | "koch" | "whole_sign" | "equal";
   zodiac_system?: "tropical" | "sidereal";
 }
@@ -142,6 +120,12 @@ export interface PlanetInHouseResponse {
   interpretation?: InterpretationContentResponse;
 }
 
+export interface HouseInSignResponse {
+  house_number: number;
+  sign: string;
+  interpretation?: InterpretationContentResponse;
+}
+
 export interface AspectInterpretationResponse {
   planet_1: string;
   planet_2: string;
@@ -156,6 +140,7 @@ export interface ChartInterpretationResponse {
   language: string;
   planet_in_sign: PlanetInSignResponse[];
   planet_in_house: PlanetInHouseResponse[];
+  house_in_sign: HouseInSignResponse[];
   aspects: AspectInterpretationResponse[];
 }
 

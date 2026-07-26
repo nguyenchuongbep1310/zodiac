@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Cinzel } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
-import { AuthProvider } from "@/lib/providers/AuthProvider";
 import { ToastProvider } from "@/components/ui/Toast";
-import { StarfieldBackground } from "@/components/layout/StarfieldBackground";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,11 +11,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const cinzel = Cinzel({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-cinzel",
-  display: "swap",
-  weight: ["400", "600", "700"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -44,16 +42,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${cinzel.variable}`}>
-      <body className="font-sans">
-        <StarfieldBackground />
-        <QueryProvider>
-          <AuthProvider>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+      <body className="font-sans bg-[var(--bg-main)] text-[var(--text-main)] min-h-screen">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {/* Editorial glowing orb background */}
+          <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-900/15 dark:bg-violet-900/20 blur-[120px] mix-blend-screen" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-amber-900/10 dark:bg-amber-900/15 blur-[120px] mix-blend-screen" />
+          </div>
+          <QueryProvider>
             <ToastProvider>
               <div className="relative z-10">{children}</div>
             </ToastProvider>
-          </AuthProvider>
-        </QueryProvider>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

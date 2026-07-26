@@ -36,6 +36,13 @@ type PlanetInHouseResponse struct {
 	Interpretation *InterpretationContentResponse  `json:"interpretation,omitempty"`
 }
 
+// HouseInSignResponse is one entry in the house_in_sign array.
+type HouseInSignResponse struct {
+	HouseNumber    int                             `json:"house_number"`
+	Sign           string                          `json:"sign"`
+	Interpretation *InterpretationContentResponse  `json:"interpretation,omitempty"`
+}
+
 // AspectInterpretationResponse is one entry in the aspects array.
 type AspectInterpretationResponse struct {
 	Planet1        string                          `json:"planet_1"`
@@ -53,5 +60,6 @@ type ChartInterpretationResponse struct {
 	Language      string                          `json:"language"`
 	PlanetInSign  []PlanetInSignResponse           `json:"planet_in_sign"`
 	PlanetInHouse []PlanetInHouseResponse          `json:"planet_in_house"`
+	HouseInSign   []HouseInSignResponse            `json:"house_in_sign"`
 	Aspects       []AspectInterpretationResponse   `json:"aspects"`
 }

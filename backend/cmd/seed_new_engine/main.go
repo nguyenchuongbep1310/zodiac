@@ -15,6 +15,7 @@ type SeedData struct {
 	FactorType    string
 	FactorValue1  string
 	FactorValue2  string
+	FactorValue3  string
 	CoreMeaning   string
 	RealLife      string
 	Strengths     string
@@ -56,13 +57,18 @@ func main() {
 	seeds = append(seeds, getNorthNodeSeedsPart2()...)
 	seeds = append(seeds, getChironSeeds()...)
 	seeds = append(seeds, getChironSeedsPart2()...)
+	
+	// Add mock data for Aspects and Houses so the UI works
+	seeds = append(seeds, getMockHouseSeeds()...)
+	seeds = append(seeds, getMockAspectSeeds()...)
+	seeds = append(seeds, getMockHouseInSignSeeds()...)
 
 	insertStmt := `
 		INSERT INTO placement_interpretations (
-			id, language, factor_type, factor_value_1, factor_value_2,
+			id, language, factor_type, factor_value_1, factor_value_2, factor_value_3,
 			core_meaning, real_life, strengths, challenges, relationships, growth_path, key_themes
 		) VALUES (
-			:id, :language, :factor_type, :factor_value_1, :factor_value_2,
+			:id, :language, :factor_type, :factor_value_1, :factor_value_2, NULLIF(:factor_value_3, ''),
 			:core_meaning, :real_life, :strengths, :challenges, :relationships, :growth_path, :key_themes
 		) ON CONFLICT (language, factor_type, factor_value_1, factor_value_2, factor_value_3)
 		DO UPDATE SET
@@ -85,6 +91,7 @@ func main() {
 			"factor_type":    s.FactorType,
 			"factor_value_1": s.FactorValue1,
 			"factor_value_2": s.FactorValue2,
+			"factor_value_3": s.FactorValue3,
 			"core_meaning":   s.CoreMeaning,
 			"real_life":      s.RealLife,
 			"strengths":      s.Strengths,

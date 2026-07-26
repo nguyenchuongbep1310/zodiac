@@ -55,7 +55,14 @@ type Aspect struct {
 // from a single BirthProfile. It ties together positions, houses, and aspects.
 type NatalChart struct {
 	ID           uuid.UUID
-	ProfileID    uuid.UUID
+	UserID       *uuid.UUID // Optional user association
+	Name         string
+	BirthDate    time.Time // Using time.Time for DATE, only year/month/day are significant
+	BirthTime    time.Time // Using time.Time for TIME, only hour/minute/second are significant
+	Timezone     string
+	Latitude     float64
+	Longitude    float64
+	City         string
 	HouseSystem  string
 	ZodiacSystem string
 	IsRectified  bool

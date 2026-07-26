@@ -45,59 +45,20 @@ func (r *Router) registerRoutes() {
 
 	// ── Instantiate handlers ──────────────────────────────────────────────────
 	zapLog := r.log.Logger
-	authH := NewAuthHandler(r.container.AuthService, zapLog)
-	profileH := NewProfileHandler(r.container.ProfileService, zapLog)
 	chartH := NewChartHandler(r.container.ChartService, zapLog)
 	interpH := NewInterpretationHandler(r.container.InterpretationService, zapLog)
 
 	v1 := r.engine.Group("/api/v1")
 	{
 		// ── Public routes ─────────────────────────────────────────────────────
-		auth := v1.Group("/auth")
+		charts := v1.Group("/charts")
 		{
-			// POST /api/v1/auth/register
-			auth.POST("/register", authH.Register)
-			// POST /api/v1/auth/login
-			auth.POST("/login", authH.Login)
-			// POST /api/v1/auth/refresh
-			auth.POST("/refresh", authH.Refresh)
-			// POST /api/v1/auth/forgot-password
-			auth.POST("/forgot-password", authH.ForgotPassword)
-			// POST /api/v1/auth/reset-password
-			auth.POST("/reset-password", authH.ResetPassword)
-		}
-
-		// ── Protected routes ──────────────────────────────────────────────────
-		protected := v1.Group("")
-		protected.Use(middleware.Auth(r.cfg.JWT.Secret))
-		{
-			profiles := protected.Group("/profiles")
-			{
-				// POST /api/v1/profiles
-				profiles.POST("", profileH.Create)
-				// GET  /api/v1/profiles
-				profiles.GET("", profileH.List)
-				// GET  /api/v1/profiles/:id
-				profiles.GET("/:id", profileH.GetByID)
-			}
-
-			charts := protected.Group("/charts")
-			{
-				// POST /api/v1/charts/calculate
-				charts.POST("/calculate", chartH.Calculate)
-				// GET  /api/v1/charts/:id
-				charts.GET("/:id", chartH.GetByID)
-				// GET  /api/v1/charts/:id/interpretations?lang=en|vi
-				charts.GET("/:id/interpretations", interpH.GetByChartID)
-			}
-		}
-
-		// ── Admin routes ──────────────────────────────────────────────────────
-		admin := v1.Group("/admin")
-		admin.Use(middleware.Auth(r.cfg.JWT.Secret))
-		admin.Use(middleware.RequireRole("admin"))
-		{
-			admin.GET("/users", r.handleNotImplemented)
+			// POST /api/v1/charts/calculate
+			charts.POST("/calculate", chartH.Calculate)
+			// GET  /api/v1/charts/:id
+			charts.GET("/:id", chartH.GetByID)
+			// GET  /api/v1/charts/:id/interpretations?lang=en|vi
+			charts.GET("/:id/interpretations", interpH.GetByChartID)
 		}
 	}
 }

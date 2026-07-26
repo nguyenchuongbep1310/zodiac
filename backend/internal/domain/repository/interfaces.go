@@ -7,48 +7,6 @@ import (
 	"github.com/zodiac/backend/internal/domain"
 )
 
-// UserRepository defines the data access contract for the User aggregate.
-// Implementations live in internal/adapter/repository.
-type UserRepository interface {
-	// Create persists a new User, returning the saved entity.
-	Create(ctx context.Context, user *domain.User) (*domain.User, error)
-
-	// GetByID retrieves a User by its primary key.
-	GetByID(ctx context.Context, id uuid.UUID) (*domain.User, error)
-
-	// GetByEmail retrieves a User by their unique email address.
-	GetByEmail(ctx context.Context, email string) (*domain.User, error)
-
-	// GetByPasswordResetToken retrieves a User by their password reset token.
-	GetByPasswordResetToken(ctx context.Context, tokenHash string) (*domain.User, error)
-
-	// Update persists changes to an existing User.
-	Update(ctx context.Context, user *domain.User) (*domain.User, error)
-
-	// SoftDelete marks a User as deleted without removing the record.
-	SoftDelete(ctx context.Context, id uuid.UUID) error
-
-	// ExistsByEmail checks if an email address is already registered.
-	ExistsByEmail(ctx context.Context, email string) (bool, error)
-}
-
-// ProfileRepository defines the data access contract for the BirthProfile aggregate.
-type ProfileRepository interface {
-	// Create persists a new BirthProfile.
-	Create(ctx context.Context, profile *domain.BirthProfile) (*domain.BirthProfile, error)
-
-	// GetByID retrieves a BirthProfile by its primary key.
-	GetByID(ctx context.Context, id uuid.UUID) (*domain.BirthProfile, error)
-
-	// ListByUserID retrieves all BirthProfiles belonging to a user.
-	ListByUserID(ctx context.Context, userID uuid.UUID) ([]*domain.BirthProfile, error)
-
-	// Update persists changes to an existing BirthProfile.
-	Update(ctx context.Context, profile *domain.BirthProfile) (*domain.BirthProfile, error)
-
-	// Delete permanently removes a BirthProfile and cascades to related charts.
-	Delete(ctx context.Context, id uuid.UUID) error
-}
 
 // ChartRepository defines the data access contract for the NatalChart aggregate.
 type ChartRepository interface {
@@ -58,11 +16,8 @@ type ChartRepository interface {
 	// GetByID retrieves a full NatalChart (including all sub-entities) by its primary key.
 	GetByID(ctx context.Context, id uuid.UUID) (*domain.NatalChart, error)
 
-	// GetByProfileID retrieves the most recent chart for a given birth profile.
-	GetByProfileID(ctx context.Context, profileID uuid.UUID) (*domain.NatalChart, error)
-
-	// ListByProfileID retrieves all charts for a given birth profile.
-	ListByProfileID(ctx context.Context, profileID uuid.UUID) ([]*domain.NatalChart, error)
+	// ListByUserID retrieves all charts for a given user.
+	ListByUserID(ctx context.Context, userID uuid.UUID) ([]*domain.NatalChart, error)
 
 	// Delete removes a NatalChart and all associated data.
 	Delete(ctx context.Context, id uuid.UUID) error

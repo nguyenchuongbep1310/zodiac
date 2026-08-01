@@ -98,7 +98,7 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("app.debug", false)
 	v.SetDefault("app.read_timeout", "15s")
 	v.SetDefault("app.write_timeout", "15s")
-	v.SetDefault("app.ephe_path", "/usr/share/ephe")
+	v.SetDefault("app.ephe_path", "./ephe")
 
 	v.SetDefault("database.dsn", "")
 	v.SetDefault("database.max_open_conns", 25)

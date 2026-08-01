@@ -6,9 +6,19 @@ RUN apk add --no-cache gcc musl-dev git make curl
 
 WORKDIR /app
 
-# Download Swiss Ephemeris C source and compile libswe.a for Linux target
+# Download Swiss Ephemeris C source and compile libswe.a for Linux target (only core library C files)
 RUN git clone --depth 1 https://github.com/aloistr/swisseph.git /tmp/swisseph && \
-    gcc -O2 -c /tmp/swisseph/*.c -I/tmp/swisseph && \
+    gcc -O2 -c \
+      /tmp/swisseph/swecl.c \
+      /tmp/swisseph/swedate.c \
+      /tmp/swisseph/swehouse.c \
+      /tmp/swisseph/swejpl.c \
+      /tmp/swisseph/swemmoon.c \
+      /tmp/swisseph/swemplan.c \
+      /tmp/swisseph/sweph.c \
+      /tmp/swisseph/swephlib.c \
+      /tmp/swisseph/swehel.c \
+      -I/tmp/swisseph && \
     ar rcs libswe.a *.o && \
     rm -f *.o && \
     rm -rf /tmp/swisseph

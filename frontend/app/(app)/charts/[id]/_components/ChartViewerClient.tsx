@@ -256,7 +256,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
           </div>
 
           {/* Right Side: Static Chart Wheel */}
-          <div className="lg:col-span-7 relative order-1 lg:order-2 flex justify-center sticky top-24">
+          <div className="lg:col-span-7 relative order-1 lg:order-2 flex justify-center lg:sticky lg:top-24">
             <div className="w-full relative z-10 p-2 sm:p-4 lg:p-8">
               <ChartWheel chart={chart} />
             </div>

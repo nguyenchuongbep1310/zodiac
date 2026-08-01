@@ -4,6 +4,8 @@ FROM golang:1.24-alpine AS builder
 # Install build tools & git
 RUN apk add --no-cache gcc musl-dev git make curl
 
+ENV GOTOOLCHAIN=auto
+
 WORKDIR /app
 
 # Download Swiss Ephemeris C source and compile libswe.a for Linux target (only core library C files)

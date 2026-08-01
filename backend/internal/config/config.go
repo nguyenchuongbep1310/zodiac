@@ -100,15 +100,19 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("app.write_timeout", "15s")
 	v.SetDefault("app.ephe_path", "/usr/share/ephe")
 
+	v.SetDefault("database.dsn", "")
 	v.SetDefault("database.max_open_conns", 25)
 	v.SetDefault("database.max_idle_conns", 10)
 	v.SetDefault("database.conn_max_lifetime", "5m")
 	v.SetDefault("database.migrations_path", "file://migrations")
 
+	v.SetDefault("redis.address", "")
+	v.SetDefault("redis.password", "")
 	v.SetDefault("redis.db", 0)
 	v.SetDefault("redis.pool_size", 10)
 	v.SetDefault("redis.dial_timeout", "5s")
 
+	v.SetDefault("jwt.secret", "")
 	v.SetDefault("jwt.access_token_ttl", "15m")
 	v.SetDefault("jwt.refresh_token_ttl", "168h") // 7 days
 

@@ -12,27 +12,36 @@ interface AccordionItemProps {
 
 export function AccordionItem({ title, content, isOpen = false, onToggle, className }: AccordionItemProps) {
   return (
-    <div className={cn("border-b border-black/5 dark:border-white/5 last:border-0", className)}>
+    <div className={cn("border-b border-[#EBE4D8]/80 dark:border-white/5 last:border-0", className)}>
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between py-4 px-2 text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 rounded-lg"
+        className="flex w-full items-center justify-between py-4 px-2 text-left transition-all duration-300 hover:bg-[#F3EDE4]/50 dark:hover:bg-white/[0.03] rounded-xl group"
       >
         <div className="flex-1 min-w-0">{title}</div>
-        <ChevronDown
-          className={cn(
-            "h-5 w-5 shrink-0 text-slate-400 transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
-        />
+        <div className={cn(
+          "flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-300 ml-3 shrink-0",
+          isOpen
+            ? "bg-[#5C4033] border-[#5C4033] dark:bg-[#E8DDD3] dark:border-[#E8DDD3] rotate-180"
+            : "border-[#D0C4B8] dark:border-white/15 group-hover:border-[#8C5A3C] dark:group-hover:border-white/30"
+        )}>
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-colors duration-300",
+              isOpen
+                ? "text-[#FAF7F2] dark:text-[#1C1815]"
+                : "text-[#8C7A6B] dark:text-[#A8988C] group-hover:text-[#5C4033] dark:group-hover:text-[#E8DDD3]"
+            )}
+          />
+        </div>
       </button>
       <div
         className={cn(
-          "overflow-hidden transition-all duration-300 ease-in-out",
-          isOpen ? "max-h-[1000px] opacity-100 mb-4" : "max-h-0 opacity-0"
+          "overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)]",
+          isOpen ? "max-h-[2000px] opacity-100 mb-4" : "max-h-0 opacity-0"
         )}
       >
-        <div className="px-4 py-2 text-sm text-slate-700 dark:text-slate-300 space-y-3">
+        <div className="px-4 py-3 text-sm text-[#5C4033] dark:text-[#A8988C] space-y-3 leading-relaxed">
           {content}
         </div>
       </div>
@@ -69,7 +78,7 @@ export function Accordion({ items, className, allowMultiple = false }: Accordion
   };
 
   return (
-    <div className={cn("w-full divide-y divide-black/5 dark:divide-white/5", className)}>
+    <div className={cn("w-full divide-y divide-[#EBE4D8]/80 dark:divide-white/5", className)}>
       {items.map((item) => (
         <AccordionItem
           key={item.id}

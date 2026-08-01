@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, Menu, X } from "lucide-react";
+import { Sparkles, Menu, X, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { useI18nStore } from "@/lib/hooks/useI18n";
 
 export function FloatingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const { language, setLanguage } = useI18nStore();
 
   // Handle scroll detection for subtle styling changes
   useEffect(() => {
@@ -34,34 +36,34 @@ export function FloatingNavbar() {
       <header
         className={`fixed top-4 inset-x-0 mx-auto z-50 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           isScrolled
-            ? "w-[90%] md:w-[70%] max-w-4xl"
-            : "w-[95%] md:w-[85%] max-w-5xl"
+            ? "w-[92%] md:w-[82%] max-w-6xl"
+            : "w-[96%] md:w-[92%] max-w-7xl"
         }`}
       >
         <div
-          className={`flex items-center justify-between px-6 py-3 rounded-full border shadow-lg transition-colors duration-500 ${
+          className={`flex items-center justify-between px-8 py-4 sm:py-4.5 rounded-full border shadow-xl transition-colors duration-500 ${
             isScrolled
-              ? "bg-white/10 dark:bg-black/20 border-white/20 dark:border-white/10 backdrop-blur-xl shadow-mystic-dark/10"
-              : "bg-white/5 dark:bg-black/10 border-white/10 dark:border-white/5 backdrop-blur-md shadow-transparent"
+              ? "bg-white/15 dark:bg-black/30 border-white/20 dark:border-white/10 backdrop-blur-xl shadow-mystic-dark/10"
+              : "bg-white/10 dark:bg-black/15 border-white/15 dark:border-white/5 backdrop-blur-md shadow-transparent"
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-gradient-to-br from-dusty-rose to-teal-muted p-1.5 rounded-full shadow-inner">
-              <Sparkles className="w-4 h-4 text-warm-cream animate-pulse-glow" />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="bg-gradient-to-br from-dusty-rose to-teal-muted p-2.5 rounded-full shadow-md">
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-warm-cream animate-pulse-glow" />
             </div>
-            <span className="font-display font-semibold text-xl tracking-wide text-mystic-dark dark:text-warm-cream transition-colors group-hover:text-dusty-rose">
+            <span className="font-display font-semibold text-2xl sm:text-3xl tracking-wide text-mystic-dark dark:text-warm-cream transition-colors group-hover:text-dusty-rose">
               Zodiac
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10 lg:gap-12">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-mystic-dark dark:hover:text-white transition-colors"
+                className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-200 hover:text-mystic-dark dark:hover:text-white transition-colors"
               >
                 {link.label}
               </Link>
@@ -70,26 +72,38 @@ export function FloatingNavbar() {
 
           {/* CTA & Actions */}
           <div className="hidden md:flex items-center gap-4">
+            {/* 2-Option Language Switcher Pill */}
+            <div className="flex items-center bg-black/5 dark:bg-white/10 p-1 rounded-full border border-black/5 dark:border-white/10 text-sm font-semibold">
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`px-4 py-1.5 rounded-full transition-all ${
+                  language === "en"
+                    ? "bg-[#4A3525] text-[#F7F3ED] shadow-sm font-semibold"
+                    : "text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                }`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("vi")}
+                className={`px-4 py-1.5 rounded-full transition-all ${
+                  language === "vi"
+                    ? "bg-[#4A3525] text-[#F7F3ED] shadow-sm font-semibold"
+                    : "text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                }`}
+              >
+                Tiếng Việt
+              </button>
+            </div>
+
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-slate-700 dark:text-slate-300"
+              className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-slate-800 dark:text-slate-200"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-            
-            <button
-              onClick={() => {
-                if (pathname !== "/") {
-                  window.location.href = "/";
-                } else {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }
-              }}
-              className="relative overflow-hidden px-5 py-2 rounded-full bg-mystic-dark dark:bg-warm-cream text-warm-cream dark:text-mystic-dark text-sm font-medium shadow-md transition-transform hover:scale-105 active:scale-95 group"
-            >
-              <span className="relative z-10">Start Your Journey</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-muted/40 to-dusty-rose/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+              {theme === "dark" ? <Sun size={22} /> : <Moon size={22} />}
             </button>
           </div>
 
@@ -145,6 +159,30 @@ export function FloatingNavbar() {
               </nav>
 
               <div className="mt-auto flex flex-col gap-4">
+                {/* Mobile Language Switcher */}
+                <div className="flex items-center justify-center bg-black/5 dark:bg-white/5 p-1 rounded-xl font-medium text-sm gap-2">
+                  <button
+                    onClick={() => setLanguage("en")}
+                    className={`flex-1 py-2 rounded-lg transition-all ${
+                      language === "en"
+                        ? "bg-[#4A3525] text-white shadow-sm font-semibold"
+                        : "text-slate-700 dark:text-slate-300"
+                    }`}
+                  >
+                    English
+                  </button>
+                  <button
+                    onClick={() => setLanguage("vi")}
+                    className={`flex-1 py-2 rounded-lg transition-all ${
+                      language === "vi"
+                        ? "bg-[#4A3525] text-white shadow-sm font-semibold"
+                        : "text-slate-700 dark:text-slate-300"
+                    }`}
+                  >
+                    Tiếng Việt
+                  </button>
+                </div>
+
                 <button
                   onClick={() => {
                     setTheme(theme === "dark" ? "light" : "dark");
@@ -154,19 +192,6 @@ export function FloatingNavbar() {
                 >
                   {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
                   Toggle Theme
-                </button>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    if (pathname !== "/") {
-                      window.location.href = "/";
-                    } else {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }
-                  }}
-                  className="flex justify-center items-center p-3 rounded-xl bg-mystic-dark dark:bg-warm-cream text-warm-cream dark:text-mystic-dark font-medium w-full"
-                >
-                  Start Your Journey
                 </button>
               </div>
             </motion.div>

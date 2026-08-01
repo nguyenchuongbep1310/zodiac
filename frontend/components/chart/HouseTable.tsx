@@ -34,24 +34,24 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
           </div>
           <div className="flex flex-col min-w-0 gap-0.5">
             <span className={cn(
-              "text-lg sm:text-xl font-display font-medium truncate tracking-wide",
-              isAngular ? "text-amber-600 dark:text-amber-400" : "text-slate-800 dark:text-white"
+              "text-base sm:text-lg font-display font-semibold truncate tracking-wide",
+              isAngular ? "text-amber-700 dark:text-amber-400" : "text-[#4A3525] dark:text-[#E8DDD3]"
             )}>
-              {t("table.house")} {house.house_number}
+              {isAngular ? t(`house.${house.house_number}`) : `${t("table.house")} ${house.house_number}`}
             </span>
-            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400/80 font-light truncate">
-              <span className="text-amber-600 dark:text-amber-400/90 text-sm">{ZODIAC_GLYPHS[house.sign]}</span>
-              <span>{t(`sign.${house.sign.toLowerCase()}`)}</span>
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light truncate">
+              <span className="text-amber-600 dark:text-amber-400 text-sm font-semibold">{ZODIAC_GLYPHS[house.sign]}</span>
+              <span className="font-medium">{t(`sign.${house.sign.toLowerCase()}`)}</span>
               {isAngular && (
                 <>
-                  <span className="mx-1 opacity-30">•</span>
-                  <span className="text-amber-600/70 dark:text-amber-400/70">{t(`house.${house.house_number}`)}</span>
+                  <span className="mx-1 opacity-40">•</span>
+                  <span className="opacity-80">{t("table.house")} {house.house_number}</span>
                 </>
               )}
             </div>
           </div>
         </div>
-        <div className="flex justify-end shrink-0 ml-4 text-sm text-slate-400 dark:text-slate-500 font-medium">
+        <div className="flex justify-end shrink-0 ml-4 text-sm text-[#8C7A6B] dark:text-[#A8988C] font-semibold">
           {(house.cusp_longitude % 30).toFixed(2)}°
         </div>
       </div>

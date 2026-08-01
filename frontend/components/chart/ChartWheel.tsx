@@ -176,10 +176,10 @@ export function ChartWheel({
 
   return (
     <div className={`relative select-none ${className}`}>
-      <svg
-        ref={svgRef}
-        viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
-        className="w-full max-w-[560px] mx-auto aspect-square block"
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
+          className="w-full mx-auto aspect-square block"
         style={{ cursor: dragStart.current ? 'grabbing' : 'grab' }}
         role="img"
         aria-label="Natal chart wheel"

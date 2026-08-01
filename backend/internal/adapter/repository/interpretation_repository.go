@@ -151,15 +151,15 @@ func (r *PostgresInterpretationRepository) fetchInto(
 		FROM placement_interpretations it
 		JOIN (VALUES %s) AS req(ft, v1, v2, v3)
 		  ON it.language      = $1
-		 AND it.factor_type   = req.ft
-		 AND it.factor_value_1 = req.v1
-		 AND it.factor_value_2 = req.v2
+		 AND LOWER(it.factor_type) = LOWER(req.ft)
+		 AND LOWER(TRIM(REPLACE(it.factor_value_1, 'House ', ''))) = LOWER(TRIM(REPLACE(req.v1, 'House ', '')))
+		 AND LOWER(it.factor_value_2) = LOWER(req.v2)
 		 AND (
-		   -- match rows where factor_value_3 is NULL (planet_in_sign / planet_in_house)
-		   (req.v3 = '' AND it.factor_value_3 IS NULL)
+		   -- match rows where factor_value_3 is NULL or empty string (planet_in_sign / planet_in_house / house_in_sign)
+		   (req.v3 = '' AND (it.factor_value_3 IS NULL OR it.factor_value_3 = ''))
 		   OR
 		   -- match rows where factor_value_3 is set (aspect)
-		   (req.v3 <> '' AND it.factor_value_3 = req.v3)
+		   (req.v3 <> '' AND LOWER(it.factor_value_3) = LOWER(req.v3))
 		 )
 	`, strings.Join(placeholders, ", "))
 
@@ -170,19 +170,38 @@ func (r *PostgresInterpretationRepository) fetchInto(
 
 	for i := range recs {
 		tmpl := recordToTemplate(&recs[i])
-		// Reconstruct the LookupFactor.Key() to match what was requested.
-		f := domain.LookupFactor{
-			FactorType:   tmpl.FactorType,
-			FactorValue1: tmpl.FactorValue1,
-			FactorValue2: tmpl.FactorValue2,
-			FactorValue3: tmpl.FactorValue3,
-		}
-		// Only store if not already present (primary language wins over fallback).
-		if _, exists := dest[f.Key()]; !exists {
-			dest[f.Key()] = tmpl
+		for _, reqFactor := range factors {
+			if matchFactor(reqFactor, tmpl) {
+				if _, exists := dest[reqFactor.Key()]; !exists {
+					dest[reqFactor.Key()] = tmpl
+				}
+			}
 		}
 	}
 	return nil
+}
+
+func matchFactor(req domain.LookupFactor, tmpl *domain.PlacementInterpretation) bool {
+	if !strings.EqualFold(string(req.FactorType), string(tmpl.FactorType)) {
+		return false
+	}
+	v1Req := strings.TrimSpace(strings.ReplaceAll(req.FactorValue1, "House ", ""))
+	v1Tmpl := strings.TrimSpace(strings.ReplaceAll(tmpl.FactorValue1, "House ", ""))
+	if !strings.EqualFold(v1Req, v1Tmpl) {
+		return false
+	}
+	if !strings.EqualFold(req.FactorValue2, tmpl.FactorValue2) {
+		return false
+	}
+	reqV3 := ""
+	if req.FactorValue3 != nil {
+		reqV3 = *req.FactorValue3
+	}
+	tmplV3 := ""
+	if tmpl.FactorValue3 != nil {
+		tmplV3 = *tmpl.FactorValue3
+	}
+	return strings.EqualFold(reqV3, tmplV3)
 }
 
 // ── GetByID ───────────────────────────────────────────────────────────────────

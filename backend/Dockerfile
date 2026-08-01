@@ -8,7 +8,15 @@ ENV GOTOOLCHAIN=auto
 
 WORKDIR /app
 
-# Download Swiss Ephemeris C source and compile libswe.a for Linux target (only core library C files)
+# Copy go module dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy backend source files
+COPY . .
+
+# Download Swiss Ephemeris C source and compile libswe.a for Linux
+# This MUST happen AFTER "COPY . ." to overwrite the macOS libswe.a
 RUN git clone --depth 1 https://github.com/aloistr/swisseph.git /tmp/swisseph && \
     gcc -O2 -c \
       /tmp/swisseph/swecl.c \
@@ -24,13 +32,6 @@ RUN git clone --depth 1 https://github.com/aloistr/swisseph.git /tmp/swisseph &&
     ar rcs libswe.a *.o && \
     rm -f *.o && \
     rm -rf /tmp/swisseph
-
-# Copy go module dependencies
-COPY go.mod go.sum ./
-RUN go mod download
-
-# Copy backend source files
-COPY . .
 
 # Compile Go API with CGO enabled
 RUN CGO_ENABLED=1 GOOS=linux go build -o api ./cmd/api

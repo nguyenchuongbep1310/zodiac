@@ -3,7 +3,13 @@ import { ApiError, ApiErrorResponse } from "@/lib/types/api";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+const getBaseUrl = () => {
+  const raw = process.env.NEXT_PUBLIC_API_URL || "/api";
+  const trimmed = raw.replace(/\/$/, "");
+  return trimmed.endsWith("/api") ? trimmed : `${trimmed}/api`;
+};
+
+const BASE_URL = getBaseUrl();
 
 // ─── Axios instance ───────────────────────────────────────────────────────────
 

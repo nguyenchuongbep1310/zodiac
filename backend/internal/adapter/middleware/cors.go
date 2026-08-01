@@ -17,7 +17,7 @@ type CORSConfig struct {
 // DefaultCORSConfig returns a sensible default CORS configuration for development.
 func DefaultCORSConfig() CORSConfig {
 	return CORSConfig{
-		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Origin", "Content-Type", "Authorization", "X-Request-ID"},
 		MaxAge:         12 * time.Hour,

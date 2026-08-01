@@ -1,5 +1,5 @@
 # Build Stage
-FROM golang:1.24-alpine AS builder
+FROM golang:alpine AS builder
 
 # Install build tools & git
 RUN apk add --no-cache gcc musl-dev git make curl

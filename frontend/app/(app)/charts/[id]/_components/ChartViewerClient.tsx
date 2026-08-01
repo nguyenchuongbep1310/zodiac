@@ -93,14 +93,14 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
               {chart.name === "My Chart" ? "Birth Chart" : (chart.name.toLowerCase().endsWith("chart") ? chart.name : `${chart.name}'s Chart`)}
             </h1>
             <div className="flex flex-wrap items-center gap-2.5 mt-2">
-              <Badge variant="outline" className="bg-[#F3EDE4] dark:bg-[#27211C] text-[#5C4033] dark:text-[#E8DDD3] border-[#E3D8CB] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
+              <Badge variant="slate" className="bg-[#F3EDE4] dark:bg-[#27211C] text-[#5C4033] dark:text-[#E8DDD3] border-[#E3D8CB] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
                 {t(`system.${chart.house_system}`)} {t("charts.houses_suffix")}
               </Badge>
-              <Badge variant="outline" className="bg-[#F3EDE4] dark:bg-[#27211C] text-[#5C4033] dark:text-[#E8DDD3] border-[#E3D8CB] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
+              <Badge variant="slate" className="bg-[#F3EDE4] dark:bg-[#27211C] text-[#5C4033] dark:text-[#E8DDD3] border-[#E3D8CB] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
                 {chart.zodiac_system}
               </Badge>
               {chart.is_rectified && (
-                <Badge variant="outline" className="bg-teal-500/10 text-teal-800 dark:text-teal-200 border-teal-500/20 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
+                <Badge variant="slate" className="bg-teal-500/10 text-teal-800 dark:text-teal-200 border-teal-500/20 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
                   {t("charts.rectified")}
                 </Badge>
               )}

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useTranslation } from "@/lib/hooks/useI18n";
 import { cn } from "@/lib/utils";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { Star } from "lucide-react";
 
 export function TopNav() {
@@ -22,12 +23,7 @@ export function TopNav() {
       <header className="flex items-center justify-between px-6 py-2.5 w-full max-w-5xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl rounded-full border border-black/5 dark:border-white/10 shadow-lg shadow-black/5 transition-all duration-300">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 shadow-sm">
-            <Star className="h-4 w-4 fill-current" />
-          </div>
-          <span className="font-display text-xl font-bold text-slate-900 dark:text-white tracking-tight">Zodiac</span>
-        </Link>
+        <BrandLogo size="md" />
 
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-8">

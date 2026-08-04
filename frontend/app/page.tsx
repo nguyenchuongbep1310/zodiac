@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { BentoFeatures } from "@/components/landing/BentoFeatures";
 import { LearnSection } from "@/components/landing/LearnSection";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export default function HomePage() {
   return (
@@ -20,9 +21,7 @@ export default function HomePage() {
         
         <div className="max-w-6xl mx-auto flex flex-col items-center gap-6">
           {/* Logo mark */}
-          <div className="flex items-center gap-2 text-[#4A3525] dark:text-[#E8DDD3]">
-            <span className="font-display text-2xl font-semibold tracking-wide">Zodiac</span>
-          </div>
+          <BrandLogo size="md" />
           
           <div className="flex items-center gap-6 text-sm text-[#947E70] dark:text-[#A8988C]">
             <a href="#features" className="hover:text-[#5C4033] dark:hover:text-[#E8DDD3] transition-colors">Features</a>
@@ -33,7 +32,7 @@ export default function HomePage() {
           </div>
 
           <p className="text-[#A8988C] dark:text-[#7A6E65] text-sm">
-            © {new Date().getFullYear()} Zodiac Astrology. All rights reserved.
+            © {new Date().getFullYear()} AstroMind Astrology. All rights reserved.
           </p>
         </div>
       </footer>

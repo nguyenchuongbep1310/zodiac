@@ -19,15 +19,20 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Zodiac",
-    default: "Zodiac — Natal Chart & Astrology Platform",
+    template: "%s | AstroMind",
+    default: "AstroMind — Natal Chart & AI Astrology Platform",
   },
   description:
-    "Calculate and explore your natal chart. Discover planetary positions, house cusps, and aspects with Zodiac — a modern astrology platform.",
-  keywords: ["astrology", "natal chart", "birth chart", "planets", "horoscope", "zodiac"],
+    "Calculate and explore your natal chart. Discover planetary positions, house cusps, and aspects with AstroMind — a modern AI astrology platform.",
+  keywords: ["astrology", "natal chart", "birth chart", "planets", "horoscope", "zodiac", "astromind"],
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
-    title: "Zodiac — Natal Chart & Astrology Platform",
-    description: "Calculate and explore your natal chart with Zodiac.",
+    title: "AstroMind — Natal Chart & AI Astrology Platform",
+    description: "Calculate and explore your natal chart with AstroMind.",
     type: "website",
   },
   robots: {

@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { useI18nStore } from "@/lib/hooks/useI18n";
 
 export function FloatingNavbar() {
@@ -48,14 +49,7 @@ export function FloatingNavbar() {
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="bg-gradient-to-br from-dusty-rose to-teal-muted p-2.5 rounded-full shadow-md">
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-warm-cream animate-pulse-glow" />
-            </div>
-            <span className="font-display font-semibold text-2xl sm:text-3xl tracking-wide text-mystic-dark dark:text-warm-cream transition-colors group-hover:text-dusty-rose">
-              Zodiac
-            </span>
-          </Link>
+          <BrandLogo size="md" />
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-10 lg:gap-12">
@@ -134,9 +128,7 @@ export function FloatingNavbar() {
               className="w-3/4 max-w-sm h-full bg-warm-cream dark:bg-mystic-dark border-l border-white/10 p-6 flex flex-col shadow-2xl"
             >
               <div className="flex justify-between items-center mb-12">
-                <span className="font-display font-semibold text-2xl text-mystic-dark dark:text-warm-cream">
-                  Zodiac
-                </span>
+                <BrandLogo size="md" />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"

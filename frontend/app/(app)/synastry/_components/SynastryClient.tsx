@@ -31,6 +31,8 @@ const EMPTY_PERSON: PersonDetails = {
   unknownTime: false,
 };
 
+import { resolveLocation } from "@/lib/utils/geocode";
+
 type Step = 1 | 2;
 type PairMode = "synastry" | "composite" | "davison" | "portrait";
 
@@ -39,33 +41,16 @@ async function resolveChart(
   fallbackName: string,
   calculateChart: ReturnType<typeof useCalculateChart>
 ): Promise<ChartResponse> {
-  const res = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(person.city)}&format=json&limit=1`
-  );
-  const geoData = await res.json();
-  if (!geoData || geoData.length === 0) {
-    throw new Error(`Could not find location "${person.city}".`);
-  }
-
-  const lat = parseFloat(geoData[0].lat);
-  const lon = parseFloat(geoData[0].lon);
-  const resolvedCity = geoData[0].display_name.split(",")[0];
-
-  let tz = "UTC";
-  try {
-    tz = tzlookup(lat, lon);
-  } catch {
-    // fall back to UTC
-  }
+  const location = await resolveLocation(person.city);
 
   return calculateChart.mutateAsync({
     name: person.name || fallbackName,
     birth_date: person.date,
     birth_time: person.unknownTime ? "12:00" : person.time,
-    timezone: tz,
-    latitude: lat,
-    longitude: lon,
-    city: resolvedCity,
+    timezone: location.timezone,
+    latitude: location.lat,
+    longitude: location.lon,
+    city: location.city,
     house_system: "placidus",
   });
 }

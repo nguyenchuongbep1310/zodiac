@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +20,7 @@ func DefaultCORSConfig() CORSConfig {
 	return CORSConfig{
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-		AllowedHeaders: []string{"Origin", "Content-Type", "Authorization", "X-Request-ID"},
+		AllowedHeaders: []string{"Origin", "Content-Type", "Authorization", "X-Request-ID", "Accept"},
 		MaxAge:         12 * time.Hour,
 	}
 }
@@ -30,8 +31,10 @@ func CORS(cfg CORSConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.Request.Header.Get("Origin")
 
-		if isAllowedOrigin(origin, cfg.AllowedOrigins) {
+		if origin != "" && isAllowedOrigin(origin, cfg.AllowedOrigins) {
 			c.Header("Access-Control-Allow-Origin", origin)
+		} else if origin == "" {
+			c.Header("Access-Control-Allow-Origin", "*")
 		}
 
 		c.Header("Access-Control-Allow-Methods", joinStrings(cfg.AllowedMethods))
@@ -69,5 +72,6 @@ func joinStrings(ss []string) string {
 }
 
 func formatDuration(d time.Duration) string {
-	return time.Duration(d.Seconds()).String()
+	return strconv.Itoa(int(d.Seconds()))
 }
+

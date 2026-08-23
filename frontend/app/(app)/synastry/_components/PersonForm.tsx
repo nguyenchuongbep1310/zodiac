@@ -24,6 +24,8 @@ const ACCENT_RING: Record<string, string> = {
   amber: "focus:ring-[#C2A066]",
 };
 
+import { searchCities } from "@/lib/utils/geocode";
+
 interface GeoResult {
   display_name: string;
   lat: string;
@@ -36,20 +38,13 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    if (value.city.length <= 2 || !showDropdown) {
+    if (value.city.length < 2 || !showDropdown) {
       return;
     }
     const timeout = setTimeout(async () => {
-      try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value.city)}&format=json&limit=5`
-        );
-        const data: GeoResult[] = await res.json();
-        setGeoResults(data);
-      } catch {
-        setGeoResults([]);
-      }
-    }, 500);
+      const data = await searchCities(value.city);
+      setGeoResults(data);
+    }, 300);
     return () => clearTimeout(timeout);
   }, [value.city, showDropdown]);
 

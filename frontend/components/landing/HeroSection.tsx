@@ -7,18 +7,18 @@ import { useCalculateChart } from "@/lib/hooks/useCharts";
 import { useToast } from "@/components/ui/Toast";
 import { useTranslation } from "@/lib/hooks/useI18n";
 import { motion } from "framer-motion";
-import tzlookup from "tz-lookup";
+import { resolveLocation, searchCities } from "@/lib/utils/geocode";
 
 export function HeroSection() {
   const router = useRouter();
   const calculateChart = useCalculateChart();
   const { error: toastError } = useToast();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
-  const [name, setName] = useState("Birth Chart");
-  const [city, setCity] = useState("");
-  const [date, setDate] = useState("1990-01-01");
-  const [time, setTime] = useState("12:00");
+  const [name, setName] = useState("");
+  const [city, setCity] = useState("Hà Nội");
+  const [date, setDate] = useState("1995-10-24");
+  const [time, setTime] = useState("08:30");
   const [unknownTime, setUnknownTime] = useState(false);
   const [showExtended, setShowExtended] = useState(false);
   const [houseSystem, setHouseSystem] = useState<"placidus" | "koch" | "whole_sign" | "equal">("placidus");
@@ -27,23 +27,16 @@ export function HeroSection() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    if (city.length > 2 && showDropdown) {
+    if (city.length >= 2 && showDropdown) {
       const timeout = setTimeout(async () => {
-        try {
-          const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=5`);
-          const data = await res.json();
-          setGeoResults(data);
-        } catch {
-          setGeoResults([]);
-        }
-      }, 500);
+        const data = await searchCities(city);
+        setGeoResults(data);
+      }, 300);
       return () => clearTimeout(timeout);
     } else {
       setGeoResults([]);
     }
   }, [city, showDropdown]);
-
-  const { language } = useTranslation();
 
   const handleStart = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,25 +49,12 @@ export function HeroSection() {
     setIsLoading(true);
 
     try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=1`
-      );
-      const geoData = await res.json();
-      if (!geoData || geoData.length === 0) {
+      const location = await resolveLocation(city);
+      
+      if (!location) {
         toastError(t("home.hero.toast_not_found_title"), t("home.hero.toast_not_found_desc"));
         setIsLoading(false);
         return;
-      }
-
-      const lat = parseFloat(geoData[0].lat);
-      const lon = parseFloat(geoData[0].lon);
-      const resolvedCity = geoData[0].display_name.split(",")[0];
-
-      let tz = "UTC";
-      try {
-        tz = tzlookup(lat, lon);
-      } catch {
-        // Fallback
       }
 
       const defaultChartName = language === "vi" ? "Bản Đồ Sao Sinh" : "Birth Chart";
@@ -83,10 +63,10 @@ export function HeroSection() {
         name: name || defaultChartName,
         birth_date: date,
         birth_time: birthTime,
-        timezone: tz,
-        latitude: lat,
-        longitude: lon,
-        city: resolvedCity,
+        timezone: location.timezone,
+        latitude: location.lat,
+        longitude: location.lon,
+        city: location.city,
         house_system: houseSystem,
       });
 

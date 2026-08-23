@@ -13,9 +13,9 @@ export function TopNav() {
   const { t, language, setLanguage } = useTranslation();
 
   const navItems = [
-    { label: "Features", href: "/dashboard" },
-    { label: "Astrology", href: "/learn/birth-chart/planets" },
-    { label: "FAQ", href: "/learn" },
+    { label: t("nav.features"), href: "/dashboard" },
+    { label: t("nav.astrology"), href: "/learn/birth-chart/planets" },
+    { label: t("nav.faq"), href: "/learn" },
   ];
 
   return (

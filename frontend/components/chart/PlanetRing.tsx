@@ -12,6 +12,7 @@ import React, { memo } from 'react';
 import { fmt, toDMS } from '@/lib/chart/geometry';
 import { CX, CY, R, PLANET_CIRCLE_R } from '@/lib/chart/constants';
 import type { RenderedPlanet } from '@/lib/chart/renderer';
+import { useTranslation } from '@/lib/hooks/useI18n';
 
 interface PlanetRingProps {
   planets: RenderedPlanet[];
@@ -66,6 +67,7 @@ interface PlanetGlyphProps {
 }
 
 const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover, onClick }: PlanetGlyphProps) {
+  const { t } = useTranslation();
   const {
     planet,
     glyphCenter,
@@ -77,11 +79,18 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover, onClick }: 
     isRetrograde,
   } = rp;
 
+  const pKey = planet.planet.toLowerCase().replace(" ", "_");
+  const sKey = planet.sign.toLowerCase();
+  const pName = t(`planet.${pKey}`);
+  const sName = t(`sign.${sKey}`);
+  const houseText = `${t("table.house")} ${planet.house_number}`;
+  const statusText = isRetrograde ? `℞ ${t("status.retrograde")}` : t("status.direct");
+
   const tooltipText = [
-    planet.planet,
-    `${planet.sign} ${toDMS(planet.longitude % 30)}`,
-    `House ${planet.house_number}`,
-    isRetrograde ? 'Retrograde ℞' : 'Direct',
+    pName,
+    `${sName} ${toDMS(planet.longitude % 30)}`,
+    houseText,
+    statusText,
   ].join(' · ');
 
   const glyphColor = isRetrograde ? '#f59e0b' : '#c4b5fd';

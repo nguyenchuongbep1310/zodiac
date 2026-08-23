@@ -60,7 +60,7 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
     const content = (
       <div className="space-y-4 text-slate-700 dark:text-slate-300">
         {!hasInterpretation && (
-          <p className="text-slate-400 dark:text-slate-500 italic text-sm">No interpretations available.</p>
+          <p className="text-slate-400 dark:text-slate-500 italic text-sm">{t("charts.no_interpretations")}</p>
         )}
         
         {houseInterp && (

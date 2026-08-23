@@ -43,7 +43,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
           <Spinner size="lg" />
         </div>
         <p className="text-[#7A6E65] dark:text-[#A8988C] text-sm font-light animate-pulse">
-          Loading your cosmic blueprint...
+          {t("charts.loading_blueprint")}
         </p>
       </div>
     );
@@ -59,11 +59,25 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
         <p className="text-rose-500 dark:text-rose-400 font-display text-xl mb-3">{t("charts.not_found")}</p>
         <Link href="/" className="text-sm text-[#8C5A3C] hover:text-[#4A3525] dark:text-[#E8B896] dark:hover:text-[#E8DDD3] hover:underline mt-2 inline-flex items-center gap-1.5 transition-colors">
           <ChevronLeft className="w-4 h-4" />
-          Back to home
+          {t("nav.back_home")}
         </Link>
       </motion.div>
     );
   }
+
+  const chartTitle = (() => {
+    if (!chart.name || chart.name === "My Chart" || chart.name === "Birth Chart" || chart.name === "Natal Chart" || chart.name === "Bản Đồ Sao Sinh") {
+      return t("charts.title_default");
+    }
+    if (language === "vi") {
+      return `Bản Đồ Sao Của ${chart.name}`;
+    }
+    return chart.name.toLowerCase().endsWith("chart") ? chart.name : `${chart.name}'s Chart`;
+  })();
+
+  const zodiacSystemLabel = t(`system.${chart.zodiac_system.toLowerCase()}`) !== `system.${chart.zodiac_system.toLowerCase()}`
+    ? t(`system.${chart.zodiac_system.toLowerCase()}`)
+    : chart.zodiac_system;
 
   return (
     <div className="relative min-h-screen pb-16">
@@ -90,14 +104,14 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
               {t("profiles.back")}
             </Link>
             <h1 className="font-serif italic font-normal text-4xl sm:text-5xl lg:text-6xl text-[#4A3525] dark:text-[#E8DDD3] tracking-tight mb-3">
-              {chart.name === "My Chart" ? "Birth Chart" : (chart.name.toLowerCase().endsWith("chart") ? chart.name : `${chart.name}'s Chart`)}
+              {chartTitle}
             </h1>
             <div className="flex flex-wrap items-center gap-2.5 mt-2">
               <Badge variant="slate" className="bg-[#F3EDE4] dark:bg-[#27211C] text-[#5C4033] dark:text-[#E8DDD3] border-[#E3D8CB] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
                 {t(`system.${chart.house_system}`)} {t("charts.houses_suffix")}
               </Badge>
               <Badge variant="slate" className="bg-[#F3EDE4] dark:bg-[#27211C] text-[#5C4033] dark:text-[#E8DDD3] border-[#E3D8CB] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
-                {chart.zodiac_system}
+                {zodiacSystemLabel}
               </Badge>
               {chart.is_rectified && (
                 <Badge variant="slate" className="bg-teal-500/10 text-teal-800 dark:text-teal-200 border-teal-500/20 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">

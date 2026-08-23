@@ -43,10 +43,12 @@ export function HeroSection() {
     }
   }, [city, showDropdown]);
 
+  const { language } = useTranslation();
+
   const handleStart = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!city || !date || (!time && !unknownTime)) {
-      toastError("Missing fields", "Please fill out all required birth details.");
+      toastError(t("home.hero.toast_missing_title"), t("home.hero.toast_missing_desc"));
       return;
     }
 
@@ -59,7 +61,7 @@ export function HeroSection() {
       );
       const geoData = await res.json();
       if (!geoData || geoData.length === 0) {
-        toastError("Location not found", "Could not find that city. Try typing another location.");
+        toastError(t("home.hero.toast_not_found_title"), t("home.hero.toast_not_found_desc"));
         setIsLoading(false);
         return;
       }
@@ -75,8 +77,10 @@ export function HeroSection() {
         // Fallback
       }
 
+      const defaultChartName = language === "vi" ? "Bản Đồ Sao Sinh" : "Birth Chart";
+
       const chart = await calculateChart.mutateAsync({
-        name: name || "Natal Chart",
+        name: name || defaultChartName,
         birth_date: date,
         birth_time: birthTime,
         timezone: tz,
@@ -88,7 +92,7 @@ export function HeroSection() {
 
       router.push(`/charts/${chart.id}`);
     } catch (err: any) {
-      toastError("Failed to calculate chart", err.message || "An error occurred");
+      toastError(t("home.hero.toast_calc_error"), err.message || t("misc.error"));
       setIsLoading(false);
     }
   };
@@ -219,7 +223,9 @@ export function HeroSection() {
                   <button
                     type="button"
                     onClick={() => {
-                      const sampleCities = ["New York", "London", "Paris", "Tokyo", "Sydney", "Hanoi"];
+                      const sampleCities = language === "vi"
+                        ? ["Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Đà Lạt"]
+                        : ["New York", "London", "Paris", "Tokyo", "Sydney", "Hanoi"];
                       setCity(sampleCities[Math.floor(Math.random() * sampleCities.length)]);
                     }}
                     className="text-xs sm:text-sm text-[#8C7A6B] dark:text-[#A8988C] hover:underline mt-2 inline-block font-light"
@@ -249,10 +255,10 @@ export function HeroSection() {
                           onChange={(e) => setHouseSystem(e.target.value as any)}
                           className="w-full bg-[#FAF7F2] dark:bg-[#1C1815] border border-[#E3D8CB] dark:border-white/10 rounded-xl p-2.5 text-sm text-[#4A3525] dark:text-[#E8DDD3]"
                         >
-                          <option value="placidus">Placidus</option>
-                          <option value="whole_sign">Whole Sign</option>
-                          <option value="koch">Koch</option>
-                          <option value="equal">Equal</option>
+                          <option value="placidus">{t("system.placidus")}</option>
+                          <option value="whole_sign">{t("system.whole_sign")}</option>
+                          <option value="koch">{t("system.koch")}</option>
+                          <option value="equal">{t("system.equal")}</option>
                         </select>
                       </div>
                     </div>

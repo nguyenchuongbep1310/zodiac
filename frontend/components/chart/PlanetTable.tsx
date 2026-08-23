@@ -48,7 +48,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
     const content = (
       <div className="space-y-4 text-[#5C4033] dark:text-[#A8988C]">
         {!hasInterpretation && (
-          <p className="text-[#A8988C] dark:text-[#7A6E65] italic text-sm">No interpretations available.</p>
+          <p className="text-[#A8988C] dark:text-[#7A6E65] italic text-sm">{t("charts.no_interpretations")}</p>
         )}
         
         {signInterp && (

@@ -6,7 +6,13 @@ import type { ChartResponse } from '@/lib/types/api';
 
 const MOCK_CHART: ChartResponse = {
   id: 'test-chart',
-  profile_id: 'test-profile',
+  name: 'Test Chart',
+  birth_date: '2000-01-01',
+  birth_time: '12:00',
+  timezone: 'UTC',
+  latitude: 0,
+  longitude: 0,
+  city: 'Test City',
   house_system: 'placidus',
   zodiac_system: 'tropical',
   is_rectified: false,

@@ -68,7 +68,7 @@ export function AspectGrid({ aspects, interpretations }: AspectGridProps) {
               <span style={{color}} className="text-sm font-semibold">{symbol}</span>
               <span className="font-medium" style={{color}}>{t(`aspect.${aspectKeyStr}`)}</span>
               <span className="mx-1 opacity-40 shrink-0">•</span>
-              <span className="shrink-0 font-medium text-[#8C7A6B] dark:text-[#A8988C]">{aspect.orb.toFixed(2)}° orb</span>
+              <span className="shrink-0 font-medium text-[#8C7A6B] dark:text-[#A8988C]">{t("charts.aspect_orb").replace("{orb}", aspect.orb.toFixed(2))}</span>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@ export function AspectGrid({ aspects, interpretations }: AspectGridProps) {
     const content = (
       <div className="space-y-4 text-[#5C4033] dark:text-[#A8988C]">
         {!hasInterpretation && (
-          <p className="text-[#A8988C] dark:text-[#7A6E65] italic text-sm">No interpretations available.</p>
+          <p className="text-[#A8988C] dark:text-[#7A6E65] italic text-sm">{t("charts.no_interpretations")}</p>
         )}
         
         {interp && (

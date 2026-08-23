@@ -8,14 +8,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { useI18nStore } from "@/lib/hooks/useI18n";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
 export function FloatingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-  const { language, setLanguage } = useI18nStore();
+  const { t, language, setLanguage } = useTranslation();
 
   // Handle scroll detection for subtle styling changes
   useEffect(() => {
@@ -27,9 +27,10 @@ export function FloatingNavbar() {
   }, []);
 
   const navLinks = [
-    { label: "Features", href: "#features" },
-    { label: "Astrology", href: "#astrology" },
-    { label: "FAQ", href: "#faq" },
+    { label: t("nav.features"), href: "#features" },
+    { label: t("nav.synastry"), href: "/synastry" },
+    { label: t("nav.astrology"), href: "#astrology" },
+    { label: t("nav.faq"), href: "#faq" },
   ];
 
   return (

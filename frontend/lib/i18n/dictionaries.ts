@@ -6,6 +6,12 @@ export const en: Dictionary = {
   "nav.charts": "Natal Charts",
   "nav.new": "New Profile",
   "nav.detail": "Detail",
+  "nav.features": "Features",
+  "nav.synastry": "Synastry",
+  "nav.astrology": "Astrology",
+  "nav.faq": "FAQ",
+  "nav.home": "Home",
+  "nav.back_home": "Back to home",
   
   // Profiles
   "profiles.title": "Birth Profiles",
@@ -35,15 +41,22 @@ export const en: Dictionary = {
   "charts.calculated": "planets calculated",
   "charts.not_found": "Chart not found",
   "charts.natal_chart": "Natal Chart",
+  "charts.title_default": "Birth Chart",
+  "charts.title_possessive": "{name}'s Chart",
+  "charts.loading_blueprint": "Loading your cosmic blueprint...",
   "charts.houses_suffix": "House System",
   "charts.rectified": "Rectified",
   "charts.wheel.desc": "{0} planets · {1} aspects · {2} houses",
   "charts.positions": "Planetary Positions",
   "charts.aspects_found": "aspects found",
   "charts.no_aspects": "No aspects calculated.",
+  "charts.no_interpretations": "No interpretations available for this position.",
   "charts.house_cusps": "House Cusps",
   "charts.house_system": "house system",
   "charts.calculate_action": "View Chart",
+  "charts.aspect_orb": "{orb}° orb",
+  "charts.direct": "Direct",
+  "charts.retrograde": "Retrograde",
   
   // Tables
   "table.planet": "Planet",
@@ -94,11 +107,13 @@ export const en: Dictionary = {
   "planet.north_node": "North Node",
   "planet.chiron": "Chiron",
 
-  // House Systems
+  // Systems
   "system.placidus": "Placidus",
   "system.whole_sign": "Whole Sign",
   "system.koch": "Koch",
   "system.equal": "Equal",
+  "system.tropical": "Tropical",
+  "system.sidereal": "Sidereal",
   
   // Angular Houses
   "house.1": "Ascendant",
@@ -145,6 +160,11 @@ export const en: Dictionary = {
   "home.hero.house_system": "House System",
   "home.hero.btn_submit": "Create Birth Chart",
   "home.hero.btn_loading": "Calculating Chart...",
+  "home.hero.toast_missing_title": "Missing fields",
+  "home.hero.toast_missing_desc": "Please fill out all required birth details.",
+  "home.hero.toast_not_found_title": "Location not found",
+  "home.hero.toast_not_found_desc": "Could not find that city. Try typing another location.",
+  "home.hero.toast_calc_error": "Failed to calculate chart",
 
   // Home Page - Learn
   "home.learn.title": "Learn Astrology",
@@ -201,6 +221,12 @@ export const vi: Dictionary = {
   "nav.charts": "Bản Đồ Sao",
   "nav.new": "Hồ Sơ Mới",
   "nav.detail": "Chi Tiết",
+  "nav.features": "Tính Năng",
+  "nav.synastry": "Độ Tương Hợp",
+  "nav.astrology": "Chiêm Tinh",
+  "nav.faq": "Hỏi Đáp",
+  "nav.home": "Trang Chủ",
+  "nav.back_home": "Quay lại trang chủ",
   
   // Profiles
   "profiles.title": "Hồ Sơ Sinh",
@@ -215,7 +241,7 @@ export const vi: Dictionary = {
   "profiles.search_city": "Tìm kiếm thành phố...",
   "profiles.view": "Xem Hồ Sơ",
   "profiles.calculate_chart": "Tính Bản Đồ Sao",
-  "profiles.back": "Quay lại hồ sơ",
+  "profiles.back": "Quay lại",
   "profiles.not_found": "Không tìm thấy hồ sơ",
   "profiles.location": "Địa điểm",
   "profiles.house_system": "Hệ thống nhà",
@@ -230,15 +256,22 @@ export const vi: Dictionary = {
   "charts.calculated": "hành tinh đã tính",
   "charts.not_found": "Không tìm thấy bản đồ sao",
   "charts.natal_chart": "Bản Đồ Sao Sinh",
+  "charts.title_default": "Bản Đồ Sao Sinh",
+  "charts.title_possessive": "Bản Đồ Sao Của {name}",
+  "charts.loading_blueprint": "Đang tải bản đồ sao vũ trụ của bạn...",
   "charts.houses_suffix": "Hệ Thống Nhà",
   "charts.rectified": "Đã Tinh Chỉnh",
   "charts.wheel.desc": "{0} hành tinh · {1} góc chiếu · {2} nhà",
   "charts.positions": "Vị Trí Các Hành Tinh",
   "charts.aspects_found": "góc chiếu tìm thấy",
   "charts.no_aspects": "Không có góc chiếu nào được tính toán.",
+  "charts.no_interpretations": "Chưa có lời giải thích cho vị trí này.",
   "charts.house_cusps": "Đỉnh Các Cung Địa Bàn",
   "charts.house_system": "hệ thống nhà",
   "charts.calculate_action": "Xem Bản Đồ Sao",
+  "charts.aspect_orb": "Dung sai {orb}°",
+  "charts.direct": "Thuận hành",
+  "charts.retrograde": "Nghịch hành",
   
   // Tables
   "table.planet": "Hành Tinh",
@@ -258,7 +291,7 @@ export const vi: Dictionary = {
   "phase.separating": "Đang Tách",
   
   // Status
-  "status.direct": "Thuận",
+  "status.direct": "Thuận Hành",
   "status.retrograde": "℞ Nghịch Hành",
 
   // Zodiac Signs
@@ -285,21 +318,23 @@ export const vi: Dictionary = {
   "planet.saturn": "Sao Thổ",
   "planet.uranus": "Sao Thiên Vương",
   "planet.neptune": "Sao Hải Vương",
-  "planet.pluto": "Diêm Vương Tinh",
+  "planet.pluto": "Sao Diêm Vương",
   "planet.north_node": "Bắc Giao Điểm",
   "planet.chiron": "Chiron",
 
-  // House Systems
+  // Systems
   "system.placidus": "Placidus",
   "system.whole_sign": "Nguyên Cung",
   "system.koch": "Koch",
   "system.equal": "Bằng Nhau",
+  "system.tropical": "Hoàng Đạo Nhiệt Đới",
+  "system.sidereal": "Hoàng Đạo Tinh Tú",
   
   // Angular Houses
-  "house.1": "Cung Mọc (ASC)",
-  "house.4": "Thiên Để (IC)",
-  "house.7": "Cung Lặn (DSC)",
-  "house.10": "Thiên Đỉnh (MC)",
+  "house.1": "Cung Mọc",
+  "house.4": "Thiên Để",
+  "house.7": "Cung Lặn",
+  "house.10": "Thiên Đỉnh",
   
   // Aspects
   "aspect.conjunction": "Trùng Tụ",
@@ -340,6 +375,11 @@ export const vi: Dictionary = {
   "home.hero.house_system": "Hệ Thống Nhà",
   "home.hero.btn_submit": "Tạo Bản Đồ Sao",
   "home.hero.btn_loading": "Đang Tính Bản Đồ...",
+  "home.hero.toast_missing_title": "Thiếu thông tin",
+  "home.hero.toast_missing_desc": "Vui lòng điền đầy đủ thông tin ngày giờ sinh.",
+  "home.hero.toast_not_found_title": "Không tìm thấy địa điểm",
+  "home.hero.toast_not_found_desc": "Không tìm thấy thành phố này. Hãy thử nhập tên địa điểm khác.",
+  "home.hero.toast_calc_error": "Không thể tính bản đồ sao",
 
   // Home Page - Learn
   "home.learn.title": "Học Chiêm Tinh",
@@ -378,14 +418,14 @@ export const vi: Dictionary = {
   "home.faq.a4": "Có! Giao diện đẹp mắt và lời giải thích rõ ràng, dễ hiểu giúp bất kỳ ai cũng có thể dễ dàng khám phá những thông điệp sâu sắc ẩn chứa trong bản đồ sao của mình.",
   "home.faq.q5": "Ý nghĩa cốt lõi của 10 hành tinh chính trong chiêm tinh là gì?",
   "home.faq.a5_intro": "Tóm tắt ý nghĩa 10 hành tinh chính:",
-  "home.faq.p1": "1. Mặt Trời (Sun) - Bản Ngã & Mục đích sống",
-  "home.faq.p2": "2. Mặt Trăng (Moon) - Cảm Xúc & Tiềm thức",
-  "home.faq.p3": "3. Thủy Tinh (Mercury) - Tư Duy & Giao Tiếp",
-  "home.faq.p4": "4. Kim Tinh (Venus) - Tình Yêu & Giá Trị",
-  "home.faq.p5": "5. Hỏa Tinh (Mars) - Hành Động & Ý Chí",
-  "home.faq.p6": "6. Mộc Tinh (Jupiter) - May Mắn & Phóng Đại",
-  "home.faq.p7": "7. Thổ Tinh (Saturn) - Kỷ Luật & Bài Học Cuộc Đời",
-  "home.faq.p8": "8. Thiên Vương Tinh (Uranus) - Đột Phá & Tự Do",
-  "home.faq.p9": "9. Hải Vương Tinh (Neptune) - Ước Mơ & Tâm Linh",
-  "home.faq.p10": "10. Diêm Vương Tinh (Pluto) - Tái Sinh & Chuyển Hóa",
+  "home.faq.p1": "1. Mặt Trời - Bản Ngã & Mục Đích Sống",
+  "home.faq.p2": "2. Mặt Trăng - Cảm Xúc & Tiềm Thức",
+  "home.faq.p3": "3. Sao Thủy - Tư Duy & Giao Tiếp",
+  "home.faq.p4": "4. Sao Kim - Tình Yêu & Giá Trị",
+  "home.faq.p5": "5. Sao Hỏa - Hành Động & Ý Chí",
+  "home.faq.p6": "6. Sao Mộc - May Mắn & Mở Rộng",
+  "home.faq.p7": "7. Sao Thổ - Kỷ Luật & Bài Học Cuộc Đời",
+  "home.faq.p8": "8. Sao Thiên Vương - Đột Phá & Tự Do",
+  "home.faq.p9": "9. Sao Hải Vương - Ước Mơ & Tâm Linh",
+  "home.faq.p10": "10. Sao Diêm Vương - Tái Sinh & Chuyển Hóa",
 };

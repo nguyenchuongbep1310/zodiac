@@ -29,6 +29,7 @@ import { ZodiacRing } from './ZodiacRing';
 import { HouseRing } from './HouseRing';
 import { AspectLines } from './AspectLines';
 import { PlanetRing } from './PlanetRing';
+import { useTranslation } from '@/lib/hooks/useI18n';
 
 interface ChartWheelProps {
   chart: ChartResponse;
@@ -125,45 +126,69 @@ export function ChartWheel({
   const zoomOut = () => setTransform((p) => ({ ...p, scale: clampScale(p.scale - SCALE_STEP) }));
   const zoomReset = () => setTransform({ scale: initialScale, tx: 0, ty: 0 });
 
+  const { t } = useTranslation();
+
   // ── Hover handlers ───────────────────────────────────────────────────────
   const handlePlanetHover = useCallback((planet: RenderedPlanet | null) => {
     setHoveredPlanet(planet);
-    setTooltip(
-      planet
-        ? {
-            text: planet.label,
-            x: planet.glyphCenter.x,
-            y: planet.glyphCenter.y - PLANET_CIRCLE_R - 8,
-          }
-        : null
-    );
-  }, []);
+    if (!planet) {
+      setTooltip(null);
+      return;
+    }
+    const pKey = planet.planet.planet.toLowerCase().replace(" ", "_");
+    const sKey = planet.planet.sign.toLowerCase();
+    const pName = t(`planet.${pKey}`);
+    const sName = t(`sign.${sKey}`);
+    const deg = Math.floor(planet.planet.longitude % 30);
+    const min = Math.floor(((planet.planet.longitude % 30) - deg) * 60);
+    const retroStr = planet.isRetrograde ? ` (℞ ${t("charts.retrograde")})` : "";
+    const tooltipText = `${planet.glyph} ${pName} ${deg}°${min.toString().padStart(2, "0")}' ${sName}${retroStr}`;
+
+    setTooltip({
+      text: tooltipText,
+      x: planet.glyphCenter.x,
+      y: planet.glyphCenter.y - PLANET_CIRCLE_R - 8,
+    });
+  }, [t]);
 
   const handleHouseHover = useCallback((house: RenderedHouse | null) => {
     setHoveredHouse(house);
-    setTooltip(
-      house
-        ? {
-            text: `House ${house.house.house_number} (${house.house.sign})`,
-            x: house.labelPos.x,
-            y: house.labelPos.y - 12,
-          }
-        : null
-    );
-  }, []);
+    if (!house) {
+      setTooltip(null);
+      return;
+    }
+    const sKey = house.house.sign.toLowerCase();
+    const sName = t(`sign.${sKey}`);
+    const houseTitle = house.isAngular ? t(`house.${house.house.house_number}`) : `${t("table.house")} ${house.house.house_number}`;
+    const tooltipText = `${houseTitle} (${sName})`;
+
+    setTooltip({
+      text: tooltipText,
+      x: house.labelPos.x,
+      y: house.labelPos.y - 12,
+    });
+  }, [t]);
 
   const handleAspectHover = useCallback((aspect: RenderedAspect | null) => {
     setHoveredAspect(aspect);
-    setTooltip(
-      aspect
-        ? {
-            text: `${aspect.aspect.planet_1} ${aspect.style.label ?? aspect.aspect.aspect_type} ${aspect.aspect.planet_2}`,
-            x: (aspect.p1.x + aspect.p2.x) / 2,
-            y: (aspect.p1.y + aspect.p2.y) / 2 - 8,
-          }
-        : null
-    );
-  }, []);
+    if (!aspect) {
+      setTooltip(null);
+      return;
+    }
+    const p1Key = aspect.aspect.planet_1.toLowerCase().replace(" ", "_");
+    const p2Key = aspect.aspect.planet_2.toLowerCase().replace(" ", "_");
+    const aspKey = aspect.aspect.aspect_type.toLowerCase().replace(/[-_ ]/g, "");
+    const p1Name = t(`planet.${p1Key}`);
+    const p2Name = t(`planet.${p2Key}`);
+    const aspName = t(`aspect.${aspKey}`);
+    const tooltipText = `${p1Name} ${aspName} ${p2Name}`;
+
+    setTooltip({
+      text: tooltipText,
+      x: (aspect.p1.x + aspect.p2.x) / 2,
+      y: (aspect.p1.y + aspect.p2.y) / 2 - 8,
+    });
+  }, [t]);
 
   // ── Derived transform string ─────────────────────────────────────────────
   const groupTransform = `translate(${transform.tx}, ${transform.ty}) scale(${transform.scale}) translate(${-CX * (transform.scale - 1) / transform.scale}, ${-CY * (transform.scale - 1) / transform.scale})`;

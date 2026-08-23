@@ -1,131 +1,198 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import { useTranslation } from "@/lib/hooks/useI18n";
+import { LearnArticleCard } from "./LearnArticleCard";
 
-interface ArticleCardProps {
-  artwork: React.ReactNode;
+interface Article {
+  id: string;
   title: string;
-  description: string;
-  className?: string;
+  excerpt: string;
+  category: "basics" | "intermediate" | "advanced" | "techniques";
+  readTime: string;
+  image?: string;
+  href: string;
+  featured?: boolean;
 }
 
-function ArticleCard({ artwork, title, description, className = "" }: ArticleCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className={`group cursor-pointer transition-transform duration-300 hover:-translate-y-2 ${className}`}
-    >
-      <div className="relative w-full rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-[#E8DDD0] dark:border-white/10 transition-all duration-500 group-hover:scale-[1.02]">
-        {artwork}
-        {/* Subtle overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4A3525]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </div>
-      <h3 className="font-serif text-xl sm:text-2xl font-medium text-[#4A3525] dark:text-[#E8DDD3] mt-5 leading-snug tracking-tight group-hover:text-[#8C5A3C] dark:group-hover:text-[#E8B896] transition-colors">
-        {title}
-      </h3>
-      <p className="text-sm sm:text-base text-[#7A6E65] dark:text-[#A8988C] font-light mt-2 line-clamp-3 leading-relaxed">
-        {description}
-      </p>
-    </motion.div>
-  );
+interface LearnSectionProps {
+  articles?: Article[];
+  title?: string;
+  subtitle?: string;
 }
 
-export function LearnSection() {
-  const { t } = useTranslation();
+// Sample articles for demo
+export const defaultArticles: Article[] = [
+  {
+    id: "1",
+    title: "Understanding Your Birth Chart",
+    excerpt:
+      "Learn the fundamentals of reading your natal chart and what each placement means for your personality and life path.",
+    category: "basics",
+    readTime: "8 min",
+    image: "/learn/birth-chart.jpg",
+    href: "/learn/birth-chart",
+    featured: true,
+  },
+  {
+    id: "2",
+    title: "Mercury Retrograde Explained",
+    excerpt:
+      "Discover what Mercury retrograde means and how to navigate communication challenges during this celestial event.",
+    category: "basics",
+    readTime: "6 min",
+    image: "/learn/mercury-retrograde.jpg",
+    href: "/learn/mercury-retrograde",
+  },
+  {
+    id: "3",
+    title: "Aspect Patterns in Your Chart",
+    excerpt:
+      "Deep dive into aspect patterns and how they create unique configurations that shape your astrological profile.",
+    category: "intermediate",
+    readTime: "12 min",
+    image: "/learn/aspect-patterns.jpg",
+    href: "/learn/aspects",
+  },
+  {
+    id: "4",
+    title: "House Systems Compared",
+    excerpt:
+      "Explore different house systems and understand which one resonates most with your astrological practice.",
+    category: "intermediate",
+    readTime: "10 min",
+    image: "/learn/house-systems.jpg",
+    href: "/learn/houses",
+  },
+  {
+    id: "5",
+    title: "Transits & Progressions",
+    excerpt:
+      "Master the advanced techniques of reading transits and progressions to predict life events and personal growth.",
+    category: "advanced",
+    readTime: "15 min",
+    image: "/learn/transits.jpg",
+    href: "/learn/transits",
+  },
+  {
+    id: "6",
+    title: "Synastry in Relationships",
+    excerpt:
+      "Learn how to compare charts with others to understand relationship dynamics and compatibility.",
+    category: "advanced",
+    readTime: "14 min",
+    image: "/learn/synastry.jpg",
+    href: "/learn/synastry",
+  },
+];
+
+export function LearnSection({
+  articles = defaultArticles,
+  title = "Learn Astrology",
+  subtitle = "Clarity. No Fluff.",
+}: LearnSectionProps) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
 
   return (
-    <section className="w-full bg-[#F7F3ED] dark:bg-[#14110F] py-24 sm:py-28 px-6 sm:px-12 lg:px-16 transition-colors border-t border-[#E8DDD0]/50 dark:border-white/5 relative overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[#B5A499]/5 to-transparent blur-3xl pointer-events-none" />
+    <section className="relative py-20 md:py-28 px-4 md:px-6 lg:px-8 bg-white dark:bg-asknova-bg-dark overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-asknova-burgundy/5 dark:bg-asknova-burgundy/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-asknova-teal/5 dark:bg-asknova-teal/10 rounded-full blur-3xl -z-10" />
 
-      <div className="max-w-7xl mx-auto space-y-14 relative">
-        {/* Header Alignment */}
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-end text-right space-y-2"
+          viewport={{ once: true }}
+          className="text-center mb-16 md:mb-20"
         >
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#4A3525] dark:text-[#E8DDD3] font-normal tracking-tight">
-            {t("home.learn.title")}
-          </h2>
-          <p className="font-serif text-2xl sm:text-3xl text-[#947E70] dark:text-[#A8988C] font-light italic">
-            {t("home.learn.subtitle")}
-          </p>
-          <div className="w-24 h-0.5 bg-gradient-to-l from-[#B5A499] to-transparent mt-2" />
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl lg:text-6xl font-display italic font-bold text-asknova-dark dark:text-asknova-light mb-4"
+          >
+            {title}
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-lg md:text-xl text-asknova-burgundy dark:text-asknova-gold font-display italic"
+          >
+            {subtitle}
+          </motion.p>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            viewport={{ once: true }}
+            className="w-20 h-1 bg-gradient-to-r from-asknova-burgundy to-asknova-gold mx-auto mt-6"
+          />
         </motion.div>
 
-        {/* 3-Column Editorial Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
-          
-          {/* Card 1: Sun Conjunct Venus (Portrait 4/5) */}
-          <div className="md:col-span-4 lg:col-span-4">
-            <ArticleCard
-              artwork={
-                <div className="w-full aspect-[4/5] bg-[#EADFD4] relative overflow-hidden">
-                  <img
-                    src="/images/learn_sun_venus.png"
-                    alt="Sun Conjunct Venus"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      (e.target as HTMLElement).style.display = 'none';
-                    }}
-                  />
-                </div>
-              }
-              title={t("home.learn.card1.title")}
-              description={t("home.learn.card1.desc")}
-            />
-          </div>
+        {/* Articles Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        >
+          {articles.map((article) => (
+            <motion.div key={article.id} variants={itemVariants}>
+              <LearnArticleCard {...article} />
+            </motion.div>
+          ))}
+        </motion.div>
 
-          {/* Card 2: Venus Conjunct Mars (Vertical 3/5) */}
-          <div className="md:col-span-3 lg:col-span-3">
-            <ArticleCard
-              artwork={
-                <div className="w-full aspect-[3/5] bg-[#DFD5C6] relative overflow-hidden">
-                  <img
-                    src="/images/learn_venus_mars.png"
-                    alt="Venus Conjunct Mars"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      (e.target as HTMLElement).style.display = 'none';
-                    }}
-                  />
-                </div>
-              }
-              title={t("home.learn.card2.title")}
-              description={t("home.learn.card2.desc")}
-            />
-          </div>
-
-          {/* Card 3: Moon Conjunct Mars (Wide Hero 16/9) */}
-          <div className="md:col-span-5 lg:col-span-5">
-            <ArticleCard
-              artwork={
-                <div className="w-full aspect-[16/9] bg-[#E3D7C7] relative overflow-hidden">
-                  <img
-                    src="/images/learn_moon_mars.png"
-                    alt="Moon Conjunct Mars"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      (e.target as HTMLElement).style.display = 'none';
-                    }}
-                  />
-                </div>
-              }
-              title={t("home.learn.card3.title")}
-              description={t("home.learn.card3.desc")}
-            />
-          </div>
-
-        </div>
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mt-16 md:mt-20"
+        >
+          <p className="text-asknova-dark/70 dark:text-asknova-light/70 mb-6">
+            Want to go deeper into astrology?
+          </p>
+          <motion.a
+            href="/learn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center px-8 py-3 rounded-lg font-semibold text-white bg-asknova-burgundy hover:bg-asknova-burgundy-dark dark:bg-asknova-gold dark:text-asknova-dark dark:hover:bg-asknova-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Explore All Articles
+            <span className="ml-2">→</span>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
 }
+
+export default LearnSection;

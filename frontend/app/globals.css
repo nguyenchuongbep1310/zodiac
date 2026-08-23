@@ -17,6 +17,21 @@
   --color-warm-cream: #f4efe6;
   --color-mystic-dark: #121013;
 
+  /* Learn Section Colors */
+  --color-asknova-cream: #f5f3f0;
+  --color-asknova-burgundy: #8b6b66;
+  --color-asknova-burgundy-dark: #6b4f4a;
+  --color-asknova-burgundy-darker: #4a3530;
+  --color-asknova-blue: #4a5568;
+  --color-asknova-teal: #3d6b5d;
+  --color-asknova-gold: #c9a877;
+  --color-asknova-dark: #3c3c3c;
+  --color-asknova-light: #e8ddd3;
+  --color-asknova-bg-dark: #14110f;
+  --color-asknova-surface-dark: #1c1815;
+  --color-asknova-gray-light: #ebe4d8;
+  --color-asknova-gray-accent: #8c7d75;
+
   /* Override Tailwind default colors globally */
   --color-violet-300: var(--theme-violet-300);
   --color-violet-400: var(--theme-violet-400);

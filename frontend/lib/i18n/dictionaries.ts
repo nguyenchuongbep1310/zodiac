@@ -213,6 +213,39 @@ export const en: Dictionary = {
   "home.faq.p8": "8. Uranus - Innovation & Freedom",
   "home.faq.p9": "9. Neptune - Dreams & Spirituality",
   "home.faq.p10": "10. Pluto - Rebirth & Transformation",
+
+  // Home Page - Capable (Accurate. Simple. Capable.)
+  "home.capable.title": "Accurate. Simple. Capable.",
+  "home.capable.subtitle": "A calculator built on real astronomical data, wrapped in an interface anyone can read.",
+  "home.capable.card1.title": "Made for All Levels",
+  "home.capable.card1.desc": "Plain-language explanations for newcomers, with the technical depth serious practitioners expect underneath.",
+  "home.capable.card2.title": "Simple Surface, Deep Core",
+  "home.capable.card2.desc": "A clean chart at a glance, with every layer - houses, aspects, dignities - one click away.",
+  "home.capable.card3.title": "Swiss Ephemeris",
+  "home.capable.card3.desc": "Planetary positions computed to the arcminute using the same engine professional astrologers trust.",
+  "home.capable.card4.title": "House Systems & Orbs",
+  "home.capable.card4.desc": "Toggle between Placidus, Whole Sign, Koch and more, with configurable aspect orbs.",
+
+  // Home Page - CTA
+  "home.cta.title": "Read Your Sky",
+  "home.cta.subtitle": "Your birth chart is waiting. Free, accurate, and ready in seconds.",
+  "home.cta.button": "Create Your Free Chart",
+
+  // Footer
+  "footer.tagline": "Readable for beginners. Deep for the curious. Built on the Swiss Ephemeris, accurate to the arcminute.",
+  "footer.charts": "Charts",
+  "footer.charts.birth": "Birth Chart",
+  "footer.charts.synastry": "Synastry Chart",
+  "footer.charts.transit": "Transit Chart",
+  "footer.more": "More",
+  "footer.more.learn": "Learn",
+  "footer.more.faq": "FAQ",
+  "footer.more.features": "Features",
+  "footer.about": "About",
+  "footer.about.privacy": "Privacy Policy",
+  "footer.about.terms": "Terms of Service",
+  "footer.about.contact": "Contact Us",
+  "footer.rights": "All rights reserved.",
 };
 
 export const vi: Dictionary = {
@@ -428,4 +461,37 @@ export const vi: Dictionary = {
   "home.faq.p8": "8. Sao Thiên Vương - Đột Phá & Tự Do",
   "home.faq.p9": "9. Sao Hải Vương - Ước Mơ & Tâm Linh",
   "home.faq.p10": "10. Sao Diêm Vương - Tái Sinh & Chuyển Hóa",
+
+  // Home Page - Capable (Accurate. Simple. Capable.)
+  "home.capable.title": "Chính Xác. Đơn Giản. Toàn Diện.",
+  "home.capable.subtitle": "Công cụ tính toán dựa trên dữ liệu thiên văn thực tế, đóng gói trong giao diện ai cũng đọc được.",
+  "home.capable.card1.title": "Dành Cho Mọi Trình Độ",
+  "home.capable.card1.desc": "Giải thích bằng ngôn ngữ dễ hiểu cho người mới, cùng chiều sâu kỹ thuật mà người luyện tập nghiêm túc cần.",
+  "home.capable.card2.title": "Bề Mặt Đơn Giản, Cốt Lõi Sâu Sắc",
+  "home.capable.card2.desc": "Bản đồ sao rõ ràng ngay từ cái nhìn đầu tiên, với mọi lớp thông tin - cung, góc chiếu, phẩm trật - chỉ cách một cú nhấp.",
+  "home.capable.card3.title": "Swiss Ephemeris",
+  "home.capable.card3.desc": "Vị trí hành tinh được tính chính xác đến từng vi độ bằng chính công cụ mà các nhà chiêm tinh chuyên nghiệp tin dùng.",
+  "home.capable.card4.title": "Hệ Nhà & Orbs",
+  "home.capable.card4.desc": "Chuyển đổi giữa Placidus, Whole Sign, Koch và nhiều hệ khác, với orb góc chiếu tùy chỉnh.",
+
+  // Home Page - CTA
+  "home.cta.title": "Đọc Vì Sao Của Bạn",
+  "home.cta.subtitle": "Bản đồ sao của bạn đang chờ đợi. Miễn phí, chính xác, và sẵn sàng trong vài giây.",
+  "home.cta.button": "Tạo Bản Đồ Sao Miễn Phí",
+
+  // Footer
+  "footer.tagline": "Dễ hiểu cho người mới. Sâu sắc cho người ham học hỏi. Xây dựng trên Swiss Ephemeris, chính xác đến từng vi độ.",
+  "footer.charts": "Bản Đồ Sao",
+  "footer.charts.birth": "Bản Đồ Sinh",
+  "footer.charts.synastry": "Bản Đồ Đôi Lứa",
+  "footer.charts.transit": "Bản Đồ Vận Hành",
+  "footer.more": "Khám Phá Thêm",
+  "footer.more.learn": "Học Chiêm Tinh",
+  "footer.more.faq": "Câu Hỏi Thường Gặp",
+  "footer.more.features": "Tính Năng",
+  "footer.about": "Giới Thiệu",
+  "footer.about.privacy": "Chính Sách Bảo Mật",
+  "footer.about.terms": "Điều Khoản Dịch Vụ",
+  "footer.about.contact": "Liên Hệ",
+  "footer.rights": "Đã đăng ký bản quyền.",
 };

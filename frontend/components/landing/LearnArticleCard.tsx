@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
 interface LearnArticleCardProps {
   id: string;
@@ -15,7 +17,6 @@ interface LearnArticleCardProps {
 }
 
 export function LearnArticleCard({
-  id,
   title,
   excerpt,
   category,
@@ -24,6 +25,8 @@ export function LearnArticleCard({
   href,
   featured = false,
 }: LearnArticleCardProps) {
+  const { t } = useTranslation();
+
   const categoryColors: Record<string, string> = {
     basics: "bg-asknova-burgundy/10 text-asknova-burgundy dark:bg-asknova-burgundy/20 dark:text-asknova-gold",
     intermediate:
@@ -37,6 +40,17 @@ export function LearnArticleCard({
   const categoryColor =
     categoryColors[category] ||
     "bg-asknova-gray-accent/10 text-asknova-dark dark:bg-asknova-gray-accent/20 dark:text-asknova-light";
+
+  const categoryKey = `category.${category}`;
+  const translatedCategory = t(categoryKey);
+  const categoryLabel = translatedCategory !== categoryKey
+    ? translatedCategory
+    : category.charAt(0).toUpperCase() + category.slice(1);
+
+  const readSuffix = t("home.learn.read_suffix");
+  const readLabel = readTime.includes("phút") || readTime.includes("min")
+    ? (readSuffix ? `${readTime} ${readSuffix}` : readTime)
+    : `${readTime} ${readSuffix || "read"}`;
 
   return (
     <motion.div
@@ -68,10 +82,13 @@ export function LearnArticleCard({
                 transition={{ duration: 0.3 }}
                 className="w-full h-full"
               >
-                <img
+                <Image
                   src={image}
                   alt={title}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  loading="lazy"
+                  className="object-cover"
                 />
               </motion.div>
 
@@ -84,7 +101,7 @@ export function LearnArticleCard({
                     backdrop-blur-sm
                   `}
                 >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                  {categoryLabel}
                 </span>
               </div>
             </div>
@@ -125,12 +142,12 @@ export function LearnArticleCard({
                     ${categoryColor}
                   `}
                 >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                  {categoryLabel}
                 </span>
               )}
 
               <span className="text-xs text-asknova-dark/60 dark:text-asknova-light/60 font-medium">
-                {readTime} read
+                {readLabel}
               </span>
             </div>
           </div>

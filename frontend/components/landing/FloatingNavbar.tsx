@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Sparkles, Menu, X, Globe } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -13,25 +12,85 @@ import { useTranslation } from "@/lib/hooks/useI18n";
 export function FloatingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const { t, language, setLanguage } = useTranslation();
 
-  // Handle scroll detection for subtle styling changes
+  // Hydration guard for next-themes: `theme` is undefined on the server and
+  // on the very first client render, so rendering an icon based on it before
+  // mounting causes a flash of the wrong icon (and can trigger a hydration
+  // mismatch). This mirrors the same guard used in components/theme-toggle.tsx.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setMounted(true), []);
+
+  // Handle scroll detection for subtle styling changes.
+  // Throttled via rAF + a boundary-crossing check so we only trigger a
+  // re-render when isScrolled actually flips, not on every scroll pixel.
   useEffect(() => {
+    // Compute the initial state immediately in case the page loads already
+    // scrolled (e.g. browser scroll restoration, or landing on a #hash),
+    // instead of waiting for the first scroll event to fire.
+    // One-time read of the real DOM scroll position on mount, not a data sync.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsScrolled(window.scrollY > 20);
+
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setIsScrolled((prev) => {
+          const next = window.scrollY > 20;
+          return prev === next ? prev : next;
+        });
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll while the mobile drawer is open, and let Escape close it.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
+  // Absolute hrefs (leading "/") so these still work when the navbar is
+  // rendered on a route other than the homepage — a plain "#features" href
+  // only scrolls within the current page and silently does nothing on
+  // /learn, /synastry, /charts/[id], etc., since those sections only exist
+  // on "/".
   const navLinks = [
-    { label: t("nav.features"), href: "#features" },
+    { label: t("nav.features"), href: "/#features" },
     { label: t("nav.synastry"), href: "/synastry" },
-    { label: t("nav.astrology"), href: "#astrology" },
-    { label: t("nav.faq"), href: "#faq" },
+    { label: t("nav.astrology"), href: "/#astrology" },
+    { label: t("nav.faq"), href: "/#faq" },
   ];
+
+  const themeIcon = mounted ? (
+    theme === "dark" ? <Sun size={22} /> : <Moon size={22} />
+  ) : (
+    <span className="block w-[22px] h-[22px]" aria-hidden="true" />
+  );
+
+  const themeIconMobile = mounted ? (
+    theme === "dark" ? <Sun size={18} /> : <Moon size={18} />
+  ) : (
+    <span className="block w-[18px] h-[18px]" aria-hidden="true" />
+  );
 
   return (
     <>
@@ -72,6 +131,7 @@ export function FloatingNavbar() {
               <button
                 type="button"
                 onClick={() => setLanguage("en")}
+                aria-pressed={language === "en"}
                 className={`px-4 py-1.5 rounded-full transition-all ${
                   language === "en"
                     ? "bg-[#4A3525] text-[#F7F3ED] shadow-sm font-semibold"
@@ -83,6 +143,7 @@ export function FloatingNavbar() {
               <button
                 type="button"
                 onClick={() => setLanguage("vi")}
+                aria-pressed={language === "vi"}
                 className={`px-4 py-1.5 rounded-full transition-all ${
                   language === "vi"
                     ? "bg-[#4A3525] text-[#F7F3ED] shadow-sm font-semibold"
@@ -98,7 +159,7 @@ export function FloatingNavbar() {
               className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-slate-800 dark:text-slate-200"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun size={22} /> : <Moon size={22} />}
+              {themeIcon}
             </button>
           </div>
 
@@ -106,6 +167,8 @@ export function FloatingNavbar() {
           <button
             className="md:hidden p-2 text-slate-800 dark:text-slate-200"
             onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={mobileMenuOpen}
           >
             <Menu size={24} />
           </button>
@@ -120,6 +183,7 @@ export function FloatingNavbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-mystic-dark/40 backdrop-blur-sm md:hidden flex justify-end"
+            onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
               initial={{ x: "100%" }}
@@ -127,12 +191,14 @@ export function FloatingNavbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="w-3/4 max-w-sm h-full bg-warm-cream dark:bg-mystic-dark border-l border-white/10 p-6 flex flex-col shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-12">
-                <BrandLogo size="md" />
+                <BrandLogo size="md" onClick={() => setMobileMenuOpen(false)} />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+                  aria-label="Close menu"
                 >
                   <X size={24} className="text-slate-800 dark:text-slate-200" />
                 </button>
@@ -156,6 +222,7 @@ export function FloatingNavbar() {
                 <div className="flex items-center justify-center bg-black/5 dark:bg-white/5 p-1 rounded-xl font-medium text-sm gap-2">
                   <button
                     onClick={() => setLanguage("en")}
+                    aria-pressed={language === "en"}
                     className={`flex-1 py-2 rounded-lg transition-all ${
                       language === "en"
                         ? "bg-[#4A3525] text-white shadow-sm font-semibold"
@@ -166,6 +233,7 @@ export function FloatingNavbar() {
                   </button>
                   <button
                     onClick={() => setLanguage("vi")}
+                    aria-pressed={language === "vi"}
                     className={`flex-1 py-2 rounded-lg transition-all ${
                       language === "vi"
                         ? "bg-[#4A3525] text-white shadow-sm font-semibold"
@@ -183,8 +251,8 @@ export function FloatingNavbar() {
                   }}
                   className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/5 dark:bg-white/5 font-medium"
                 >
-                  {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-                  Toggle Theme
+                  {themeIconMobile}
+                  <span>{t("nav.toggle_theme")}</span>
                 </button>
               </div>
             </motion.div>

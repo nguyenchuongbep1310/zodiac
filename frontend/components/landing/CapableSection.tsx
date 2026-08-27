@@ -45,7 +45,7 @@ export function CapableSection() {
   ];
 
   return (
-    <section className="py-28 px-6 relative overflow-hidden">
+    <section id="astrology" className="py-28 px-6 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-gradient-radial from-amber-500/5 to-transparent blur-3xl" />
       </div>

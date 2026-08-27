@@ -66,7 +66,7 @@ export async function searchCities(query: string): Promise<Array<{ display_name:
     const timeout = setTimeout(() => controller.abort(), 3000);
     const res = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`,
-      { signal: controller.signal }
+      { signal: controller.signal, referrerPolicy: "origin" }
     );
     clearTimeout(timeout);
     if (res.ok) {
@@ -82,7 +82,7 @@ export async function searchCities(query: string): Promise<Array<{ display_name:
   return matched;
 }
 
-export async function resolveLocation(cityName: string): Promise<GeoLocation> {
+export async function resolveLocation(cityName: string): Promise<GeoLocation | null> {
   const norm = normalizeKey(cityName);
   const known = KNOWN_CITIES[norm] || Object.entries(KNOWN_CITIES).find(([k]) => norm.includes(k))?.[1];
 
@@ -91,7 +91,7 @@ export async function resolveLocation(cityName: string): Promise<GeoLocation> {
     const timeout = setTimeout(() => controller.abort(), 3500);
     const res = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cityName)}&format=json&limit=1`,
-      { signal: controller.signal }
+      { signal: controller.signal, referrerPolicy: "origin" }
     );
     clearTimeout(timeout);
     if (res.ok) {
@@ -122,11 +122,6 @@ export async function resolveLocation(cityName: string): Promise<GeoLocation> {
     };
   }
 
-  // Generic fallback if all else fails
-  return {
-    lat: 21.0285,
-    lon: 105.8542,
-    city: cityName || "Hà Nội",
-    timezone: "Asia/Ho_Chi_Minh",
-  };
+  // Nothing matched a known city and the geocoding API found nothing either.
+  return null;
 }

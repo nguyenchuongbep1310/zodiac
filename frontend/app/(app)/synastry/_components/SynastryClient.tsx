@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import tzlookup from "tz-lookup";
 import { ChevronLeft, ChevronRight, Heart, Home as HomeIcon, Layers, Sparkles } from "lucide-react";
 
 import { useCalculateChart } from "@/lib/hooks/useCharts";
@@ -15,8 +14,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Spinner } from "@/components/ui/Spinner";
 import { Accordion } from "@/components/ui/Accordion";
-import { BrandLogo } from "@/components/ui/BrandLogo";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { PLANET_GLYPHS, cn } from "@/lib/utils";
 import type { ChartResponse } from "@/lib/types/api";
 import { computeSynastryAspects, computeHouseOverlays, scoreSynastry } from "@/lib/chart/synastry";
@@ -39,9 +36,18 @@ type PairMode = "synastry" | "composite" | "davison" | "portrait";
 async function resolveChart(
   person: PersonDetails,
   fallbackName: string,
-  calculateChart: ReturnType<typeof useCalculateChart>
+  calculateChart: ReturnType<typeof useCalculateChart>,
+  language: "en" | "vi"
 ): Promise<ChartResponse> {
   const location = await resolveLocation(person.city);
+
+  if (!location) {
+    throw new Error(
+      language === "vi"
+        ? `Không tìm thấy địa điểm "${person.city}". Hãy thử nhập tên địa điểm khác.`
+        : `Could not find "${person.city}". Try typing another location.`
+    );
+  }
 
   return calculateChart.mutateAsync({
     name: person.name || fallbackName,
@@ -105,8 +111,8 @@ export function SynastryClient() {
     setIsLoading(true);
     try {
       const [resultA, resultB] = await Promise.all([
-        resolveChart(personA, language === "vi" ? "Người 1" : "Person 1", calcA),
-        resolveChart(personB, language === "vi" ? "Người 2" : "Person 2", calcB),
+        resolveChart(personA, language === "vi" ? "Người 1" : "Person 1", calcA, language),
+        resolveChart(personB, language === "vi" ? "Người 2" : "Person 2", calcB, language),
       ]);
       setChartA(resultA);
       setChartB(resultB);
@@ -196,8 +202,8 @@ export function SynastryClient() {
       </div>
 
       <div className="relative space-y-10 animate-fade-in">
-        {/* Header */}
-        <div className="flex items-center justify-between gap-4">
+        {/* Back link (logo, theme, and language switching now live in the global navbar) */}
+        <div className="flex items-center">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-[#7A6E65] hover:text-[#4A3525] dark:text-[#A8988C] dark:hover:text-[#E8DDD3] transition-colors group"
@@ -205,10 +211,6 @@ export function SynastryClient() {
             <ChevronLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
             {t("nav.back_home")}
           </Link>
-          <div className="flex items-center gap-3">
-            <BrandLogo size="md" />
-            <ThemeToggle />
-          </div>
         </div>
 
         {/* Hero + form */}

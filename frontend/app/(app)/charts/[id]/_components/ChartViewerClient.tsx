@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, Sparkles } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChart, useChartInterpretations } from "@/lib/hooks/useCharts";
 import { ChartWheel } from "@/components/chart/ChartWheel";
@@ -15,7 +15,6 @@ import { Spinner } from "@/components/ui/Spinner";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/lib/hooks/useI18n";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 
 type Tab = "planets" | "aspects" | "houses";
 
@@ -27,7 +26,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
   const { data: chart, isLoading, error } = useChart(id);
   const { data: interpretations, isLoading: interpretationsLoading } = useChartInterpretations(id);
   const [activeTab, setActiveTab] = useState<Tab>("planets");
-  const { t, language, setLanguage } = useTranslation();
+  const { t, language } = useTranslation();
 
   const TABS: { id: "planets" | "aspects" | "houses"; label: string; emoji: string }[] = [
     { id: "planets", label: t("charts.tabs.planets"), emoji: "✦" },
@@ -121,39 +120,6 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
             </div>
           </div>
 
-          {/* Right Header Controls */}
-          <motion.div
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-center gap-3 pt-2"
-          >
-            <div className="flex items-center bg-[#F3EDE4] dark:bg-[#27211C] p-1 rounded-full border border-[#E3D8CB] dark:border-white/10 text-xs font-medium shadow-sm">
-              <button
-                onClick={() => setLanguage("en")}
-                className={cn(
-                  "px-3.5 py-1.5 rounded-full transition-all duration-300",
-                  language === "en"
-                    ? "bg-[#4A3525] text-[#FAF7F2] dark:bg-[#E8DDD3] dark:text-[#1C1815] font-semibold shadow-sm"
-                    : "text-[#7A6E65] hover:text-[#4A3525] dark:text-[#A8988C] dark:hover:text-white"
-                )}
-              >
-                English
-              </button>
-              <button
-                onClick={() => setLanguage("vi")}
-                className={cn(
-                  "px-3.5 py-1.5 rounded-full transition-all duration-300",
-                  language === "vi"
-                    ? "bg-[#4A3525] text-[#FAF7F2] dark:bg-[#E8DDD3] dark:text-[#1C1815] font-semibold shadow-sm"
-                    : "text-[#7A6E65] hover:text-[#4A3525] dark:text-[#A8988C] dark:hover:text-white"
-                )}
-              >
-                Tiếng Việt
-              </button>
-            </div>
-            <ThemeToggle />
-          </motion.div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">

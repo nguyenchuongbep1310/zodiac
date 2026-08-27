@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { LearnArticleCard } from "./LearnArticleCard";
 import { LearnCategoryFilter, type LearnCategory } from "./LearnCategoryFilter";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
 interface Article {
   id: string;
@@ -25,11 +26,16 @@ interface LearnPageLayoutProps {
 
 export function LearnPageLayout({
   articles,
-  title = "Learn Astrology",
-  subtitle = "Comprehensive Guides & Tutorials",
-  description = "Everything you need to understand astrology, from beginner basics to advanced techniques. Our carefully curated articles are designed to demystify the cosmos and help you connect with the stars.",
+  title,
+  subtitle,
+  description,
 }: LearnPageLayoutProps) {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState<LearnCategory>("all");
+
+  const pageTitle = title || t("home.learn.title");
+  const pageSubtitle = subtitle || t("home.learn.page_subtitle");
+  const pageDesc = description || t("home.learn.page_desc");
 
   // Filter articles by category
   const filteredArticles = useMemo(() => {
@@ -74,7 +80,7 @@ export function LearnPageLayout({
             transition={{ duration: 0.6 }}
             className="text-5xl md:text-6xl lg:text-7xl font-display italic font-bold text-asknova-dark dark:text-asknova-light mb-4"
           >
-            {title}
+            {pageTitle}
           </motion.h1>
 
           <motion.p
@@ -83,7 +89,7 @@ export function LearnPageLayout({
             transition={{ delay: 0.1, duration: 0.6 }}
             className="text-xl md:text-2xl text-asknova-burgundy dark:text-asknova-gold font-display italic mb-6"
           >
-            {subtitle}
+            {pageSubtitle}
           </motion.p>
 
           <motion.div
@@ -99,7 +105,7 @@ export function LearnPageLayout({
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-asknova-dark/70 dark:text-asknova-light/70 max-w-2xl mx-auto text-lg leading-relaxed"
           >
-            {description}
+            {pageDesc}
           </motion.p>
         </div>
       </section>
@@ -121,8 +127,9 @@ export function LearnPageLayout({
             className="text-center mb-8"
           >
             <p className="text-asknova-dark/60 dark:text-asknova-light/60">
-              {filteredArticles.length} article
-              {filteredArticles.length !== 1 ? "s" : ""} found
+              {filteredArticles.length === 1
+                ? t("home.learn.articles_found_single")
+                : t("home.learn.articles_found").replace("{count}", filteredArticles.length.toString())}
             </p>
           </motion.div>
 
@@ -149,10 +156,10 @@ export function LearnPageLayout({
               className="text-center py-16"
             >
               <p className="text-lg text-asknova-dark/60 dark:text-asknova-light/60 mb-4">
-                No articles found in this category yet.
+                {t("home.learn.empty_category")}
               </p>
               <p className="text-sm text-asknova-dark/40 dark:text-asknova-light/40">
-                Check back soon for more content!
+                {t("home.learn.empty_soon")}
               </p>
             </motion.div>
           )}
@@ -166,16 +173,16 @@ export function LearnPageLayout({
             className="mt-20 md:mt-28 max-w-2xl mx-auto bg-gradient-to-r from-asknova-burgundy/10 to-asknova-teal/10 dark:from-asknova-burgundy/20 dark:to-asknova-teal/20 rounded-xl p-8 md:p-12 text-center border border-asknova-burgundy/20 dark:border-asknova-gold/20"
           >
             <h3 className="text-2xl md:text-3xl font-display italic font-bold text-asknova-dark dark:text-asknova-light mb-3">
-              Get New Articles Weekly
+              {t("home.learn.newsletter_title")}
             </h3>
             <p className="text-asknova-dark/70 dark:text-asknova-light/70 mb-6">
-              Subscribe to our newsletter and never miss a new astrology guide.
+              {t("home.learn.newsletter_desc")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t("home.learn.newsletter_placeholder")}
                 className="flex-1 px-4 py-3 rounded-lg bg-white dark:bg-asknova-surface-dark border border-asknova-gray-light/50 dark:border-asknova-burgundy-darker/30 text-asknova-dark dark:text-asknova-light placeholder-asknova-dark/40 dark:placeholder-asknova-light/40 focus:outline-none focus:border-asknova-burgundy dark:focus:border-asknova-gold transition-colors"
               />
               <motion.button
@@ -183,7 +190,7 @@ export function LearnPageLayout({
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-3 rounded-lg font-semibold text-white bg-asknova-burgundy hover:bg-asknova-burgundy-dark dark:bg-asknova-gold dark:text-asknova-dark dark:hover:bg-asknova-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
               >
-                Subscribe
+                {t("home.learn.newsletter_btn")}
               </motion.button>
             </div>
           </motion.div>

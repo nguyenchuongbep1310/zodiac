@@ -125,7 +125,7 @@ export function BentoFeatures() {
               </p>
             </div>
             <div className="flex items-center gap-2 text-[#5C4033] dark:text-warm-cream font-semibold group-hover:gap-3 transition-all">
-              <span className="hidden sm:inline">Explore</span>
+              <span className="hidden sm:inline">{t("misc.explore")}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </div>
             <Sparkles className="w-36 h-36 text-dusty-rose/15 absolute -right-6 -top-6 pointer-events-none group-hover:scale-110 transition-transform duration-700" />

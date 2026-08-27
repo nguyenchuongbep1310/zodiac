@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
 export type LearnCategory = "all" | "basics" | "intermediate" | "advanced" | "techniques";
 
@@ -10,49 +11,50 @@ interface LearnCategoryFilterProps {
   activeCategory?: LearnCategory;
 }
 
-const categories: Array<{
-  value: LearnCategory;
-  label: string;
-  description: string;
-  color: string;
-}> = [
-  {
-    value: "all",
-    label: "All Articles",
-    description: "View everything",
-    color: "bg-asknova-dark dark:bg-asknova-light",
-  },
-  {
-    value: "basics",
-    label: "Basics",
-    description: "Start here",
-    color: "bg-asknova-burgundy dark:bg-asknova-gold",
-  },
-  {
-    value: "intermediate",
-    label: "Intermediate",
-    description: "Build skills",
-    color: "bg-asknova-blue dark:bg-asknova-blue/70",
-  },
-  {
-    value: "advanced",
-    label: "Advanced",
-    description: "Master it",
-    color: "bg-asknova-teal dark:bg-asknova-teal/70",
-  },
-  {
-    value: "techniques",
-    label: "Techniques",
-    description: "Practical tools",
-    color: "bg-asknova-gold dark:bg-asknova-gold/70",
-  },
-];
-
 export function LearnCategoryFilter({
   onCategoryChange,
   activeCategory = "all",
 }: LearnCategoryFilterProps) {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<LearnCategory>(activeCategory);
+
+  const categories: Array<{
+    value: LearnCategory;
+    label: string;
+    description: string;
+    color: string;
+  }> = [
+    {
+      value: "all",
+      label: t("category.all"),
+      description: t("category.all_desc"),
+      color: "bg-asknova-dark dark:bg-asknova-light",
+    },
+    {
+      value: "basics",
+      label: t("category.basics"),
+      description: t("category.basics_desc"),
+      color: "bg-asknova-burgundy dark:bg-asknova-gold",
+    },
+    {
+      value: "intermediate",
+      label: t("category.intermediate"),
+      description: t("category.intermediate_desc"),
+      color: "bg-asknova-blue dark:bg-asknova-blue/70",
+    },
+    {
+      value: "advanced",
+      label: t("category.advanced"),
+      description: t("category.advanced_desc"),
+      color: "bg-asknova-teal dark:bg-asknova-teal/70",
+    },
+    {
+      value: "techniques",
+      label: t("category.techniques"),
+      description: t("category.techniques_desc"),
+      color: "bg-asknova-gold dark:bg-asknova-gold/70",
+    },
+  ];
 
   const handleSelect = (category: LearnCategory) => {
     setSelected(category);
@@ -107,13 +109,11 @@ export function LearnCategoryFilter({
         transition={{ delay: 0.3, duration: 0.5 }}
         className="text-center text-sm text-asknova-dark/60 dark:text-asknova-light/60"
       >
-        {selected === "all" && "Showing all articles across all levels"}
-        {selected === "basics" &&
-          "Perfect for beginners. Start with the fundamentals."}
-        {selected === "intermediate" &&
-          "Build on your knowledge with deeper insights."}
-        {selected === "advanced" && "Master complex astrological concepts."}
-        {selected === "techniques" && "Learn practical methods you can use."}
+        {selected === "all" && t("category.all_info")}
+        {selected === "basics" && t("category.basics_info")}
+        {selected === "intermediate" && t("category.intermediate_info")}
+        {selected === "advanced" && t("category.advanced_info")}
+        {selected === "techniques" && t("category.techniques_info")}
       </motion.div>
     </div>
   );

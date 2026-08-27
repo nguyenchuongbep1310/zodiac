@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "ui-avatars.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
   // Proxy API calls in dev so no CORS issues

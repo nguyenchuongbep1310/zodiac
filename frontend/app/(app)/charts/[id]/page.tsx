@@ -4,6 +4,10 @@ import { ChartViewerClient } from "./_components/ChartViewerClient";
 export const metadata: Metadata = {
   title: "Natal Chart",
   description: "View your natal chart with planetary positions, houses, and aspects.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function ChartPage({ params }: { params: Promise<{ id: string }> }) {

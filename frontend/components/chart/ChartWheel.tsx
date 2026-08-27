@@ -89,10 +89,12 @@ export function ChartWheel({
   // ── Pan drag ─────────────────────────────────────────────────────────────
   const svgRef = useRef<SVGSVGElement>(null);
   const dragStart = useRef<{ mx: number; my: number; tx: number; ty: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
     if (e.button !== 0) return;
     dragStart.current = { mx: e.clientX, my: e.clientY, tx: transform.tx, ty: transform.ty };
+    setIsDragging(true);
     e.preventDefault();
   }, [transform]);
 
@@ -109,6 +111,7 @@ export function ChartWheel({
 
   const onMouseUp = useCallback(() => {
     dragStart.current = null;
+    setIsDragging(false);
   }, []);
 
   // ── Wheel zoom ───────────────────────────────────────────────────────────
@@ -126,7 +129,7 @@ export function ChartWheel({
   const zoomOut = () => setTransform((p) => ({ ...p, scale: clampScale(p.scale - SCALE_STEP) }));
   const zoomReset = () => setTransform({ scale: initialScale, tx: 0, ty: 0 });
 
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   // ── Hover handlers ───────────────────────────────────────────────────────
   const handlePlanetHover = useCallback((planet: RenderedPlanet | null) => {
@@ -191,7 +194,6 @@ export function ChartWheel({
   }, [t]);
 
   // ── Derived transform string ─────────────────────────────────────────────
-  const groupTransform = `translate(${transform.tx}, ${transform.ty}) scale(${transform.scale}) translate(${-CX * (transform.scale - 1) / transform.scale}, ${-CY * (transform.scale - 1) / transform.scale})`;
 
   // Simplify: zoom from center (CX, CY)
   const zoomTransform = `translate(${CX + transform.tx}, ${CY + transform.ty}) scale(${transform.scale}) translate(${-CX}, ${-CY})`;
@@ -206,7 +208,7 @@ export function ChartWheel({
           ref={svgRef}
           viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
           className="w-full mx-auto aspect-square block"
-          style={{ cursor: dragStart.current ? 'grabbing' : 'grab' }}
+          style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
           role="img"
           aria-label="Natal chart wheel"
           onMouseDown={onMouseDown}
@@ -319,21 +321,21 @@ export function ChartWheel({
           <div className="absolute bottom-3 right-3 flex flex-col gap-1 z-10">
             <button
               onClick={zoomIn}
-              title="Zoom in"
+              title={language === "vi" ? "Phóng to" : "Zoom in"}
               className="w-7 h-7 rounded-lg bg-space-800/80 border border-space-600/60 text-slate-300 hover:text-violet-300 hover:border-violet-500/50 hover:bg-violet-900/20 transition-all text-sm font-bold flex items-center justify-center backdrop-blur-sm shadow-md"
             >
               +
             </button>
             <button
               onClick={zoomReset}
-              title="Reset zoom"
+              title={language === "vi" ? "Đặt lại" : "Reset zoom"}
               className="w-7 h-7 rounded-lg bg-space-800/80 border border-space-600/60 text-slate-400 hover:text-slate-200 hover:border-space-500 transition-all text-xs flex items-center justify-center backdrop-blur-sm shadow-md"
             >
               ↺
             </button>
             <button
               onClick={zoomOut}
-              title="Zoom out"
+              title={language === "vi" ? "Thu nhỏ" : "Zoom out"}
               className="w-7 h-7 rounded-lg bg-space-800/80 border border-space-600/60 text-slate-300 hover:text-violet-300 hover:border-violet-500/50 hover:bg-violet-900/20 transition-all text-sm font-bold flex items-center justify-center backdrop-blur-sm shadow-md"
             >
               −
@@ -345,18 +347,18 @@ export function ChartWheel({
       {/* ── Legend: aspect colors ────────────────────────────────────────────── */}
       <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-2.5 px-2">
         {[
-          { color: '#819a96', label: 'Trine' },
-          { color: '#8fa3b5', label: 'Sextile' },
-          { color: '#bc8f8f', label: 'Square' },
-          { color: '#d97b7b', label: 'Opposition' },
-          { color: '#a67c7e', label: 'Conjunction' },
-        ].map(({ color, label }) => (
-          <span key={label} className="flex items-center gap-1.5 text-xs text-[#5C4033] dark:text-slate-300 font-medium">
+          { color: '#819a96', key: 'trine' },
+          { color: '#8fa3b5', key: 'sextile' },
+          { color: '#bc8f8f', key: 'square' },
+          { color: '#d97b7b', key: 'opposition' },
+          { color: '#a67c7e', key: 'conjunction' },
+        ].map(({ color, key }) => (
+          <span key={key} className="flex items-center gap-1.5 text-xs text-[#5C4033] dark:text-slate-300 font-medium">
             <span
               className="inline-block w-5 h-0.5 rounded-full"
               style={{ backgroundColor: color }}
             />
-            {label}
+            {t(`aspect.${key}`)}
           </span>
         ))}
       </div>

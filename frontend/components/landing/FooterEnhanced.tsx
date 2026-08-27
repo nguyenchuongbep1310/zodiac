@@ -3,21 +3,22 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
+import { Badge } from "@/components/ui/Badge";
 import { useTranslation } from "@/lib/hooks/useI18n";
 
 export function FooterEnhanced() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const chartLinks = [
     { label: t("footer.charts.birth"), href: "/" },
     { label: t("footer.charts.synastry"), href: "/synastry" },
-    { label: t("footer.charts.transit"), href: "/charts" },
+    { label: t("footer.charts.transit"), href: null },
   ];
 
   const moreLinks = [
     { label: t("footer.more.learn"), href: "/learn" },
-    { label: t("footer.more.features"), href: "#features" },
-    { label: t("footer.more.faq"), href: "#faq" },
+    { label: t("footer.more.features"), href: "/#features" },
+    { label: t("footer.more.faq"), href: "/#faq" },
   ];
 
   const aboutLinks = [
@@ -60,13 +61,20 @@ export function FooterEnhanced() {
             {t("footer.charts")}
           </h4>
           <ul className="space-y-2.5">
-            {chartLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} className="text-sm text-[#947E70] dark:text-[#A8988C] hover:text-[#5C4033] dark:hover:text-warm-cream transition-colors">
+            {chartLinks.map((link) =>
+              link.href ? (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-sm text-[#947E70] dark:text-[#A8988C] hover:text-[#5C4033] dark:hover:text-warm-cream transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ) : (
+                <li key={link.label} className="text-sm text-[#C2BCA8] dark:text-white/20 cursor-not-allowed inline-flex items-center gap-1.5">
                   {link.label}
-                </Link>
-              </li>
-            ))}
+                  <Badge variant="slate" className="text-[10px] px-1.5 py-0">{language === "vi" ? "sắp ra mắt" : "soon"}</Badge>
+                </li>
+              )
+            )}
           </ul>
         </div>
 

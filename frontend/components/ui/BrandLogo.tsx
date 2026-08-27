@@ -8,9 +8,10 @@ interface BrandLogoProps {
   className?: string;
   iconOnly?: boolean;
   size?: "sm" | "md" | "lg";
+  onClick?: () => void;
 }
 
-export function BrandLogo({ className, iconOnly = false, size = "md" }: BrandLogoProps) {
+export function BrandLogo({ className, iconOnly = false, size = "md", onClick }: BrandLogoProps) {
   const iconSizes = {
     sm: "w-7 h-7",
     md: "w-9 h-9",
@@ -24,7 +25,7 @@ export function BrandLogo({ className, iconOnly = false, size = "md" }: BrandLog
   };
 
   return (
-    <Link href="/" className={cn("inline-flex items-center gap-2.5 group select-none", className)}>
+    <Link href="/" onClick={onClick} className={cn("inline-flex items-center gap-2.5 group select-none", className)}>
       {/* Enhanced AstroMind Emblem Icon */}
       <div className={cn("relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105", iconSizes[size])}>
         {/* Glowing background ring */}

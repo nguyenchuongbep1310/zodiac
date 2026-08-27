@@ -2,7 +2,6 @@ import React from "react";
 import { AspectResponse, ChartInterpretationResponse } from "@/lib/types/api";
 import { PLANET_GLYPHS, ASPECT_COLORS } from "@/lib/utils";
 import { useTranslation } from "@/lib/hooks/useI18n";
-import { cn } from "@/lib/utils";
 import { Accordion } from "@/components/ui/Accordion";
 
 interface AspectGridProps {

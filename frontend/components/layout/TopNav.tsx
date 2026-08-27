@@ -6,7 +6,6 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { useTranslation } from "@/lib/hooks/useI18n";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { Star } from "lucide-react";
 
 export function TopNav() {
   const pathname = usePathname();

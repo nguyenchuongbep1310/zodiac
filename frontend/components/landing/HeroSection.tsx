@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar, Clock, MapPin, Search } from "lucide-react";
+import { Calendar, Clock, Search, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCalculateChart } from "@/lib/hooks/useCharts";
 import { useToast } from "@/components/ui/Toast";
@@ -23,7 +23,7 @@ export function HeroSection() {
   const [showExtended, setShowExtended] = useState(false);
   const [houseSystem, setHouseSystem] = useState<"placidus" | "koch" | "whole_sign" | "equal">("placidus");
   const [isLoading, setIsLoading] = useState(false);
-  const [geoResults, setGeoResults] = useState<any[]>([]);
+  const [geoResults, setGeoResults] = useState<Array<{ display_name: string; lat: string; lon: string }>>([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
@@ -33,9 +33,11 @@ export function HeroSection() {
         setGeoResults(data);
       }, 300);
       return () => clearTimeout(timeout);
-    } else {
-      setGeoResults([]);
     }
+    // Clearing suggestions when the dropdown closes or the query is too short
+    // is a reset of this component's own UI state, not an external data sync.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setGeoResults([]);
   }, [city, showDropdown]);
 
   const handleStart = async (e: React.FormEvent) => {
@@ -71,14 +73,15 @@ export function HeroSection() {
       });
 
       router.push(`/charts/${chart.id}`);
-    } catch (err: any) {
-      toastError(t("home.hero.toast_calc_error"), err.message || t("misc.error"));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : t("misc.error");
+      toastError(t("home.hero.toast_calc_error"), message);
       setIsLoading(false);
     }
   };
 
   return (
-    <section className="relative w-full bg-[#F7F3ED] dark:bg-[#14110F] pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 transition-colors overflow-hidden">
+    <section id="hero" className="relative w-full bg-[#F7F3ED] dark:bg-[#14110F] pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 transition-colors overflow-hidden">
       {/* Subtle decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[#B5A499]/8 to-transparent blur-3xl" />
@@ -114,7 +117,24 @@ export function HeroSection() {
             {/* Left Column: Form */}
             <div className="lg:col-span-5 space-y-6">
               <form onSubmit={handleStart} className="space-y-5">
-                
+
+                {/* Name */}
+                <div>
+                  <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
+                    {t("home.hero.name_label")}
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder={t("home.hero.name_placeholder")}
+                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20"
+                    />
+                  </div>
+                </div>
+
                 {/* Birth Date */}
                 <div>
                   <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
@@ -232,7 +252,7 @@ export function HeroSection() {
                         </label>
                         <select
                           value={houseSystem}
-                          onChange={(e) => setHouseSystem(e.target.value as any)}
+                          onChange={(e) => setHouseSystem(e.target.value as "placidus" | "koch" | "whole_sign" | "equal")}
                           className="w-full bg-[#FAF7F2] dark:bg-[#1C1815] border border-[#E3D8CB] dark:border-white/10 rounded-xl p-2.5 text-sm text-[#4A3525] dark:text-[#E8DDD3]"
                         >
                           <option value="placidus">{t("system.placidus")}</option>

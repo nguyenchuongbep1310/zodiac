@@ -55,7 +55,7 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
       {/* Name */}
       <div>
         <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
-          {label} — {language === "vi" ? "Tên (tùy chọn)" : "Name (optional)"}
+          {label} — {t("home.hero.name_label")}
         </label>
         <div className="relative">
           <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
@@ -63,7 +63,7 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
             type="text"
             value={value.name}
             onChange={(e) => update({ name: e.target.value })}
-            placeholder={language === "vi" ? "Ví dụ: An" : "e.g. Alex"}
+            placeholder={t("home.hero.name_placeholder")}
             className={`w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] placeholder-[#A8988C] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20`}
           />
         </div>

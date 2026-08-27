@@ -1,150 +1,245 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
-export const metadata: Metadata = {
-  title: "The Planets in Astrology",
-  description: "Understand what each planet represents in your natal birth chart.",
-};
+interface PlanetItem {
+  name: string;
+  symbol: string;
+  keyword: string;
+  summary: string;
+  image: string;
+  color: string;
+}
 
-const planets = [
+const planetsEn: PlanetItem[] = [
   {
-    name: "Sun (Mặt Trời)",
+    name: "Sun",
     symbol: "☀️",
-    keyword: "Bản Ngã & Identity",
-    summary: "Đại diện cho cái tôi cốt lõi, ý chí sống, cá tính thật và mục đích phát triển bản thân.",
+    keyword: "Ego & Core Purpose",
+    summary: "Represents your conscious identity, vitality, self-expression, and the hero's journey of your lifetime.",
     image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop",
-    color: "border-amber-500/40 bg-amber-500/5 text-amber-400",
+    color: "border-amber-500/40 bg-amber-500/5 text-amber-500",
   },
   {
-    name: "Moon (Mặt Trăng)",
+    name: "Moon",
     symbol: "🌙",
-    keyword: "Cảm Xúc & Trực Giác",
-    summary: "Đại diện cho thế giới nội tâm, nhu cầu cảm xúc, tiềm thức, phản xạ tự nhiên và nhu cầu an toàn.",
+    keyword: "Emotions & Intuition",
+    summary: "Governs your instinctual feelings, subconscious patterns, inner emotional safety, and natural reactions.",
     image: "https://images.unsplash.com/photo-1532693322450-2cb5c511067d?q=80&w=800&auto=format&fit=crop",
-    color: "border-slate-400/40 bg-slate-400/5 text-slate-300",
+    color: "border-slate-400/40 bg-slate-400/5 text-slate-400",
   },
   {
-    name: "Mercury (Thủy Tinh)",
+    name: "Mercury",
     symbol: "☿️",
-    keyword: "Tư Duy & Giao Tiếp",
-    summary: "Đại diện cho cách bạn suy nghĩ, xử lý thông tin, giao tiếp, ngôn ngữ và khả năng học hỏi.",
+    keyword: "Mind & Communication",
+    summary: "Rules intellect, cognitive processing, speech, writing, logical analysis, and everyday learning style.",
     image: "https://images.unsplash.com/photo-1614728423169-3f65fd722b7e?q=80&w=800&auto=format&fit=crop",
-    color: "border-emerald-400/40 bg-emerald-400/5 text-emerald-400",
+    color: "border-emerald-500/40 bg-emerald-500/5 text-emerald-500",
   },
   {
-    name: "Venus (Kim Tinh)",
+    name: "Venus",
     symbol: "♀️",
-    keyword: "Tình Yêu & Giá Trị",
-    summary: "Đại diện cho gu thẩm mỹ, cách bạn yêu thương, thu hút mối quan hệ, tiền bạc và những gì bạn trân trọng.",
+    keyword: "Love & Values",
+    summary: "Shapes aesthetic tastes, romantic attraction, relational harmony, financial values, and personal self-worth.",
     image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?q=80&w=800&auto=format&fit=crop",
     color: "border-rose-400/40 bg-rose-400/5 text-rose-400",
   },
   {
-    name: "Mars (Hỏa Tinh)",
+    name: "Mars",
     symbol: "♂️",
-    keyword: "Hành Động & Đam Mê",
-    summary: "Đại diện cho năng lượng thực thi, ham muốn, sự khao khát, ý chí chiến đấu và cách giải quyết xung đột.",
+    keyword: "Action & Drive",
+    summary: "Drives assertiveness, physical vitality, passion, ambition, courage, and how you pursue goals.",
     image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop",
     color: "border-red-500/40 bg-red-500/5 text-red-400",
   },
   {
-    name: "Jupiter (Mộc Tinh)",
+    name: "Jupiter",
     symbol: "♃",
-    keyword: "May Mắn & Phóng Đại",
-    summary: "Đại diện cho sự phát triển, triết lý sống, niềm tin, cơ hội mở rộng và sự may mắn trong cuộc sống.",
+    keyword: "Expansion & Wisdom",
+    summary: "Brings luck, philosophical growth, optimism, generosity, and the expansion of personal horizons.",
     image: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?q=80&w=800&auto=format&fit=crop",
-    color: "border-violet-400/40 bg-violet-400/5 text-violet-300",
+    color: "border-violet-400/40 bg-violet-400/5 text-violet-400",
   },
   {
-    name: "Saturn (Thổ Tinh)",
+    name: "Saturn",
     symbol: "♄",
-    keyword: "Kỷ Luật & Bài Học",
-    summary: "Đại diện cho giới hạn, trách nhiệm, sự kiên nhẫn, thử thách và những bài học cuộc sống cần vượt qua.",
+    keyword: "Discipline & Maturity",
+    summary: "Teaches perseverance, boundaries, responsibility, structural mastery, and hard-earned life wisdom.",
     image: "https://images.unsplash.com/photo-1614732484003-ef9881555dc3?q=80&w=800&auto=format&fit=crop",
-    color: "border-yellow-600/40 bg-yellow-600/5 text-yellow-500",
+    color: "border-amber-600/40 bg-amber-600/5 text-amber-600",
   },
   {
-    name: "Uranus (Thiên Vương Tinh)",
+    name: "Uranus",
     symbol: "♅",
-    keyword: "Đổi Mới & Đột Phá",
-    summary: "Đại diện cho tính cá bản độc đáo, tinh thần tự do, sự bứt phá khỏi truyền thống và những thay đổi bất ngờ.",
-    image: "https://images.unsplash.com/photo-1614728423169-3f65fd722b7e?q=80&w=800&auto=format&fit=crop",
+    keyword: "Innovation & Freedom",
+    summary: "Sparks sudden breakthroughs, radical individuality, authentic liberation, and revolutionary vision.",
+    image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop",
     color: "border-cyan-400/40 bg-cyan-400/5 text-cyan-400",
   },
   {
-    name: "Neptune (Hải Vương Tinh)",
+    name: "Neptune",
     symbol: "♆",
-    keyword: "Ước Mơ & Tâm Linh",
-    summary: "Đại diện cho khả năng tưởng tượng, lý tưởng hóa, tâm linh, nghệ thuật, lòng trắc ẩn và những giấc mơ.",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop",
-    color: "border-indigo-400/40 bg-indigo-400/5 text-indigo-300",
+    keyword: "Dreams & Transcendence",
+    summary: "Guides artistic imagination, spiritual empathy, intuitive mysticism, dreams, and soulful ideals.",
+    image: "https://images.unsplash.com/photo-1614728423169-3f65fd722b7e?q=80&w=800&auto=format&fit=crop",
+    color: "border-blue-400/40 bg-blue-400/5 text-blue-400",
   },
   {
-    name: "Pluto (Diêm Vương Tinh)",
+    name: "Pluto",
     symbol: "♇",
-    keyword: "Chuyển Hóa & Tái Sinh",
-    summary: "Đại diện cho sức mạnh tiềm ẩn, quá trình lột xác, sự thao túng, chuyển hóa tâm lý sâu sắc và sự tái sinh.",
-    image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=800&auto=format&fit=crop",
-    color: "border-purple-500/40 bg-purple-500/5 text-purple-400",
+    keyword: "Rebirth & Power",
+    summary: "Oversees deep psychological alchemy, purging of outdated cycles, inner empowerment, and rebirth.",
+    image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?q=80&w=800&auto=format&fit=crop",
+    color: "border-purple-600/40 bg-purple-600/5 text-purple-400",
+  },
+];
+
+const planetsVi: PlanetItem[] = [
+  {
+    name: "Mặt Trời",
+    symbol: "☀️",
+    keyword: "Bản Ngã & Mục Đích Sống",
+    summary: "Đại diện cho cái tôi cốt lõi, ý chí sống, cá tính đích thực và con đường phát triển bản thân.",
+    image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop",
+    color: "border-amber-500/40 bg-amber-500/5 text-amber-500",
+  },
+  {
+    name: "Mặt Trăng",
+    symbol: "🌙",
+    keyword: "Cảm Xúc & Trực Giác",
+    summary: "Cai quản thế giới nội tâm, nhu cầu an toàn cảm xúc, phản xạ vô thức và bản năng tự nhiên.",
+    image: "https://images.unsplash.com/photo-1532693322450-2cb5c511067d?q=80&w=800&auto=format&fit=crop",
+    color: "border-slate-400/40 bg-slate-400/5 text-slate-400",
+  },
+  {
+    name: "Sao Thủy",
+    symbol: "☿️",
+    keyword: "Tư Duy & Giao Tiếp",
+    summary: "Chủ quản tư duy logic, xử lý thông tin, phong cách diễn đạt ngôn ngữ và khả năng học tập.",
+    image: "https://images.unsplash.com/photo-1614728423169-3f65fd722b7e?q=80&w=800&auto=format&fit=crop",
+    color: "border-emerald-500/40 bg-emerald-500/5 text-emerald-500",
+  },
+  {
+    name: "Sao Kim",
+    symbol: "♀️",
+    keyword: "Tình Yêu & Giá Trị Bản Thân",
+    summary: "Định hình gu thẩm mỹ, lực hút tình cảm, cách bạn yêu thương, tiền bạc và những giá trị bạn trân quý.",
+    image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?q=80&w=800&auto=format&fit=crop",
+    color: "border-rose-400/40 bg-rose-400/5 text-rose-400",
+  },
+  {
+    name: "Sao Hỏa",
+    symbol: "♂️",
+    keyword: "Hành Động & Ý Chí",
+    summary: "Thúc đẩy năng lượng hành động, đam mê, sự quả cảm, tham vọng và cách giải quyết xung đột.",
+    image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop",
+    color: "border-red-500/40 bg-red-500/5 text-red-400",
+  },
+  {
+    name: "Sao Mộc",
+    symbol: "♃",
+    keyword: "May Mắn & Mở Rộng",
+    summary: "Mang lại cơ hội, sự phóng khoáng, triết lý sống, niềm tin lạc quan và sự thịnh vượng.",
+    image: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?q=80&w=800&auto=format&fit=crop",
+    color: "border-violet-400/40 bg-violet-400/5 text-violet-400",
+  },
+  {
+    name: "Sao Thổ",
+    symbol: "♄",
+    keyword: "Kỷ Luật & Bài Học Cuộc Đời",
+    summary: "Đại diện cho trách nhiệm, ranh giới cá nhân, sự kiên định, thử thách và thành tựu bền vững.",
+    image: "https://images.unsplash.com/photo-1614732484003-ef9881555dc3?q=80&w=800&auto=format&fit=crop",
+    color: "border-amber-600/40 bg-amber-600/5 text-amber-600",
+  },
+  {
+    name: "Sao Thiên Vương",
+    symbol: "♅",
+    keyword: "Đột Phá & Tự Do",
+    summary: "Thắp lên sự đổi mới, tính độc lập nguyên bản, tầm nhìn tiến bộ và những bước chuyển bất ngờ.",
+    image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop",
+    color: "border-cyan-400/40 bg-cyan-400/5 text-cyan-400",
+  },
+  {
+    name: "Sao Hải Vương",
+    symbol: "♆",
+    keyword: "Ước Mơ & Tâm Linh",
+    summary: "Khơi gợi trực giác sâu sắc, cảm hứng nghệ thuật, lòng trắc ẩn và lý tưởng tâm hồn cao đẹp.",
+    image: "https://images.unsplash.com/photo-1614728423169-3f65fd722b7e?q=80&w=800&auto=format&fit=crop",
+    color: "border-blue-400/40 bg-blue-400/5 text-blue-400",
+  },
+  {
+    name: "Sao Diêm Vương",
+    symbol: "♇",
+    keyword: "Tái Sinh & Chuyển Hóa",
+    summary: "Chủ quản sự lột xác tâm lý, khai mở sức mạnh tiềm ẩn, thanh lọc cái cũ và tái sinh mạnh mẽ.",
+    image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?q=80&w=800&auto=format&fit=crop",
+    color: "border-purple-600/40 bg-purple-600/5 text-purple-400",
   },
 ];
 
 export default function PlanetsPage() {
+  const { language } = useTranslation();
+  const planets = language === "vi" ? planetsVi : planetsEn;
+
   return (
-    <div className="max-w-6xl mx-auto py-12 px-6 animate-fade-in space-y-10">
+    <div className="max-w-6xl mx-auto py-12 px-6 animate-fade-in space-y-12">
       <Link 
         href="/learn"
-        className="inline-flex items-center text-sm font-medium text-slate-400 hover:text-white transition-colors"
+        className="inline-flex items-center text-sm font-medium text-[#7A6E65] hover:text-[#4A3525] dark:text-[#A8988C] dark:hover:text-[#E8DDD3] transition-colors group"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Quay lại trang Learn
+        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-0.5 transition-transform" />
+        {language === "vi" ? "Quay lại danh mục Học Chiêm Tinh" : "Back to Learn"}
       </Link>
 
       <header className="space-y-4 text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold tracking-widest text-violet-300 uppercase">
-          <Sparkles className="w-3.5 h-3.5" /> Kiến Thức Chiêm Tinh
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#B5A499]/15 border border-[#B5A499]/25 text-xs font-semibold tracking-widest text-[#5C4033] dark:text-[#E8DDD3] uppercase">
+          <Sparkles className="w-3.5 h-3.5" />
+          {language === "vi" ? "Bản Đồ Sao Sinh · Cơ Bản" : "Birth Chart · Basics"}
         </div>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-slate-100 leading-tight">
-          Ý Nghĩa Các Hành Tinh Trong Bản Đồ Sao
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif italic text-[#4A3525] dark:text-[#E8DDD3] leading-tight">
+          {language === "vi" ? "Hệ Thống Các Hành Tinh Chiêm Tinh" : "The Planets in Astrology"}
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 font-light leading-relaxed">
-          Mỗi hành tinh trong Chiêm tinh học đại diện cho một phần tính cách và động lực cốt lõi trong tâm trí bạn.
+        <p className="text-lg sm:text-xl text-[#7A6E65] dark:text-[#A8988C] font-light leading-relaxed">
+          {language === "vi"
+            ? "Mỗi thiên thể là một nguồn năng lượng nguyên mẫu, đóng vai trò như một nhân vật độc đáo trong dàn nhạc tâm lý của bạn."
+            : "Every celestial body is a psychological archetype, acting as a distinct voice within your inner cosmic orchestra."}
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
-        {planets.map((p, idx) => (
-          <div 
-            key={idx}
-            className={`group overflow-hidden rounded-3xl border ${p.color} bg-white/50 dark:bg-slate-900/40 shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col`}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {planets.map((planet) => (
+          <div
+            key={planet.name}
+            className={`group overflow-hidden rounded-[2rem] border ${planet.color} bg-[#FAF7F2]/80 dark:bg-[#1C1815]/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col`}
           >
-            {/* Image Header */}
-            <div className="relative h-48 w-full overflow-hidden bg-slate-950">
-              <img 
-                src={p.image} 
-                alt={p.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+            <div className="relative h-48 w-full overflow-hidden">
+              <Image
+                src={planet.image}
+                alt={planet.name}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
-              
-              <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl filter drop-shadow-md">{p.symbol}</span>
-                  <h3 className="text-xl font-display font-bold text-white tracking-wide">{p.name}</h3>
-                </div>
-                <span className="text-[10px] uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xs">
-                  {p.keyword}
-                </span>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] dark:from-[#1C1815] via-transparent to-transparent" />
+              <span className="absolute bottom-3 left-6 text-4xl drop-shadow-md">{planet.symbol}</span>
             </div>
 
-            {/* Body */}
-            <div className="p-6 flex-1 flex flex-col justify-between">
-              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-light">
-                {p.summary}
-              </p>
+            <div className="p-6 flex flex-col flex-1 justify-between space-y-4">
+              <div>
+                <div className="flex items-baseline justify-between mb-1">
+                  <h2 className="text-2xl font-serif italic text-[#4A3525] dark:text-[#E8DDD3]">
+                    {planet.name}
+                  </h2>
+                </div>
+                <span className="text-xs font-semibold tracking-wide uppercase opacity-75 block mb-3">
+                  {planet.keyword}
+                </span>
+                <p className="text-sm text-[#5C4033] dark:text-[#A8988C] leading-relaxed font-light">
+                  {planet.summary}
+                </p>
+              </div>
             </div>
           </div>
         ))}

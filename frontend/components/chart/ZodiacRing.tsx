@@ -81,7 +81,7 @@ export const ZodiacRing = memo(function ZodiacRing({ signs, ticks }: ZodiacRingP
       })}
 
       {/* ── Zodiac sign glyphs ─────────────────────────────────────────────── */}
-      {signs.map(({ sign, glyphPos, glyphColor }) => (
+      {signs.map(({ sign, glyphPos }) => (
         <text
           key={`glyph-${sign.name}`}
           x={fmt(glyphPos.x)}

@@ -2,8 +2,7 @@
 
 import React from "react";
 import { PlanetPositionResponse, ChartInterpretationResponse } from "@/lib/types/api";
-import { PLANET_GLYPHS, ZODIAC_GLYPHS, degreesToDMS } from "@/lib/utils";
-import { Badge } from "@/components/ui/Badge";
+import { PLANET_GLYPHS, ZODIAC_GLYPHS } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/lib/hooks/useI18n";
 import { Accordion } from "@/components/ui/Accordion";

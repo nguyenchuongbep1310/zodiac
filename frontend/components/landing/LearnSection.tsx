@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { LearnArticleCard } from "./LearnArticleCard";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
-interface Article {
+export interface Article {
   id: string;
   title: string;
   excerpt: string;
@@ -20,76 +21,76 @@ interface LearnSectionProps {
   subtitle?: string;
 }
 
-// Sample articles for demo
-export const defaultArticles: Article[] = [
-  {
-    id: "1",
-    title: "Understanding Your Birth Chart",
-    excerpt:
-      "Learn the fundamentals of reading your natal chart and what each placement means for your personality and life path.",
-    category: "basics",
-    readTime: "8 min",
-    image: "/learn/birth-chart.jpg",
-    href: "/learn/birth-chart",
-    featured: true,
-  },
-  {
-    id: "2",
-    title: "Mercury Retrograde Explained",
-    excerpt:
-      "Discover what Mercury retrograde means and how to navigate communication challenges during this celestial event.",
-    category: "basics",
-    readTime: "6 min",
-    image: "/learn/mercury-retrograde.jpg",
-    href: "/learn/mercury-retrograde",
-  },
-  {
-    id: "3",
-    title: "Aspect Patterns in Your Chart",
-    excerpt:
-      "Deep dive into aspect patterns and how they create unique configurations that shape your astrological profile.",
-    category: "intermediate",
-    readTime: "12 min",
-    image: "/learn/aspect-patterns.jpg",
-    href: "/learn/aspects",
-  },
-  {
-    id: "4",
-    title: "House Systems Compared",
-    excerpt:
-      "Explore different house systems and understand which one resonates most with your astrological practice.",
-    category: "intermediate",
-    readTime: "10 min",
-    image: "/learn/house-systems.jpg",
-    href: "/learn/houses",
-  },
-  {
-    id: "5",
-    title: "Transits & Progressions",
-    excerpt:
-      "Master the advanced techniques of reading transits and progressions to predict life events and personal growth.",
-    category: "advanced",
-    readTime: "15 min",
-    image: "/learn/transits.jpg",
-    href: "/learn/transits",
-  },
-  {
-    id: "6",
-    title: "Synastry in Relationships",
-    excerpt:
-      "Learn how to compare charts with others to understand relationship dynamics and compatibility.",
-    category: "advanced",
-    readTime: "14 min",
-    image: "/learn/synastry.jpg",
-    href: "/learn/synastry",
-  },
-];
-
 export function LearnSection({
-  articles = defaultArticles,
-  title = "Learn Astrology",
-  subtitle = "Clarity. No Fluff.",
+  articles,
+  title,
+  subtitle,
 }: LearnSectionProps) {
+  const { t } = useTranslation();
+
+  const sectionTitle = title || t("home.learn.title");
+  const sectionSubtitle = subtitle || t("home.learn.subtitle");
+
+  const defaultArticles: Article[] = [
+    {
+      id: "1",
+      title: t("home.learn.card1.title"),
+      excerpt: t("home.learn.card1.desc"),
+      category: "basics",
+      readTime: t("home.learn.card1.readTime"),
+      image: "/learn/birth-chart.jpg",
+      href: "/learn/birth-chart/sun-moon",
+      featured: true,
+    },
+    {
+      id: "2",
+      title: t("home.learn.card2.title"),
+      excerpt: t("home.learn.card2.desc"),
+      category: "basics",
+      readTime: t("home.learn.card2.readTime"),
+      image: "/learn/mercury-retrograde.jpg",
+      href: "/learn/birth-chart/planets",
+    },
+    {
+      id: "3",
+      title: t("home.learn.card3.title"),
+      excerpt: t("home.learn.card3.desc"),
+      category: "intermediate",
+      readTime: t("home.learn.card3.readTime"),
+      image: "/learn/aspect-patterns.jpg",
+      href: "/learn/techniques/aspects",
+    },
+    {
+      id: "4",
+      title: t("home.learn.card4.title"),
+      excerpt: t("home.learn.card4.desc"),
+      category: "intermediate",
+      readTime: t("home.learn.card4.readTime"),
+      image: "/learn/house-systems.jpg",
+      href: "/learn/synastry/basics",
+    },
+    {
+      id: "5",
+      title: t("home.learn.card5.title"),
+      excerpt: t("home.learn.card5.desc"),
+      category: "advanced",
+      readTime: t("home.learn.card5.readTime"),
+      image: "/learn/transits.jpg",
+      href: "/learn/techniques/transits",
+    },
+    {
+      id: "6",
+      title: t("home.learn.card6.title"),
+      excerpt: t("home.learn.card6.desc"),
+      category: "advanced",
+      readTime: t("home.learn.card6.readTime"),
+      image: "/learn/synastry.jpg",
+      href: "/learn/synastry/venus-mars",
+    },
+  ];
+
+  const displayArticles = articles || defaultArticles;
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -132,7 +133,7 @@ export function LearnSection({
             viewport={{ once: true }}
             className="text-4xl md:text-5xl lg:text-6xl font-display italic font-bold text-asknova-dark dark:text-asknova-light mb-4"
           >
-            {title}
+            {sectionTitle}
           </motion.h2>
 
           <motion.p
@@ -142,7 +143,7 @@ export function LearnSection({
             viewport={{ once: true }}
             className="text-lg md:text-xl text-asknova-burgundy dark:text-asknova-gold font-display italic"
           >
-            {subtitle}
+            {sectionSubtitle}
           </motion.p>
 
           <motion.div
@@ -162,7 +163,7 @@ export function LearnSection({
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
-          {articles.map((article) => (
+          {displayArticles.map((article) => (
             <motion.div key={article.id} variants={itemVariants}>
               <LearnArticleCard {...article} />
             </motion.div>
@@ -178,7 +179,7 @@ export function LearnSection({
           className="text-center mt-16 md:mt-20"
         >
           <p className="text-asknova-dark/70 dark:text-asknova-light/70 mb-6">
-            Want to go deeper into astrology?
+            {t("home.learn.want_deeper")}
           </p>
           <motion.a
             href="/learn"
@@ -186,7 +187,7 @@ export function LearnSection({
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center px-8 py-3 rounded-lg font-semibold text-white bg-asknova-burgundy hover:bg-asknova-burgundy-dark dark:bg-asknova-gold dark:text-asknova-dark dark:hover:bg-asknova-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Explore All Articles
+            {t("home.learn.explore_all")}
             <span className="ml-2">→</span>
           </motion.a>
         </motion.div>

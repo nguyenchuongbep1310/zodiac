@@ -86,35 +86,75 @@ export function ChartWheel({
     ty: 0,
   });
 
-  // ── Pan drag ─────────────────────────────────────────────────────────────
+  // ── Pan / pinch (unified via Pointer Events — covers mouse, touch, pen) ───
   const svgRef = useRef<SVGSVGElement>(null);
   const dragStart = useRef<{ mx: number; my: number; tx: number; ty: number } | null>(null);
+  const pinchStart = useRef<{ dist: number; scale: number } | null>(null);
+  const activePointers = useRef<Map<number, { x: number; y: number }>>(new Map());
   const [isDragging, setIsDragging] = useState(false);
 
-  const onMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.button !== 0) return;
-    dragStart.current = { mx: e.clientX, my: e.clientY, tx: transform.tx, ty: transform.ty };
-    setIsDragging(true);
+  const pinchDistance = (pts: Array<{ x: number; y: number }>) =>
+    Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Capture can legitimately fail (pointer already released, etc.) —
+      // gestures still work without it, just less robust to the finger
+      // sliding off the element.
+    }
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (activePointers.current.size === 2) {
+      dragStart.current = null;
+      setIsDragging(false);
+      const pts = Array.from(activePointers.current.values());
+      pinchStart.current = { dist: pinchDistance(pts), scale: transform.scale };
+    } else if (activePointers.current.size === 1) {
+      dragStart.current = { mx: e.clientX, my: e.clientY, tx: transform.tx, ty: transform.ty };
+      setIsDragging(true);
+    }
     e.preventDefault();
   }, [transform]);
 
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!dragStart.current) return;
-    const dx = e.clientX - dragStart.current.mx;
-    const dy = e.clientY - dragStart.current.my;
-    setTransform((prev) => ({
-      ...prev,
-      tx: dragStart.current!.tx + dx,
-      ty: dragStart.current!.ty + dy,
-    }));
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!activePointers.current.has(e.pointerId)) return;
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (activePointers.current.size === 2 && pinchStart.current) {
+      // Capture the values we need now — `pinchStart.current` is a ref and
+      // could be mutated (e.g. by a finger lifting) before React gets
+      // around to running this updater, so it must not be read inside it.
+      const pts = Array.from(activePointers.current.values());
+      const ratio = pinchDistance(pts) / pinchStart.current.dist;
+      const nextScale = clampScale(pinchStart.current.scale * ratio);
+      setTransform((prev) => ({ ...prev, scale: nextScale }));
+    } else if (activePointers.current.size === 1 && dragStart.current) {
+      const nextTx = dragStart.current.tx + (e.clientX - dragStart.current.mx);
+      const nextTy = dragStart.current.ty + (e.clientY - dragStart.current.my);
+      setTransform((prev) => ({ ...prev, tx: nextTx, ty: nextTy }));
+    }
   }, []);
 
-  const onMouseUp = useCallback(() => {
-    dragStart.current = null;
-    setIsDragging(false);
-  }, []);
+  const endPointer = useCallback((e: React.PointerEvent) => {
+    activePointers.current.delete(e.pointerId);
 
-  // ── Wheel zoom ───────────────────────────────────────────────────────────
+    if (activePointers.current.size === 0) {
+      dragStart.current = null;
+      pinchStart.current = null;
+      setIsDragging(false);
+    } else if (activePointers.current.size === 1) {
+      // One finger lifted mid-pinch — resume panning from the remaining one.
+      pinchStart.current = null;
+      const [pt] = Array.from(activePointers.current.values());
+      dragStart.current = { mx: pt.x, my: pt.y, tx: transform.tx, ty: transform.ty };
+      setIsDragging(true);
+    }
+  }, [transform]);
+
+  // ── Wheel zoom (desktop trackpad/mouse) ───────────────────────────────────
   const onWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     const factor = e.deltaY < 0 ? 1.12 : 0.89;
@@ -130,6 +170,15 @@ export function ChartWheel({
   const zoomReset = () => setTransform({ scale: initialScale, tx: 0, ty: 0 });
 
   const { t, language } = useTranslation();
+
+  // ── Tap-to-dismiss (touch has no hover, so a tap on empty space clears
+  // whatever tooltip a previous tap left showing) ───────────────────────────
+  const clearSelection = useCallback(() => {
+    setHoveredPlanet(null);
+    setHoveredHouse(null);
+    setHoveredAspect(null);
+    setTooltip(null);
+  }, []);
 
   // ── Hover handlers ───────────────────────────────────────────────────────
   const handlePlanetHover = useCallback((planet: RenderedPlanet | null) => {
@@ -207,14 +256,14 @@ export function ChartWheel({
         <svg
           ref={svgRef}
           viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
-          className="w-full mx-auto aspect-square block"
+          className="w-full mx-auto aspect-square block touch-none"
           style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
           role="img"
           aria-label="Natal chart wheel"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endPointer}
+          onPointerCancel={endPointer}
           onWheel={onWheel}
         >
           <defs>
@@ -235,8 +284,8 @@ export function ChartWheel({
             </clipPath>
           </defs>
 
-          {/* ── Outermost background ─────────────────────────────────────────── */}
-          <circle cx={CX} cy={CY} r={R.ZODIAC_OUTER + 2} fill="url(#ring-bg)" />
+          {/* ── Outermost background (tap here dismisses a tapped tooltip) ───── */}
+          <circle cx={CX} cy={CY} r={R.ZODIAC_OUTER + 2} fill="url(#ring-bg)" onClick={clearSelection} />
 
           {/* ── Zoomable / pannable group ─────────────────────────────────────── */}
           <g transform={zoomTransform} clipPath="url(#chart-clip)">
@@ -245,10 +294,11 @@ export function ChartWheel({
             <ZodiacRing signs={renderData.zodiacSigns} ticks={renderData.degreeTicks} />
 
             {/* ── 2. House ring ─────────────────────────────────────────────── */}
-            <HouseRing 
-              houses={renderData.houses} 
+            <HouseRing
+              houses={renderData.houses}
               highlightHouse={hoveredHouse?.house.house_number ?? null}
               onHover={handleHouseHover}
+              onClick={handleHouseHover}
             />
 
             {/* ── 3. Aspect lines (inside house inner) ─────────────────────── */}
@@ -257,6 +307,7 @@ export function ChartWheel({
               highlightPlanet={hoveredPlanet?.planet.planet ?? null}
               highlightAspect={hoveredAspect ? getAspectId(hoveredAspect) : null}
               onHover={handleAspectHover}
+              onClick={handleAspectHover}
             />
 
             {/* ── 4. Center circle (over aspects, under planets) ───────────── */}
@@ -285,6 +336,7 @@ export function ChartWheel({
               planets={renderData.planets}
               highlightPlanet={hoveredPlanet?.planet.planet ?? null}
               onHover={handlePlanetHover}
+              onClick={handlePlanetHover}
             />
 
             {/* ── 6. Inline tooltip (SVG) ──────────────────────────────────── */}

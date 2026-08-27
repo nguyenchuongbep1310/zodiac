@@ -8,7 +8,7 @@ export default function NotFoundPage() {
   const { language } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-[#F7F3ED] dark:bg-[#14110F] flex items-center justify-center px-4 transition-colors">
+    <div className="min-h-[100dvh] bg-[#F7F3ED] dark:bg-[#14110F] flex items-center justify-center px-4 transition-colors">
       <div className="text-center animate-fade-in max-w-md p-8 rounded-[2rem] bg-[#FAF7F2] dark:bg-[#1C1815] border border-[#EBE4D8] dark:border-white/10 shadow-xl">
         <div className="text-6xl mb-4 font-serif italic font-bold text-[#8C5A3C] dark:text-[#E8B896]">404</div>
         <div className="text-3xl mb-4 text-[#B5A499]">✦</div>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
@@ -24,6 +24,19 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://astromind.app";
 const title = "AstroMind — Natal Chart & AI Astrology Platform";
 const description =
   "Calculate and explore your natal chart. Discover planetary positions, house cusps, and aspects with AstroMind — a modern AI astrology platform.";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Lets the background paint under the iPhone notch/Dynamic Island and
+  // home-indicator area instead of leaving a plain bar there; safe-area
+  // insets in globals.css/components keep actual content clear of it.
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FDFDFD" },
+    { media: "(prefers-color-scheme: dark)", color: "#2a2426" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -76,7 +89,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="font-sans bg-[var(--bg-main)] text-[var(--text-main)] min-h-screen">
+      <body className="font-sans bg-[var(--bg-main)] text-[var(--text-main)] min-h-[100dvh]">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {/* Editorial glowing orb background */}
           <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -86,7 +99,7 @@ export default function RootLayout({
           <HtmlLangSync />
           <QueryProvider>
             <ToastProvider>
-              <div className="relative z-10 flex flex-col min-h-screen">
+              <div className="relative z-10 flex flex-col min-h-[100dvh]">
                 <FloatingNavbar />
                 <div className="flex-1">{children}</div>
                 <FooterEnhanced />

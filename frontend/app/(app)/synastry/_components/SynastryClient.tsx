@@ -194,7 +194,7 @@ export function SynastryClient() {
   ], [language]);
 
   return (
-    <div className="relative min-h-screen pb-16">
+    <div className="relative min-h-[100dvh] pb-16">
       {/* Ambient background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[#a67c7e]/8 to-transparent blur-3xl" />

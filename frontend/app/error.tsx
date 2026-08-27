@@ -18,7 +18,7 @@ export default function GlobalErrorPage({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-[#F7F3ED] dark:bg-[#14110F] flex items-center justify-center px-4 transition-colors">
+    <div className="min-h-[100dvh] bg-[#F7F3ED] dark:bg-[#14110F] flex items-center justify-center px-4 transition-colors">
       <div className="text-center animate-fade-in max-w-md p-8 rounded-[2rem] bg-[#FAF7F2] dark:bg-[#1C1815] border border-[#EBE4D8] dark:border-white/10 shadow-xl">
         <div className="text-4xl mb-4">⚠️</div>
         <h1 className="text-2xl font-serif italic font-bold text-[#4A3525] dark:text-[#E8DDD3] mb-2">

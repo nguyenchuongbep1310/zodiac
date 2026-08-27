@@ -79,7 +79,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
     : chart.zodiac_system;
 
   return (
-    <div className="relative min-h-screen pb-16">
+    <div className="relative min-h-[100dvh] pb-16">
       {/* Subtle page-level decorative backgrounds */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[#B5A499]/5 to-transparent blur-3xl" />

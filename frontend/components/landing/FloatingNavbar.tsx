@@ -51,11 +51,23 @@ export function FloatingNavbar() {
   }, []);
 
   // Lock body scroll while the mobile drawer is open, and let Escape close it.
+  //
+  // `overflow: hidden` on body does NOT stop background scrolling on iOS
+  // Safari — touchmove still scrolls/rubber-bands the page behind the
+  // drawer. Pinning the body with `position: fixed` (and restoring the
+  // scroll position on close) is the reliable cross-browser fix.
   useEffect(() => {
     if (!mobileMenuOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const scrollY = window.scrollY;
+    const body = document.body.style;
+    const previous = { position: body.position, top: body.top, left: body.left, right: body.right, width: body.width };
+
+    body.position = "fixed";
+    body.top = `-${scrollY}px`;
+    body.left = "0";
+    body.right = "0";
+    body.width = "100%";
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMobileMenuOpen(false);
@@ -63,7 +75,12 @@ export function FloatingNavbar() {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      body.position = previous.position;
+      body.top = previous.top;
+      body.left = previous.left;
+      body.right = previous.right;
+      body.width = previous.width;
+      window.scrollTo(0, scrollY);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [mobileMenuOpen]);
@@ -95,11 +112,12 @@ export function FloatingNavbar() {
   return (
     <>
       <header
-        className={`fixed top-4 inset-x-0 mx-auto z-50 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           isScrolled
             ? "w-[92%] md:w-[82%] max-w-6xl"
             : "w-[96%] md:w-[92%] max-w-7xl"
         }`}
+        style={{ top: "max(1rem, calc(env(safe-area-inset-top) + 0.5rem))" }}
       >
         <div
           className={`flex items-center justify-between px-8 py-4 sm:py-4.5 rounded-full border shadow-xl transition-colors duration-500 ${
@@ -165,7 +183,7 @@ export function FloatingNavbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden p-2 text-slate-800 dark:text-slate-200"
+            className="md:hidden -mr-2.5 p-2.5 text-slate-800 dark:text-slate-200"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileMenuOpen}
@@ -191,13 +209,17 @@ export function FloatingNavbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="w-3/4 max-w-sm h-full bg-warm-cream dark:bg-mystic-dark border-l border-white/10 p-6 flex flex-col shadow-2xl"
+              style={{
+                paddingTop: "max(1.5rem, calc(env(safe-area-inset-top) + 1rem))",
+                paddingBottom: "max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem))",
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-12">
                 <BrandLogo size="md" onClick={() => setMobileMenuOpen(false)} />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+                  className="-mr-2.5 p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
                   aria-label="Close menu"
                 >
                   <X size={24} className="text-slate-800 dark:text-slate-200" />

@@ -8,7 +8,7 @@ export default function PrivacyPage() {
   const { language } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-[#F7F3ED] dark:bg-[#14110F] pt-28 sm:pt-32 pb-24 px-4 sm:px-6 transition-colors">
+    <div className="min-h-[100dvh] bg-[#F7F3ED] dark:bg-[#14110F] pt-28 sm:pt-32 pb-24 px-4 sm:px-6 transition-colors">
       <div className="max-w-3xl mx-auto">
         <Link
           href="/"

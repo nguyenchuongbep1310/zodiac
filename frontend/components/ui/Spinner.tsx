@@ -23,7 +23,7 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
 
 export function PageLoader() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-space-gradient">
+    <div className="flex min-h-[100dvh] items-center justify-center bg-space-gradient">
       <div className="flex flex-col items-center gap-4">
         <div className="relative">
           <Spinner size="lg" />

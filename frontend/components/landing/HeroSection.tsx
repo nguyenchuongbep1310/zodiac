@@ -141,13 +141,13 @@ export function HeroSection() {
                     {t("home.hero.date_label")}
                   </label>
                   <div className="relative">
-                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
+                    <Calendar className="hidden sm:block pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
                     <input
                       type="date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       required
-                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20"
+                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-4 sm:pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20"
                     />
                   </div>
                 </div>
@@ -158,14 +158,14 @@ export function HeroSection() {
                     {t("home.hero.time_label")}
                   </label>
                   <div className="relative">
-                    <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
+                    <Clock className="hidden sm:block pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
                     <input
                       type="time"
                       value={time}
                       disabled={unknownTime}
                       onChange={(e) => setTime(e.target.value)}
                       required={!unknownTime}
-                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all disabled:opacity-50 hover:border-[#B5A499]/60 dark:hover:border-white/20"
+                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-4 sm:pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all disabled:opacity-50 hover:border-[#B5A499]/60 dark:hover:border-white/20"
                     />
                   </div>
                   <label className="flex items-center gap-2 mt-2.5 cursor-pointer text-sm text-[#7A6E65] dark:text-[#A8988C]">

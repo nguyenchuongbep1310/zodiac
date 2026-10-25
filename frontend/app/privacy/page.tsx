@@ -36,7 +36,9 @@ export default function PrivacyPage() {
                 <p>
                   Để tính toán bản đồ sao cá nhân của bạn một cách chuẩn xác, hệ thống yêu cầu thông tin về ngày sinh, giờ sinh và địa điểm sinh.
                   Dữ liệu này chỉ được sử dụng duy nhất cho mục đích tính toán thiên văn (tọa độ hành tinh, đỉnh nhà, góc chiếu) và không bao giờ
-                  bị bán cho bên thứ ba hoặc dùng để theo dõi quảng cáo.
+                  bị bán cho bên thứ ba hoặc dùng để theo dõi quảng cáo. Mỗi biểu đồ bạn tạo (tên, ngày giờ sinh, địa điểm và kết quả tính toán) được
+                  lưu trên máy chủ của chúng tôi và ai có đường dẫn biểu đồ đều có thể xem; bạn có thể yêu cầu xóa như nêu ở Mục 4. Khi tìm kiếm thành phố,
+                  tên thành phố bạn nhập được gửi tới dịch vụ bản đồ OpenStreetMap Nominatim.
                 </p>
               </section>
 
@@ -85,6 +87,9 @@ export default function PrivacyPage() {
                 <p>
                   To calculate your natal chart, AstroMind requests your birth date, birth time, and birth location. This information is used
                   solely to compute astronomical data (planetary positions, house cusps, and aspects) and is never sold to third parties or used for advertising profiling.
+                  Each chart you create (name, birth details, location and the computed result) is stored on our servers and can be viewed by anyone who has
+                  its link; you can request deletion as described in Section 4. When you search for a city, the text you type is sent to the OpenStreetMap
+                  Nominatim geocoding service.
                 </p>
               </section>
 

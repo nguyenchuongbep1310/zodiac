@@ -60,7 +60,7 @@ func (s *ChartService) Calculate(
 
 	loc, err := time.LoadLocation(params.Timezone)
 	if err != nil {
-		return nil, fmt.Errorf("invalid timezone: %w", err)
+		return nil, domain.ErrValidation("timezone must be a valid IANA time zone name, e.g. Asia/Ho_Chi_Minh")
 	}
 
 	utcTime := time.Date(

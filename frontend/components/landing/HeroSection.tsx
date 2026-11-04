@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Calendar, Check, Clock, Search, Sparkles, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCalculateChart } from "@/lib/hooks/useCharts";
+import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { useTranslation } from "@/lib/hooks/useI18n";
 import { motion } from "framer-motion";
@@ -276,13 +277,9 @@ export function HeroSection() {
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full h-14 rounded-2xl bg-[var(--am-primary)] text-[var(--am-primary-ink)] text-base font-bold shadow-lg shadow-[var(--am-primary)]/30 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 disabled:opacity-60 disabled:hover:translate-y-0 transition cursor-pointer"
-              >
+              <Button type="submit" size="lg" fullWidth isLoading={isLoading}>
                 {isLoading ? t("home.hero.btn_loading") : t("home.hero.btn_submit")}
-              </button>
+              </Button>
             </form>
           </div>
         </motion.div>

@@ -10,10 +10,10 @@ export function Card({ glow, hover, className, children, ...props }: CardProps) 
   return (
     <div
       className={cn(
-        "rounded-[1.75rem] border border-[var(--am-line)] bg-[var(--am-surface)]",
-        "transition-all duration-300 ease-out",
-        glow && "shadow-[0_24px_60px_-24px_rgba(76,52,200,0.35)]",
-        hover && "hover:shadow-lg hover:-translate-y-1 cursor-pointer",
+        "rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] bg-[var(--am-surface)]",
+        "transition-[transform,box-shadow] duration-150 ease-out",
+        glow && "shadow-[var(--am-shadow)]",
+        hover && "hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] cursor-pointer",
         className
       )}
       {...props}

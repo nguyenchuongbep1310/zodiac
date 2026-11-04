@@ -23,15 +23,15 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 const icons: Record<ToastType, React.ReactNode> = {
-  success: <CheckCircle className="h-5 w-5 text-emerald-500" />,
-  error: <XCircle className="h-5 w-5 text-rose-500" />,
+  success: <CheckCircle className="h-5 w-5 text-[var(--am-teal)]" />,
+  error: <XCircle className="h-5 w-5 text-[var(--am-sunset)]" />,
   info: <Info className="h-5 w-5 text-[var(--am-primary)]" />,
 };
 
 const toastStyles: Record<ToastType, string> = {
-  success: "border-emerald-500/40",
-  error: "border-rose-500/40",
-  info: "border-[var(--am-primary)]/40",
+  success: "border-[var(--am-teal)]",
+  error: "border-[var(--am-sunset)]",
+  info: "border-[var(--am-edge)]",
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -63,8 +63,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             className={cn(
-              "flex items-start gap-3 rounded-2xl border p-4 shadow-xl bg-[var(--am-surface)]",
-              "backdrop-blur-md animate-slide-in-right pointer-events-auto",
+              "flex items-start gap-3 rounded-[var(--am-radius)] border-2 p-4 shadow-[var(--am-shadow)] bg-[var(--am-surface)]",
+              "animate-slide-in-right pointer-events-auto",
               toastStyles[t.type]
             )}
           >

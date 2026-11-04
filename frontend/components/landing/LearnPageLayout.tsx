@@ -66,7 +66,7 @@ export function LearnPageLayout({
   };
 
   return (
-    <div className="bg-white dark:bg-brand-bg-dark">
+    <div className="bg-[var(--am-surface)]">
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 px-4 md:px-6 lg:px-8 overflow-hidden">
         {/* Background Elements */}
@@ -181,7 +181,7 @@ export function LearnPageLayout({
               <input
                 type="email"
                 placeholder={t("home.learn.newsletter_placeholder")}
-                className="flex-1 px-4 py-3 rounded-[var(--am-radius)] bg-white dark:bg-brand-surface-dark border border-brand-gray-light/50 dark:border-brand-burgundy-darker/30 text-brand-dark dark:text-brand-light placeholder-brand-dark/40 dark:placeholder-brand-light/40 focus:outline-none focus:border-brand-burgundy dark:focus:border-brand-gold transition-colors"
+                className="flex-1 px-4 py-3 rounded-[var(--am-radius)] bg-[var(--am-field)] border border-brand-gray-light/50 dark:border-brand-burgundy-darker/30 text-brand-dark dark:text-brand-light placeholder-brand-dark/40 dark:placeholder-brand-light/40 focus:outline-none focus:border-brand-burgundy dark:focus:border-brand-gold transition-colors"
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}

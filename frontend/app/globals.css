@@ -18,26 +18,21 @@
   --color-mystic-dark: #121013;
 
   /* Brand palette (Learn pages, cards) */
-  --color-brand-cream: #f7f5ff;
-  --color-brand-burgundy: #6d4aff;
-  --color-brand-burgundy-dark: #5536e0;
-  --color-brand-burgundy-darker: #3b22b0;
-  --color-brand-blue: #3a5bd9;
-  --color-brand-teal: #13a37a;
-  --color-brand-gold: #ff8a5c;
-  --color-brand-dark: #17132e;
-  --color-brand-light: #ece8ff;
-  --color-brand-bg-dark: #0f0c1f;
-  --color-brand-surface-dark: #1a1630;
-  --color-brand-gray-light: #e9e6f5;
-  --color-brand-gray-accent: #5d5878;
+  --color-brand-cream: #fbf4e0;
+  --color-brand-burgundy: #8b1e1e;
+  --color-brand-burgundy-dark: #6f1717;
+  --color-brand-burgundy-darker: #4d1010;
+  --color-brand-blue: #2f6a82;
+  --color-brand-teal: #1f5148;
+  --color-brand-gold: #d9a521;
+  --color-brand-dark: #1c1410;
+  --color-brand-light: #f3e6c8;
+  --color-brand-bg-dark: #170e0b;
+  --color-brand-surface-dark: #241713;
+  --color-brand-gray-light: #ead7a8;
+  --color-brand-gray-accent: #5e4b3c;
 
   /* Override Tailwind default colors globally */
-  --color-violet-300: var(--theme-violet-300);
-  --color-violet-400: var(--theme-violet-400);
-  --color-violet-500: var(--theme-violet-500);
-  --color-violet-600: var(--theme-violet-600);
-  --color-violet-700: var(--theme-violet-700);
   
   --color-amber-300: var(--theme-amber-300);
   --color-amber-400: var(--theme-amber-400);
@@ -119,12 +114,6 @@
     --theme-slate-400: #64748B;
     --theme-slate-500: #94A3B8;
 
-    /* Violet (slightly darker for contrast on light) */
-    --theme-violet-300: #8B5CF6;
-    --theme-violet-400: #7C3AED;
-    --theme-violet-500: #6D28D9;
-    --theme-violet-600: #5B21B6;
-    --theme-violet-700: #4C1D95;
 
     /* Amber (darker for contrast) */
     --theme-amber-300: #F59E0B;
@@ -160,11 +149,11 @@
 
     /* Space colors (midnight blue to deep purple) */
     --theme-space-950: #05050A;
-    --theme-space-900: #0B0A10;
-    --theme-space-800: #12101C;
-    --theme-space-700: #1A1729;
-    --theme-space-600: #2D2745;
-    --theme-space-500: #4B4168;
+    --theme-space-900: #170E0B;
+    --theme-space-800: #1C120E;
+    --theme-space-700: #241713;
+    --theme-space-600: #3A2A20;
+    --theme-space-500: #5A4636;
 
     /* Slate to crisp cool grays */
     --theme-slate-200: #E2E8F0;
@@ -172,12 +161,6 @@
     --theme-slate-400: #94A3B8;
     --theme-slate-500: #64748B;
 
-    /* Violet to vibrant cosmic purple */
-    --theme-violet-300: #C4B5FD;
-    --theme-violet-400: #A78BFA;
-    --theme-violet-500: #8B5CF6;
-    --theme-violet-600: #7C3AED;
-    --theme-violet-700: #6D28D9;
 
     /* Amber to warm glowing gold/peach */
     --theme-amber-300: #FCD34D;

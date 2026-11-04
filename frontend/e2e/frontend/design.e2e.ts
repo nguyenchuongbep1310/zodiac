@@ -200,6 +200,14 @@ test.describe("inner pages share the retro look (light)", () => {
           .map((el) => `${el.tagName.toLowerCase()}.${String(el.getAttribute("class")).slice(0, 80)}`),
       );
       expect(offenders).toEqual([]);
+
+      // Surfaces are warm paper (--am-surface / --am-field), never pure white.
+      const whites = await page.evaluate(() =>
+        [...document.querySelectorAll("body *")]
+          .filter((el) => getComputedStyle(el).backgroundColor === "rgb(255, 255, 255)")
+          .map((el) => `${el.tagName.toLowerCase()}.${String(el.getAttribute("class")).slice(0, 70)}`),
+      );
+      expect(whites).toEqual([]);
     });
   }
 });

@@ -99,3 +99,37 @@ test.describe("ticket-bar navbar and parlour footer (light)", () => {
     expect(family).toContain("Space Mono");
   });
 });
+
+test.describe("hero: tarot card and ticket form (light, desktop)", () => {
+  test.use({ colorScheme: "light", viewport: { width: 1280, height: 800 } });
+
+  test("chart wheel sits inside a tarot card", async ({ page }) => {
+    await page.goto("/");
+    const wheel = page.getByRole("img", { name: "Natal chart wheel preview" });
+    await expect(wheel).toBeVisible();
+    expect(await wheel.evaluate((el) => !!el.closest("[data-tarot]"))).toBe(true);
+  });
+
+  test("form is a ticket with a dashed perforation", async ({ page }) => {
+    await page.goto("/");
+    const style = await page.locator("#hero [data-perforation]").evaluate((el) => getComputedStyle(el).borderTopStyle);
+    expect(style).toBe("dashed");
+  });
+
+  test("headline highlight is a solid gold marker, not a gradient", async ({ page }) => {
+    await page.goto("/");
+    const mark = await page.locator("#hero h1 [data-highlight]").evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { bg: s.backgroundColor, image: s.backgroundImage };
+    });
+    expect(mark.bg).toBe("rgb(217, 165, 33)");
+    expect(mark.image).toBe("none");
+  });
+
+  test("a 100-character name does not break the layout", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#hero-name").fill("x".repeat(100));
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+});

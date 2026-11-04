@@ -9,7 +9,7 @@ import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function TopNav() {
   const pathname = usePathname();
-  const { t, language, setLanguage } = useTranslation();
+  const { t, language, setLanguage, localeHref } = useTranslation();
 
   const navItems = [
     { label: t("nav.features"), href: "/dashboard" },
@@ -31,7 +31,7 @@ export function TopNav() {
             return (
               <Link
                 key={href}
-                href={href}
+                href={localeHref(href)}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-slate-900 dark:hover:text-white",
                   active ? "text-slate-900 dark:text-white font-semibold" : "text-slate-600 dark:text-slate-400"
@@ -50,7 +50,7 @@ export function TopNav() {
               onClick={() => setLanguage("en")}
               className={cn(
                 "px-3 py-1 rounded-full transition-all",
-                language === "en" ? "bg-[#4A3525] text-white shadow-xs" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                language === "en" ? "bg-[var(--am-ink)] text-white shadow-xs" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               )}
             >
               English
@@ -59,7 +59,7 @@ export function TopNav() {
               onClick={() => setLanguage("vi")}
               className={cn(
                 "px-3 py-1 rounded-full transition-all",
-                language === "vi" ? "bg-[#4A3525] text-white shadow-xs" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                language === "vi" ? "bg-[var(--am-ink)] text-white shadow-xs" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               )}
             >
               Tiếng Việt

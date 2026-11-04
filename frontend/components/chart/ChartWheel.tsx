@@ -405,7 +405,7 @@ export function ChartWheel({
           { color: '#d97b7b', key: 'opposition' },
           { color: '#a67c7e', key: 'conjunction' },
         ].map(({ color, key }) => (
-          <span key={key} className="flex items-center gap-1.5 text-xs text-[#5C4033] dark:text-slate-300 font-medium">
+          <span key={key} className="flex items-center gap-1.5 text-xs text-[var(--am-ink)] dark:text-slate-300 font-medium">
             <span
               className="inline-block w-5 h-0.5 rounded-full"
               style={{ backgroundColor: color }}

@@ -35,7 +35,7 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
           <div className="flex flex-col min-w-0 gap-0.5">
             <span className={cn(
               "text-base sm:text-lg font-display font-semibold truncate tracking-wide",
-              isAngular ? "text-amber-700 dark:text-amber-400" : "text-[#4A3525] dark:text-[#E8DDD3]"
+              isAngular ? "text-amber-700 dark:text-amber-400" : "text-[var(--am-ink)]"
             )}>
               {isAngular ? t(`house.${house.house_number}`) : `${t("table.house")} ${house.house_number}`}
             </span>
@@ -51,7 +51,7 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
             </div>
           </div>
         </div>
-        <div className="flex justify-end shrink-0 ml-4 text-sm text-[#8C7A6B] dark:text-[#A8988C] font-semibold">
+        <div className="flex justify-end shrink-0 ml-4 text-sm text-[var(--am-muted)] font-semibold">
           {(house.cusp_longitude % 30).toFixed(2)}°
         </div>
       </div>

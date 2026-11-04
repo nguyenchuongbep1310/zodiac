@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { chartsApi, chartKeys } from "@/lib/api/charts";
-import { useI18nStore } from "./useI18n";
+import { useTranslation } from "./useI18n";
 import { CalculateChartRequest } from "@/lib/types/api";
 
 export function useChart(id: string) {
@@ -14,8 +14,8 @@ export function useChart(id: string) {
 }
 
 export function useChartInterpretations(id: string) {
-  const lang = useI18nStore((state) => state.language);
-  
+  const { language: lang } = useTranslation();
+
   return useQuery({
     queryKey: chartKeys.interpretations(id, lang),
     queryFn: () => chartsApi.getInterpretations(id, lang),

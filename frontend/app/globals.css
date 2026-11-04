@@ -17,20 +17,20 @@
   --color-warm-cream: #f4efe6;
   --color-mystic-dark: #121013;
 
-  /* Learn Section Colors */
-  --color-asknova-cream: #f5f3f0;
-  --color-asknova-burgundy: #8b6b66;
-  --color-asknova-burgundy-dark: #6b4f4a;
-  --color-asknova-burgundy-darker: #4a3530;
-  --color-asknova-blue: #4a5568;
-  --color-asknova-teal: #3d6b5d;
-  --color-asknova-gold: #c9a877;
-  --color-asknova-dark: #3c3c3c;
-  --color-asknova-light: #e8ddd3;
-  --color-asknova-bg-dark: #14110f;
-  --color-asknova-surface-dark: #1c1815;
-  --color-asknova-gray-light: #ebe4d8;
-  --color-asknova-gray-accent: #8c7d75;
+  /* Brand palette (Learn pages, cards) */
+  --color-brand-cream: #f7f5ff;
+  --color-brand-burgundy: #6d4aff;
+  --color-brand-burgundy-dark: #5536e0;
+  --color-brand-burgundy-darker: #3b22b0;
+  --color-brand-blue: #3a5bd9;
+  --color-brand-teal: #13a37a;
+  --color-brand-gold: #ff8a5c;
+  --color-brand-dark: #17132e;
+  --color-brand-light: #ece8ff;
+  --color-brand-bg-dark: #0f0c1f;
+  --color-brand-surface-dark: #1a1630;
+  --color-brand-gray-light: #e9e6f5;
+  --color-brand-gray-accent: #5d5878;
 
   /* Override Tailwind default colors globally */
   --color-violet-300: var(--theme-violet-300);
@@ -50,8 +50,8 @@
   --color-slate-500: var(--theme-slate-500);
 
   /* Fonts */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-heading), system-ui, sans-serif;
 
   /* Animations */
   --animate-fade-in: fadeIn 0.4s ease-out;
@@ -82,27 +82,27 @@
   :root, .light {
     color-scheme: light;
     /* Ethereal light theme */
-    --bg-main: #FDFDFD;
-    --bg-grad: linear-gradient(180deg, #FDFDFD 0%, #F3F0EA 100%);
-    --text-main: #1F1D2B;
+    --bg-main: #f7f5ff;
+    --bg-grad: none;
+    --text-main: #17132e;
     --glass-bg: rgba(0, 0, 0, 0.03);
     --glass-border: rgba(0, 0, 0, 0.08);
-    --scroll-track: #F3F0EA;
-    --scroll-thumb: #D0CACA;
+    --scroll-track: #f3f1fb;
+    --scroll-thumb: #cfc6f5;
 
     /* Chart Wheel SVG - Warm Editorial Theme */
-    --wheel-zodiac-bg: rgba(250, 247, 242, 0.95);
-    --wheel-border: rgba(140, 122, 107, 0.7);
-    --wheel-border-inner: rgba(140, 122, 107, 0.4);
-    --wheel-tick: rgba(140, 122, 107, 0.8);
-    --wheel-house-outer: rgba(245, 239, 236, 0.6);
-    --wheel-house-inner: rgba(250, 247, 242, 0.8);
-    --wheel-house-stroke: rgba(140, 122, 107, 0.35);
-    --wheel-planet-track-outer: rgba(245, 239, 236, 0.5);
-    --wheel-planet-track-inner: rgba(140, 122, 107, 0.2);
-    --wheel-planet-bg: #FAF7F2;
-    --wheel-text-glyph: #4A3525;
-    --wheel-text-dim: #7A6E65;
+    --wheel-zodiac-bg: rgba(255, 255, 255, 0.95);
+    --wheel-border: rgba(109, 74, 255, 0.55);
+    --wheel-border-inner: rgba(109, 74, 255, 0.3);
+    --wheel-tick: rgba(109, 74, 255, 0.6);
+    --wheel-house-outer: rgba(243, 241, 251, 0.7);
+    --wheel-house-inner: rgba(255, 255, 255, 0.85);
+    --wheel-house-stroke: rgba(23, 19, 46, 0.14);
+    --wheel-planet-track-outer: rgba(243, 241, 251, 0.5);
+    --wheel-planet-track-inner: rgba(109, 74, 255, 0.15);
+    --wheel-planet-bg: #ffffff;
+    --wheel-text-glyph: #17132e;
+    --wheel-text-dim: #5d5878;
 
     /* Light space colors (warm grays/creams) */
     --theme-space-950: #FFFFFF;
@@ -135,16 +135,16 @@
   .dark {
     color-scheme: dark;
     /* Refined Editorial dark theme */
-    --bg-main: #2a2426;
+    --bg-main: #0f0c1f;
     --bg-grad: none;
-    --text-main: #f5f2f0;
+    --text-main: #f3f0ff;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
-    --scroll-track: #2a2426;
-    --scroll-thumb: #453c3f;
+    --scroll-track: #0f0c1f;
+    --scroll-thumb: #3a3266;
 
     /* Chart Wheel SVG - Refined Neutrals */
-    --wheel-zodiac-bg: rgba(42, 36, 38, 0.85);
+    --wheel-zodiac-bg: rgba(26, 22, 48, 0.9);
     --wheel-border: rgba(255, 255, 255, 0.15);
     --wheel-border-inner: rgba(255, 255, 255, 0.1);
     --wheel-tick: rgba(255, 255, 255, 0.3);
@@ -153,7 +153,7 @@
     --wheel-house-stroke: rgba(255, 255, 255, 0.08);
     --wheel-planet-track-outer: rgba(255, 255, 255, 0.01);
     --wheel-planet-track-inner: rgba(255, 255, 255, 0.03);
-    --wheel-planet-bg: #2a2426;
+    --wheel-planet-bg: #1a1630;
     --wheel-text-glyph: rgba(255, 255, 255, 0.9);
     --wheel-text-dim: rgba(255, 255, 255, 0.5);
 
@@ -292,4 +292,60 @@
 .section-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(181, 164, 153, 0.3), transparent);
+}
+
+/* ── Landing design system ──────────────────────────────────────────────── */
+
+:root {
+  --am-bg: #f7f5ff;
+  --am-surface: #ffffff;
+  --am-ink: #17132e;
+  --am-muted: #5d5878;
+  --am-primary: #6d4aff;
+  --am-primary-ink: #ffffff;
+  --am-sunset: #ff8a5c;
+  --am-mint: #b9f3d6;
+  --am-lilac: #e4dcff;
+  --am-peach: #ffe1d3;
+  --am-line: rgba(23, 19, 46, 0.1);
+  --am-field: #f3f1fb;
+}
+
+.dark {
+  --am-bg: #0f0c1f;
+  --am-surface: #1a1630;
+  --am-ink: #f3f0ff;
+  --am-muted: #a8a2c7;
+  --am-primary: #a48bff;
+  --am-primary-ink: #0f0c1f;
+  --am-sunset: #ff9f7a;
+  --am-mint: #1f4a3c;
+  --am-lilac: #2a2350;
+  --am-peach: #46291f;
+  --am-line: rgba(243, 240, 255, 0.12);
+  --am-field: #221d3d;
+}
+
+.am-page {
+  background: var(--am-bg);
+  color: var(--am-ink);
+}
+
+.am-gradient-text {
+  background: linear-gradient(100deg, var(--am-primary) 10%, var(--am-sunset) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Infinite zodiac strip; content is duplicated once so -50% loops seamlessly */
+@keyframes am-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.am-marquee {
+  animation: am-marquee 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .am-marquee { animation: none; }
 }

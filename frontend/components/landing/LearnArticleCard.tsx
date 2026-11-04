@@ -25,21 +25,21 @@ export function LearnArticleCard({
   href,
   featured = false,
 }: LearnArticleCardProps) {
-  const { t } = useTranslation();
+  const { t, localeHref } = useTranslation();
 
   const categoryColors: Record<string, string> = {
-    basics: "bg-asknova-burgundy/10 text-asknova-burgundy dark:bg-asknova-burgundy/20 dark:text-asknova-gold",
+    basics: "bg-brand-burgundy/10 text-brand-burgundy dark:bg-brand-burgundy/20 dark:text-brand-gold",
     intermediate:
-      "bg-asknova-blue/10 text-asknova-blue dark:bg-asknova-blue/20 dark:text-asknova-light",
+      "bg-brand-blue/10 text-brand-blue dark:bg-brand-blue/20 dark:text-brand-light",
     advanced:
-      "bg-asknova-teal/10 text-asknova-teal dark:bg-asknova-teal/20 dark:text-asknova-gold",
+      "bg-brand-teal/10 text-brand-teal dark:bg-brand-teal/20 dark:text-brand-gold",
     techniques:
-      "bg-asknova-gold/10 text-asknova-dark dark:bg-asknova-gold/20 dark:text-asknova-gold",
+      "bg-brand-gold/10 text-brand-dark dark:bg-brand-gold/20 dark:text-brand-gold",
   };
 
   const categoryColor =
     categoryColors[category] ||
-    "bg-asknova-gray-accent/10 text-asknova-dark dark:bg-asknova-gray-accent/20 dark:text-asknova-light";
+    "bg-brand-gray-accent/10 text-brand-dark dark:bg-brand-gray-accent/20 dark:text-brand-light";
 
   const categoryKey = `category.${category}`;
   const translatedCategory = t(categoryKey);
@@ -61,13 +61,13 @@ export function LearnArticleCard({
       whileHover={{ y: -8 }}
       className="h-full"
     >
-      <Link href={href}>
+      <Link href={localeHref(href)}>
         <div
           className={`
             group relative h-full flex flex-col rounded-lg overflow-hidden
-            bg-white dark:bg-asknova-surface-dark
-            border border-asknova-gray-light/50 dark:border-asknova-burgundy-darker/30
-            hover:border-asknova-burgundy dark:hover:border-asknova-gold
+            bg-white dark:bg-brand-surface-dark
+            border border-brand-gray-light/50 dark:border-brand-burgundy-darker/30
+            hover:border-brand-burgundy dark:hover:border-brand-gold
             shadow-sm hover:shadow-md
             transition-all duration-300 cursor-pointer
             ${featured ? "lg:col-span-2" : ""}
@@ -75,7 +75,7 @@ export function LearnArticleCard({
         >
           {/* Image Section */}
           {image && (
-            <div className="relative h-48 overflow-hidden bg-gradient-to-br from-asknova-burgundy/20 to-asknova-blue/20 dark:from-asknova-burgundy/10 dark:to-asknova-blue/10">
+            <div className="relative h-48 overflow-hidden bg-gradient-to-br from-brand-burgundy/20 to-brand-blue/20 dark:from-brand-burgundy/10 dark:to-brand-blue/10">
               <motion.div
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
@@ -112,10 +112,10 @@ export function LearnArticleCard({
             {/* Title */}
             <h3
               className={`
-                font-display italic font-bold leading-tight mb-3
-                text-asknova-dark dark:text-asknova-light
+                font-display font-extrabold tracking-tight leading-tight mb-3
+                text-brand-dark dark:text-brand-light
                 ${featured ? "text-lg md:text-xl" : "text-base md:text-lg"}
-                hover:text-asknova-burgundy dark:hover:text-asknova-gold
+                hover:text-brand-burgundy dark:hover:text-brand-gold
                 transition-colors
               `}
             >
@@ -125,7 +125,7 @@ export function LearnArticleCard({
             {/* Excerpt */}
             <p
               className={`
-                text-asknova-dark/70 dark:text-asknova-light/70
+                text-brand-dark/70 dark:text-brand-light/70
                 leading-relaxed mb-4 flex-grow
                 ${featured ? "text-sm md:text-base" : "text-sm"}
               `}
@@ -134,7 +134,7 @@ export function LearnArticleCard({
             </p>
 
             {/* Footer: Category & Read Time */}
-            <div className="flex items-center justify-between pt-4 border-t border-asknova-gray-light/30 dark:border-asknova-burgundy-darker/20">
+            <div className="flex items-center justify-between pt-4 border-t border-brand-gray-light/30 dark:border-brand-burgundy-darker/20">
               {!image && (
                 <span
                   className={`
@@ -146,7 +146,7 @@ export function LearnArticleCard({
                 </span>
               )}
 
-              <span className="text-xs text-asknova-dark/60 dark:text-asknova-light/60 font-medium">
+              <span className="text-xs text-brand-dark/60 dark:text-brand-light/60 font-medium">
                 {readLabel}
               </span>
             </div>
@@ -157,7 +157,7 @@ export function LearnArticleCard({
             <motion.div
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-asknova-burgundy dark:text-asknova-gold"
+              className="text-brand-burgundy dark:text-brand-gold"
             >
               →
             </motion.div>

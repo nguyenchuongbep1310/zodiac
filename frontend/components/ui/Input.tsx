@@ -20,14 +20,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={id}
-            className="text-sm font-medium text-slate-300"
+            className="text-sm font-semibold text-[var(--am-ink)]"
           >
             {label}
           </label>
         )}
         <div className="relative">
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--am-muted)]">
               {icon}
             </div>
           )}
@@ -36,13 +36,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={id}
             type={inputType}
             className={cn(
-              "w-full rounded-xl border bg-space-800/60 backdrop-blur-sm",
-              "px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500",
+              "w-full rounded-2xl border bg-[var(--am-field)]",
+              "px-4 py-2.5 text-sm text-[var(--am-ink)] placeholder:text-[var(--am-muted)]/70",
               "transition-all duration-200 outline-none",
-              "focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50",
+              "focus:ring-4 focus:ring-[var(--am-primary)]/15 focus:border-[var(--am-primary)]",
               error
                 ? "border-rose-500/50 focus:ring-rose-500/30"
-                : "border-space-500/50 hover:border-space-400/50",
+                : "border-[var(--am-line)]",
               icon && "pl-10",
               isPassword && "pr-10",
               className
@@ -54,7 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               type="button"
               tabIndex={-1}
               onClick={() => setShowPassword((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" />
@@ -65,7 +65,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {error && <p className="text-xs text-rose-400">{error}</p>}
-        {hint && !error && <p className="text-xs text-slate-500">{hint}</p>}
+        {hint && !error && <p className="text-xs text-[var(--am-muted)]">{hint}</p>}
       </div>
     );
   }

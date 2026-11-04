@@ -11,7 +11,7 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
   return (
     <div
       className={cn(
-        "animate-spin rounded-full border-2 border-space-600 border-t-violet-500",
+        "animate-spin rounded-full border-2 border-[var(--am-line)] border-t-[var(--am-primary)]",
         sizeMap[size],
         className
       )}
@@ -31,7 +31,7 @@ export function PageLoader() {
             ✦
           </div>
         </div>
-        <p className="text-sm text-slate-400 animate-pulse">Loading…</p>
+        <p className="text-sm text-[var(--am-muted)] animate-pulse">Loading…</p>
       </div>
     </div>
   );

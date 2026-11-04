@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar, Clock, Search, User } from "lucide-react";
+import { Calendar, Check, Clock, Search, Sparkles, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCalculateChart } from "@/lib/hooks/useCharts";
 import { useToast } from "@/components/ui/Toast";
@@ -13,7 +13,7 @@ export function HeroSection() {
   const router = useRouter();
   const calculateChart = useCalculateChart();
   const { error: toastError } = useToast();
-  const { t, language } = useTranslation();
+  const { t, language, localeHref } = useTranslation();
 
   const [name, setName] = useState("");
   const [city, setCity] = useState("Hà Nội");
@@ -72,7 +72,7 @@ export function HeroSection() {
         house_system: houseSystem,
       });
 
-      router.push(`/charts/${chart.id}`);
+      router.push(localeHref(`/charts/${chart.id}`));
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : t("misc.error");
       toastError(t("home.hero.toast_calc_error"), message);
@@ -80,146 +80,162 @@ export function HeroSection() {
     }
   };
 
+  // Copy marks the highlighted half of the headline with "|".
+  const [titleLead, titleHighlight] = t("home.hero.title").split("|").map((part) => part.trim());
+
+  const label = "block text-sm font-semibold text-[var(--am-ink)] mb-1.5";
+  const field =
+    "w-full h-12 rounded-2xl border border-[var(--am-line)] bg-[var(--am-field)] px-4 text-base text-[var(--am-ink)] placeholder:text-[var(--am-muted)]/70 focus:outline-none focus:border-[var(--am-primary)] focus:ring-4 focus:ring-[var(--am-primary)]/15 disabled:opacity-50 transition";
+  const icon = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--am-muted)]";
+  const linkBtn = "text-sm text-[var(--am-primary)] font-medium hover:underline underline-offset-4";
+
   return (
-    <section id="hero" className="relative w-full bg-[#F7F3ED] dark:bg-[#14110F] pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 transition-colors overflow-hidden">
-      {/* Subtle decorative background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[#B5A499]/8 to-transparent blur-3xl" />
-        <div className="absolute -bottom-60 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[#a67c7e]/6 to-transparent blur-3xl" />
+    <section id="hero" className="relative w-full overflow-hidden pt-28 sm:pt-32 pb-16 md:pb-24">
+      {/* Soft gradient blobs */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-32 -left-24 w-[28rem] h-[28rem] rounded-full bg-[var(--am-lilac)] blur-3xl opacity-80" />
+        <div className="absolute top-40 -right-32 w-[26rem] h-[26rem] rounded-full bg-[var(--am-peach)] blur-3xl opacity-80" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto space-y-10">
-        
-        {/* Header with fade-in animation */}
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center space-y-4 max-w-3xl mx-auto"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center lg:text-left"
         >
-          <h1 className="font-serif italic font-normal text-5xl sm:text-6xl lg:text-7xl text-[#4A3525] dark:text-[#E8DDD3] tracking-tight leading-[1.1]">
-            {t("home.hero.title")}
+          <span className="inline-flex items-center gap-2 rounded-full bg-[var(--am-surface)] border border-[var(--am-line)] px-4 py-1.5 text-sm font-medium text-[var(--am-ink)] shadow-sm">
+            <Sparkles className="w-4 h-4 text-[var(--am-sunset)]" aria-hidden="true" />
+            {t("home.hero.eyebrow")}
+          </span>
+          <h1 className="font-display font-extrabold tracking-tight text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl text-[var(--am-ink)] mt-6">
+            {titleLead}
+            {titleHighlight && (
+              <>
+                {" "}
+                <span className="am-gradient-text">{titleHighlight}</span>
+              </>
+            )}
           </h1>
-          <p className="text-lg sm:text-xl text-[#7A6E65] dark:text-[#A8988C] font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-5 text-lg sm:text-xl text-[var(--am-muted)] max-w-xl mx-auto lg:mx-0 leading-relaxed">
             {t("home.hero.desc")}
+          </p>
+          <p className="mt-6 inline-flex items-center gap-2 text-sm text-[var(--am-muted)]">
+            <span className="grid place-items-center w-5 h-5 rounded-full bg-[var(--am-mint)] text-[var(--am-ink)]">
+              <Check className="w-3 h-3" aria-hidden="true" />
+            </span>
+            {t("home.hero.trust")}
           </p>
         </motion.div>
 
-        {/* Outer Card Container */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="bg-[#FAF7F2] dark:bg-[#1C1815] rounded-[3rem] p-8 sm:p-12 lg:p-16 border border-[#EBE4D8] dark:border-white/5 shadow-xl shadow-[#4A3525]/5 dark:shadow-black/30"
+          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+          className="relative"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            
-            {/* Left Column: Form */}
-            <div className="lg:col-span-5 space-y-6">
-              <form onSubmit={handleStart} className="space-y-5">
-
-                {/* Name */}
-                <div>
-                  <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
-                    {t("home.hero.name_label")}
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder={t("home.hero.name_placeholder")}
-                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20"
-                    />
-                  </div>
+          <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] p-5 sm:p-8 shadow-[0_24px_60px_-20px_rgba(76,52,200,0.35)]">
+            <h2 className="font-display text-2xl font-bold text-[var(--am-ink)] mb-5">{t("home.hero.form_title")}</h2>
+            <form onSubmit={handleStart} className="space-y-4">
+              <div>
+                <label htmlFor="hero-name" className={label}>{t("home.hero.name_label")}</label>
+                <div className="relative">
+                  <User className={icon} aria-hidden="true" />
+                  <input
+                    id="hero-name"
+                    type="text"
+                    value={name}
+                    maxLength={100}
+                    autoComplete="given-name"
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder={t("home.hero.name_placeholder")}
+                    className={`${field} pl-10`}
+                  />
                 </div>
+              </div>
 
-                {/* Birth Date */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
-                    {t("home.hero.date_label")}
-                  </label>
+                  <label htmlFor="hero-date" className={label}>{t("home.hero.date_label")}</label>
                   <div className="relative">
-                    <Calendar className="hidden sm:block pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
+                    <Calendar className={`${icon} hidden sm:block`} aria-hidden="true" />
                     <input
+                      id="hero-date"
                       type="date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       required
-                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-4 sm:pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20"
+                      className={`${field} sm:pl-10`}
                     />
                   </div>
                 </div>
 
-                {/* Birth Time */}
                 <div>
-                  <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
-                    {t("home.hero.time_label")}
-                  </label>
+                  <label htmlFor="hero-time" className={label}>{t("home.hero.time_label")}</label>
                   <div className="relative">
-                    <Clock className="hidden sm:block pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70]" />
+                    <Clock className={`${icon} hidden sm:block`} aria-hidden="true" />
                     <input
+                      id="hero-time"
                       type="time"
                       value={time}
                       disabled={unknownTime}
                       onChange={(e) => setTime(e.target.value)}
                       required={!unknownTime}
-                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-4 sm:pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all disabled:opacity-50 hover:border-[#B5A499]/60 dark:hover:border-white/20"
+                      className={`${field} sm:pl-10`}
                     />
                   </div>
-                  <label className="flex items-center gap-2 mt-2.5 cursor-pointer text-sm text-[#7A6E65] dark:text-[#A8988C]">
-                    <input
-                      type="checkbox"
-                      checked={unknownTime}
-                      onChange={(e) => setUnknownTime(e.target.checked)}
-                      className="rounded border-[#D0C4B8] text-[#9E8B7F] focus:ring-0 w-4 h-4"
-                    />
-                    <span>{t("home.hero.unknown_time")}</span>
-                  </label>
+                </div>
+              </div>
+
+              <label className="flex items-center gap-2 cursor-pointer text-sm text-[var(--am-ink)]">
+                <input
+                  type="checkbox"
+                  checked={unknownTime}
+                  onChange={(e) => setUnknownTime(e.target.checked)}
+                  className="w-4 h-4 rounded accent-[var(--am-primary)]"
+                />
+                <span>{t("home.hero.unknown_time")}</span>
+              </label>
+
+              <div className="relative">
+                <label htmlFor="hero-city" className={label}>{t("home.hero.location_label")}</label>
+                <div className="relative">
+                  <Search className={icon} aria-hidden="true" />
+                  <input
+                    id="hero-city"
+                    type="text"
+                    value={city}
+                    onChange={(e) => {
+                      setCity(e.target.value);
+                      setShowDropdown(true);
+                    }}
+                    onFocus={() => setShowDropdown(true)}
+                    onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                    placeholder={t("home.hero.location_placeholder")}
+                    required
+                    autoComplete="off"
+                    className={`${field} pl-10`}
+                  />
                 </div>
 
-                {/* Birth Location */}
-                <div className="relative">
-                  <label className="text-base font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-2 block">
-                    {t("home.hero.location_label")}
-                  </label>
-                  <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#947E70] pointer-events-none" />
-                    <input
-                      type="text"
-                      value={city}
-                      onChange={(e) => {
-                        setCity(e.target.value);
-                        setShowDropdown(true);
-                      }}
-                      onFocus={() => setShowDropdown(true)}
-                      onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      placeholder={t("home.hero.location_placeholder")}
-                      required
-                      autoComplete="off"
-                      className="w-full bg-[#F3EDE4] dark:bg-[#27211C] border border-[#E3D8CB] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[#4A3525] dark:text-[#E8DDD3] placeholder-[#A8988C] text-base focus:outline-none focus:ring-2 focus:ring-[#B5A499] transition-all hover:border-[#B5A499]/60 dark:hover:border-white/20"
-                    />
-                  </div>
+                {showDropdown && geoResults.length > 0 && (
+                  <ul className="absolute z-50 w-full mt-2 bg-[var(--am-surface)] border border-[var(--am-line)] rounded-2xl shadow-xl overflow-hidden text-left max-h-56 overflow-y-auto">
+                    {geoResults.map((result, i) => (
+                      <li
+                        key={i}
+                        className="px-4 py-3 hover:bg-[var(--am-field)] cursor-pointer text-sm text-[var(--am-ink)] border-b border-[var(--am-line)] last:border-0"
+                        onClick={() => {
+                          setCity(result.display_name.split(",")[0]);
+                          setShowDropdown(false);
+                        }}
+                      >
+                        {result.display_name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
-                  {/* Location Autocomplete Dropdown */}
-                  {showDropdown && geoResults.length > 0 && (
-                    <ul className="absolute z-50 w-full mt-1 bg-[#FAF7F2] dark:bg-[#1E1915] border border-[#E5DCD0] dark:border-white/10 rounded-2xl shadow-xl overflow-hidden text-left max-h-56 overflow-y-auto">
-                      {geoResults.map((result, i) => (
-                        <li
-                          key={i}
-                          className="px-5 py-3 hover:bg-[#F0E6D8] dark:hover:bg-white/5 cursor-pointer text-sm text-[#5C4033] dark:text-[#E8DDD3] border-b border-[#EBE4D8] dark:border-white/5 last:border-0"
-                          onClick={() => {
-                            setCity(result.display_name.split(",")[0]);
-                            setShowDropdown(false);
-                          }}
-                        >
-                          {result.display_name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
+                <div className="flex flex-wrap items-center justify-between gap-2 mt-2">
                   <button
                     type="button"
                     onClick={() => {
@@ -228,129 +244,46 @@ export function HeroSection() {
                         : ["New York", "London", "Paris", "Tokyo", "Sydney", "Hanoi"];
                       setCity(sampleCities[Math.floor(Math.random() * sampleCities.length)]);
                     }}
-                    className="text-xs sm:text-sm text-[#8C7A6B] dark:text-[#A8988C] hover:underline mt-2 inline-block font-light"
+                    className={linkBtn}
                   >
                     {t("home.hero.manual_coords")}
                   </button>
-                </div>
-
-                {/* Show Extended Settings */}
-                <div>
                   <button
                     type="button"
                     onClick={() => setShowExtended(!showExtended)}
-                    className="text-xs sm:text-sm text-[#8C7A6B] dark:text-[#A8988C] font-medium hover:underline inline-block"
+                    aria-expanded={showExtended}
+                    className="text-sm text-[var(--am-muted)] hover:text-[var(--am-ink)]"
                   >
                     {showExtended ? t("home.hero.hide_extended") : t("home.hero.show_extended")}
                   </button>
-
-                  {showExtended && (
-                    <div className="mt-3 p-5 bg-[#F3EDE4] dark:bg-[#27211C] rounded-2xl space-y-3 border border-[#E3D8CB] dark:border-white/10">
-                      <div>
-                        <label className="text-xs sm:text-sm font-semibold text-[#5C4033] dark:text-[#E8DDD3] mb-1 block">
-                          {t("home.hero.house_system")}
-                        </label>
-                        <select
-                          value={houseSystem}
-                          onChange={(e) => setHouseSystem(e.target.value as "placidus" | "koch" | "whole_sign" | "equal")}
-                          className="w-full bg-[#FAF7F2] dark:bg-[#1C1815] border border-[#E3D8CB] dark:border-white/10 rounded-xl p-2.5 text-sm text-[#4A3525] dark:text-[#E8DDD3]"
-                        >
-                          <option value="placidus">{t("system.placidus")}</option>
-                          <option value="whole_sign">{t("system.whole_sign")}</option>
-                          <option value="koch">{t("system.koch")}</option>
-                          <option value="equal">{t("system.equal")}</option>
-                        </select>
-                      </div>
-                    </div>
-                  )}
                 </div>
+              </div>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="group relative w-full bg-gradient-to-r from-[#5C4033] to-[#8C5A3C] hover:from-[#4A3525] hover:to-[#7A4A30] text-[#F7F3ED] font-semibold text-lg rounded-full py-4 transition-all shadow-lg hover:shadow-xl disabled:opacity-60 cursor-pointer mt-6 overflow-hidden"
-                >
-                  <span className="relative z-10">{isLoading ? t("home.hero.btn_loading") : t("home.hero.btn_submit")}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#8C5A3C] to-[#A67C7E] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </button>
-              </form>
-            </div>
+              {showExtended && (
+                <div className="p-4 bg-[var(--am-field)] rounded-2xl">
+                  <label htmlFor="hero-house" className={label}>{t("home.hero.house_system")}</label>
+                  <select
+                    id="hero-house"
+                    value={houseSystem}
+                    onChange={(e) => setHouseSystem(e.target.value as "placidus" | "koch" | "whole_sign" | "equal")}
+                    className={`${field} bg-[var(--am-surface)]`}
+                  >
+                    <option value="placidus">{t("system.placidus")}</option>
+                    <option value="whole_sign">{t("system.whole_sign")}</option>
+                    <option value="koch">{t("system.koch")}</option>
+                    <option value="equal">{t("system.equal")}</option>
+                  </select>
+                </div>
+              )}
 
-            {/* Right Column: Large Prominent Chart Wheel Visual */}
-            <div className="lg:col-span-7 flex items-center justify-center p-2 sm:p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                className="relative w-full max-w-[540px] sm:max-w-[620px] lg:max-w-[680px] aspect-square flex items-center justify-center"
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full h-14 rounded-2xl bg-[var(--am-primary)] text-[var(--am-primary-ink)] text-base font-bold shadow-lg shadow-[var(--am-primary)]/30 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 disabled:opacity-60 disabled:hover:translate-y-0 transition cursor-pointer"
               >
-                {/* Subtle glow behind wheel */}
-                <div className="absolute inset-[10%] rounded-full bg-gradient-radial from-[#B5A499]/10 to-transparent blur-2xl" />
-
-                {/* SVG Natal Chart Graphic */}
-                <svg viewBox="0 0 500 500" className="w-full h-full text-[#9C897B] dark:text-[#B5A499] drop-shadow-sm">
-                  {/* Outer ring */}
-                  <circle cx="250" cy="250" r="230" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                  <circle cx="250" cy="250" r="215" fill="none" stroke="currentColor" strokeWidth="1" />
-                  <circle cx="250" cy="250" r="140" fill="none" stroke="currentColor" strokeWidth="1" />
-                  <circle cx="250" cy="250" r="80" fill="none" stroke="currentColor" strokeWidth="1" />
-
-                  {/* 12 House Cusp Lines */}
-                  {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle, i) => {
-                    const rad = (angle * Math.PI) / 180;
-                    const x1 = (250 + 80 * Math.cos(rad)).toFixed(2);
-                    const y1 = (250 + 80 * Math.sin(rad)).toFixed(2);
-                    const x2 = (250 + 230 * Math.cos(rad)).toFixed(2);
-                    const y2 = (250 + 230 * Math.sin(rad)).toFixed(2);
-                    return (
-                      <line
-                        key={i}
-                        x1={x1}
-                        y1={y1}
-                        x2={x2}
-                        y2={y2}
-                        stroke="currentColor"
-                        strokeWidth={i % 3 === 0 ? "1.5" : "0.75"}
-                        opacity={i % 3 === 0 ? "0.8" : "0.5"}
-                      />
-                    );
-                  })}
-
-                  {/* Colored Aspect Lines in Center */}
-                  <line x1="190" y1="190" x2="310" y2="310" stroke="#7C9A86" strokeWidth="1.2" opacity="0.8" />
-                  <line x1="190" y1="310" x2="310" y2="190" stroke="#8C6E8A" strokeWidth="1.2" opacity="0.8" />
-                  <line x1="200" y1="210" x2="300" y2="290" stroke="#B87D70" strokeWidth="1.2" opacity="0.8" />
-                  <line x1="180" y1="250" x2="320" y2="250" stroke="#7C9A86" strokeWidth="1.2" opacity="0.8" />
-                  <line x1="220" y1="170" x2="280" y2="330" stroke="#C2A066" strokeWidth="1.2" opacity="0.8" />
-
-                  {/* Planet & Zodiac Glyphs placeholders matching reference */}
-                  <text x="245" y="42" fill="#B87D70" fontSize="16" fontFamily="serif">♑</text>
-                  <text x="350" y="70" fill="#C2A066" fontSize="16" fontFamily="serif">♒</text>
-                  <text x="425" y="150" fill="#7C9A86" fontSize="16" fontFamily="serif">♓</text>
-                  <text x="440" y="255" fill="#B87D70" fontSize="16" fontFamily="serif">♈</text>
-                  <text x="420" y="360" fill="#C2A066" fontSize="16" fontFamily="serif">♉</text>
-                  <text x="340" y="440" fill="#8C6E8A" fontSize="16" fontFamily="serif">♊</text>
-                  <text x="245" y="465" fill="#7C9A86" fontSize="16" fontFamily="serif">♋</text>
-                  <text x="140" y="440" fill="#B87D70" fontSize="16" fontFamily="serif">♌</text>
-                  <text x="60" y="360" fill="#C2A066" fontSize="16" fontFamily="serif">♍</text>
-                  <text x="40" y="255" fill="#8C6E8A" fontSize="16" fontFamily="serif">♎</text>
-                  <text x="65" y="150" fill="#7C9A86" fontSize="16" fontFamily="serif">♏</text>
-                  <text x="140" y="70" fill="#B87D70" fontSize="16" fontFamily="serif">♐</text>
-
-                  {/* Inner Planet Symbols */}
-                  <text x="200" y="130" fill="#4A3525" fontSize="14">☉</text>
-                  <text x="280" y="150" fill="#4A3525" fontSize="14">☽</text>
-                  <text x="330" y="210" fill="#4A3525" fontSize="14">☿</text>
-                  <text x="310" y="300" fill="#4A3525" fontSize="14">♀</text>
-                  <text x="270" y="360" fill="#4A3525" fontSize="14">♂</text>
-                  <text x="170" y="340" fill="#4A3525" fontSize="14">♃</text>
-                  <text x="140" y="280" fill="#4A3525" fontSize="14">♄</text>
-                  <text x="150" y="200" fill="#4A3525" fontSize="14">♅</text>
-                </svg>
-              </motion.div>
-            </div>
-
+                {isLoading ? t("home.hero.btn_loading") : t("home.hero.btn_submit")}
+              </button>
+            </form>
           </div>
         </motion.div>
       </div>

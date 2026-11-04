@@ -14,7 +14,7 @@ export function FloatingNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  const { t, language, setLanguage } = useTranslation();
+  const { t, language, setLanguage, localeHref } = useTranslation();
 
   // Hydration guard for next-themes: `theme` is undefined on the server and
   // on the very first client render, so rendering an icon based on it before
@@ -113,29 +113,25 @@ export function FloatingNavbar() {
     <>
       <header
         className={`fixed inset-x-0 mx-auto z-50 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-          isScrolled
-            ? "w-[92%] md:w-[82%] max-w-6xl"
-            : "w-[96%] md:w-[92%] max-w-7xl"
+          "w-[calc(100%-1.5rem)] md:w-[calc(100%-3rem)] max-w-7xl"
         }`}
         style={{ top: "max(1rem, calc(env(safe-area-inset-top) + 0.5rem))" }}
       >
         <div
-          className={`flex items-center justify-between px-8 py-4 sm:py-4.5 rounded-full border shadow-xl transition-colors duration-500 ${
-            isScrolled
-              ? "bg-white/15 dark:bg-black/30 border-white/20 dark:border-white/10 backdrop-blur-xl shadow-mystic-dark/10"
-              : "bg-white/10 dark:bg-black/15 border-white/15 dark:border-white/5 backdrop-blur-md shadow-transparent"
+          className={`flex items-center justify-between px-5 md:px-8 py-2.5 md:py-3 rounded-full bg-[var(--am-surface)]/80 backdrop-blur-md border border-[var(--am-line)] transition-shadow duration-500 ${
+            isScrolled ? "shadow-md shadow-black/5" : "shadow-none"
           }`}
         >
           {/* Logo */}
-          <BrandLogo size="md" />
+          <BrandLogo size="sm" />
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-10 lg:gap-12">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
-                className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-200 hover:text-mystic-dark dark:hover:text-white transition-colors"
+                href={localeHref(link.href)}
+                className="text-sm lg:text-base font-semibold text-[var(--am-muted)] hover:text-[var(--am-primary)] dark:hover:text-white transition-colors"
               >
                 {link.label}
               </Link>
@@ -145,15 +141,15 @@ export function FloatingNavbar() {
           {/* CTA & Actions */}
           <div className="hidden md:flex items-center gap-4">
             {/* 2-Option Language Switcher Pill */}
-            <div className="flex items-center bg-black/5 dark:bg-white/10 p-1 rounded-full border border-black/5 dark:border-white/10 text-sm font-semibold">
+            <div className="flex items-center bg-[var(--am-lilac)]/50 p-0.5 rounded-full text-xs font-semibold">
               <button
                 type="button"
                 onClick={() => setLanguage("en")}
                 aria-pressed={language === "en"}
-                className={`px-4 py-1.5 rounded-full transition-all ${
+                className={`px-3 py-1 rounded-full transition-all ${
                   language === "en"
-                    ? "bg-[#4A3525] text-[#F7F3ED] shadow-sm font-semibold"
-                    : "text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                    ? "bg-[var(--am-primary)] text-[var(--am-primary-ink)] shadow-sm"
+                    : "text-[var(--am-ink)]/70 hover:text-[var(--am-ink)]"
                 }`}
               >
                 English
@@ -162,10 +158,10 @@ export function FloatingNavbar() {
                 type="button"
                 onClick={() => setLanguage("vi")}
                 aria-pressed={language === "vi"}
-                className={`px-4 py-1.5 rounded-full transition-all ${
+                className={`px-3 py-1 rounded-full transition-all ${
                   language === "vi"
-                    ? "bg-[#4A3525] text-[#F7F3ED] shadow-sm font-semibold"
-                    : "text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                    ? "bg-[var(--am-primary)] text-[var(--am-primary-ink)] shadow-sm"
+                    : "text-[var(--am-ink)]/70 hover:text-[var(--am-ink)]"
                 }`}
               >
                 Tiếng Việt
@@ -174,7 +170,7 @@ export function FloatingNavbar() {
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-slate-800 dark:text-slate-200"
+              className="p-2 rounded-full hover:bg-[var(--am-lilac)]/50 transition-colors text-[var(--am-primary)] dark:text-[var(--am-ink)]"
               aria-label="Toggle theme"
             >
               {themeIcon}
@@ -183,7 +179,7 @@ export function FloatingNavbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden -mr-2.5 p-2.5 text-slate-800 dark:text-slate-200"
+            className="md:hidden -mr-2.5 p-2.5 text-[var(--am-ink)]"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileMenuOpen}
@@ -200,7 +196,7 @@ export function FloatingNavbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-mystic-dark/40 backdrop-blur-sm md:hidden flex justify-end"
+            className="fixed inset-0 z-[60] bg-[#17132e]/40 backdrop-blur-sm md:hidden flex justify-end"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
@@ -208,7 +204,7 @@ export function FloatingNavbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="w-3/4 max-w-sm h-full bg-warm-cream dark:bg-mystic-dark border-l border-white/10 p-6 flex flex-col shadow-2xl"
+              className="w-3/4 max-w-sm h-full bg-[var(--am-surface)] border-l border-[var(--am-line)] p-6 flex flex-col shadow-2xl"
               style={{
                 paddingTop: "max(1.5rem, calc(env(safe-area-inset-top) + 1rem))",
                 paddingBottom: "max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem))",
@@ -219,10 +215,10 @@ export function FloatingNavbar() {
                 <BrandLogo size="md" onClick={() => setMobileMenuOpen(false)} />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="-mr-2.5 p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+                  className="-mr-2.5 p-2.5 rounded-full hover:bg-[var(--am-field)]"
                   aria-label="Close menu"
                 >
-                  <X size={24} className="text-slate-800 dark:text-slate-200" />
+                  <X size={24} className="text-[var(--am-ink)]" />
                 </button>
               </div>
 
@@ -230,9 +226,9 @@ export function FloatingNavbar() {
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={localeHref(link.href)}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-lg font-medium text-slate-800 dark:text-slate-200"
+                    className="text-lg font-medium text-[var(--am-ink)]"
                   >
                     {link.label}
                   </Link>
@@ -241,14 +237,14 @@ export function FloatingNavbar() {
 
               <div className="mt-auto flex flex-col gap-4">
                 {/* Mobile Language Switcher */}
-                <div className="flex items-center justify-center bg-black/5 dark:bg-white/5 p-1 rounded-xl font-medium text-sm gap-2">
+                <div className="flex items-center justify-center bg-[var(--am-field)] p-1 rounded-2xl font-medium text-sm gap-2">
                   <button
                     onClick={() => setLanguage("en")}
                     aria-pressed={language === "en"}
                     className={`flex-1 py-2 rounded-lg transition-all ${
                       language === "en"
-                        ? "bg-[#4A3525] text-white shadow-sm font-semibold"
-                        : "text-slate-700 dark:text-slate-300"
+                        ? "bg-[var(--am-ink)] text-white shadow-sm font-semibold"
+                        : "text-[var(--am-muted)]"
                     }`}
                   >
                     English
@@ -258,8 +254,8 @@ export function FloatingNavbar() {
                     aria-pressed={language === "vi"}
                     className={`flex-1 py-2 rounded-lg transition-all ${
                       language === "vi"
-                        ? "bg-[#4A3525] text-white shadow-sm font-semibold"
-                        : "text-slate-700 dark:text-slate-300"
+                        ? "bg-[var(--am-ink)] text-white shadow-sm font-semibold"
+                        : "text-[var(--am-muted)]"
                     }`}
                   >
                     Tiếng Việt
@@ -271,7 +267,7 @@ export function FloatingNavbar() {
                     setTheme(theme === "dark" ? "light" : "dark");
                     setMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/5 dark:bg-white/5 font-medium"
+                  className="flex items-center justify-center gap-2 p-3 rounded-2xl bg-[var(--am-field)] text-[var(--am-ink)] font-medium"
                 >
                   {themeIconMobile}
                   <span>{t("nav.toggle_theme")}</span>

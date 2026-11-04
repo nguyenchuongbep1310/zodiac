@@ -9,7 +9,7 @@ test.describe("landing page", () => {
     for (const id of ["#hero", "#features", "#how-it-works", "#astrology", "#learn", "#faq"]) {
       await expect(page.locator(id)).toBeAttached();
     }
-    await expect(page.getByRole("button", { name: "Reveal My Chart" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Read My Chart" })).toBeVisible();
     expect(errors).toEqual([]);
   });
 

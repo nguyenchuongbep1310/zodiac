@@ -158,7 +158,7 @@ export const en: Dictionary = {
   "interp.growth_path": "Path of Growth",
 
   // Home Page - Hero
-  "home.hero.title": "Your birth chart, | finally decoded",
+  "home.hero.title": "Let the stars | spill the tea",
   "home.hero.desc": "Enter your birth date, time and city. Get your Big Three, all 12 houses and every aspect, explained in plain words.",
   "home.hero.name_label": "Name (optional)",
   "home.hero.name_placeholder": "e.g. Alex",
@@ -171,18 +171,18 @@ export const en: Dictionary = {
   "home.hero.show_extended": "+ Show Extended Settings",
   "home.hero.hide_extended": "- Hide Extended Settings",
   "home.hero.house_system": "House System",
-  "home.hero.btn_submit": "Reveal My Chart",
+  "home.hero.btn_submit": "Read My Chart",
   "home.hero.btn_loading": "Calculating Chart...",
   "home.hero.toast_missing_title": "Missing fields",
   "home.hero.toast_missing_desc": "Please fill out all required birth details.",
   "home.hero.toast_not_found_title": "Location not found",
   "home.hero.toast_not_found_desc": "Could not find that city. Try typing another location.",
   "home.hero.toast_calc_error": "Failed to calculate chart",
-  "home.hero.eyebrow": "Free · Sun, Moon & Rising in seconds",
+  "home.hero.eyebrow": "Admit one · free · no appointment",
   "home.hero.trust": "Positions calculated with the Swiss Ephemeris",
   "home.hero.form_title": "Cast your chart",
   "home.hero.card_title": "The Birth Chart",
-  "home.steps.title": "Three steps. Under a minute.",
+  "home.steps.title": "Three steps. No crystal ball.",
   "home.steps.s1.title": "Enter your birth details",
   "home.steps.s1.desc": "Date, time and city. Don't know your time? Tick “unknown” and you still get most of your chart.",
   "home.steps.s2.title": "Meet your Big Three",
@@ -245,7 +245,7 @@ export const en: Dictionary = {
   "category.techniques_info": "Learn practical methods you can use.",
 
   // Home Page - Bento Features
-  "home.bento.title": "Everything your chart is trying to tell you",
+  "home.bento.title": "Pull a card. Any card.",
   "home.bento.subtitle": "Not just your sun sign. The full picture, without the jargon headache.",
   "home.bento.card1.title": "Your Big Three",
   "home.bento.card1.desc": "Sun is your core vibe, Moon is how you feel, Rising is the first impression you give. See all three, explained.",
@@ -295,9 +295,9 @@ export const en: Dictionary = {
   "home.capable.card4.desc": "Prefer Whole Sign? Koch? Pick the house system you like from the settings panel, any time.",
 
   // Home Page - CTA
-  "home.cta.title": "Your sky is already written. Go read it.",
+  "home.cta.title": "Your sky's been talking. Listen up.",
   "home.cta.subtitle": "Free, accurate, and ready before your coffee cools.",
-  "home.cta.button": "Get My Free Chart",
+  "home.cta.button": "Read My Chart",
 
   // Synastry
   "synastry.title": "Create Your Synastry Chart",
@@ -503,7 +503,7 @@ export const vi: Dictionary = {
   "interp.growth_path": "Con Đường Phát Triển",
 
   // Home Page - Hero
-  "home.hero.title": "Bản đồ sao của bạn, | giải mã dễ hiểu",
+  "home.hero.title": "Để các vì sao | kể hết cho bạn",
   "home.hero.desc": "Nhập ngày, giờ và nơi sinh. Nhận ngay bộ ba Mặt Trời – Mặt Trăng – Cung Mọc, 12 nhà và mọi góc chiếu, giải thích bằng lời dễ hiểu.",
   "home.hero.name_label": "Tên (không bắt buộc)",
   "home.hero.name_placeholder": "vd: Minh Anh",
@@ -523,11 +523,11 @@ export const vi: Dictionary = {
   "home.hero.toast_not_found_title": "Không tìm thấy địa điểm",
   "home.hero.toast_not_found_desc": "Không tìm thấy thành phố này. Hãy thử nhập tên địa điểm khác.",
   "home.hero.toast_calc_error": "Không thể tính bản đồ sao",
-  "home.hero.eyebrow": "Miễn phí · Mặt Trời, Mặt Trăng & Cung Mọc trong vài giây",
+  "home.hero.eyebrow": "Một vé · miễn phí · không cần hẹn",
   "home.hero.trust": "Vị trí hành tinh tính bằng Swiss Ephemeris",
   "home.hero.form_title": "Lập bản đồ của bạn",
   "home.hero.card_title": "Bản Đồ Sao",
-  "home.steps.title": "Ba bước. Chưa tới một phút.",
+  "home.steps.title": "Ba bước. Không cần quả cầu pha lê.",
   "home.steps.s1.title": "Nhập thông tin sinh",
   "home.steps.s1.desc": "Ngày, giờ và nơi sinh. Không nhớ giờ? Chọn “không rõ” vẫn xem được phần lớn bản đồ.",
   "home.steps.s2.title": "Gặp bộ ba của bạn",
@@ -590,7 +590,7 @@ export const vi: Dictionary = {
   "category.techniques_info": "Học các phương pháp và công cụ thực hành thực tế.",
 
   // Home Page - Bento Features
-  "home.bento.title": "Mọi điều bản đồ sao muốn nói với bạn",
+  "home.bento.title": "Rút một lá đi nào.",
   "home.bento.subtitle": "Không chỉ cung Mặt Trời. Bức tranh đầy đủ, không đau đầu vì thuật ngữ.",
   "home.bento.card1.title": "Bộ Ba Cốt Lõi",
   "home.bento.card1.desc": "Mặt Trời là chất riêng của bạn, Mặt Trăng là cách bạn cảm nhận, Cung Mọc là ấn tượng đầu tiên bạn để lại. Xem cả ba, giải thích rõ ràng.",
@@ -640,7 +640,7 @@ export const vi: Dictionary = {
   "home.capable.card4.desc": "Đổi giữa Placidus, Whole Sign, Koch hoặc Equal bất cứ lúc nào.",
 
   // Home Page - CTA
-  "home.cta.title": "Bầu trời ngày bạn sinh ra đã ở đó. Đọc thôi.",
+  "home.cta.title": "Bầu trời đã nói rồi. Nghe thôi.",
   "home.cta.subtitle": "Miễn phí, chính xác và xong trước khi ly cà phê kịp nguội.",
   "home.cta.button": "Xem Bản Đồ Miễn Phí",
 

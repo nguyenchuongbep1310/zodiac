@@ -4,17 +4,17 @@ test.describe("locale routing", () => {
   test("English lives at unprefixed URLs", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Your birth chart");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Let the stars");
   });
 
   test("Vietnamese is server-rendered under /vi", async ({ request, page }) => {
     // Raw HTML, before any client JS: this is what search engines index.
     const html = await (await request.get("/vi")).text();
     expect(html).toContain('<html lang="vi"');
-    expect(html).toContain("Bản đồ sao của bạn");
+    expect(html).toContain("Để các vì sao");
 
     await page.goto("/vi");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Bản đồ sao của bạn");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Để các vì sao");
   });
 
   test("/en prefix redirects to the unprefixed URL", async ({ request }) => {

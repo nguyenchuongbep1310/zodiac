@@ -9,7 +9,7 @@ test.describe("birth chart flow (frontend + backend)", () => {
     await page.locator("#hero-city").fill("Hanoi");
 
     const calculated = page.waitForResponse((r) => r.url().includes("/api/v1/charts/calculate"));
-    await page.getByRole("button", { name: "Reveal My Chart" }).click();
+    await page.getByRole("button", { name: "Read My Chart" }).click();
     expect((await calculated).status()).toBe(201);
 
     await expect(page).toHaveURL(/\/charts\/[0-9a-f-]{36}$/);
@@ -33,7 +33,7 @@ test.describe("birth chart flow (frontend + backend)", () => {
     await page.goto("/");
     await page.getByLabel("Unknown birth time").check();
     await page.locator("#hero-city").fill("London");
-    await page.getByRole("button", { name: "Reveal My Chart" }).click();
+    await page.getByRole("button", { name: "Read My Chart" }).click();
     await expect(page).toHaveURL(/\/charts\/[0-9a-f-]{36}$/);
     await expect(page.getByRole("img", { name: "Natal chart wheel" })).toBeVisible();
   });
@@ -44,7 +44,7 @@ test.describe("birth chart flow (frontend + backend)", () => {
 
     await page.goto("/");
     await page.locator("#hero-city").fill("Zzyzx Nowhere");
-    await page.getByRole("button", { name: "Reveal My Chart" }).click();
+    await page.getByRole("button", { name: "Read My Chart" }).click();
     await expect(page.getByText("Location not found")).toBeVisible();
     expect(calculateCalls).toBe(0);
   });

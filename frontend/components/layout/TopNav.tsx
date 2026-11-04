@@ -19,7 +19,7 @@ export function TopNav() {
 
   return (
     <div className="w-full flex justify-center sticky top-4 z-40 px-4 mb-8">
-      <header className="flex items-center justify-between px-6 py-2.5 w-full max-w-5xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl rounded-full border border-black/5 dark:border-white/10 shadow-lg shadow-black/5 transition-all duration-300">
+      <header className="flex items-center justify-between px-6 py-2.5 w-full max-w-5xl bg-white/70  rounded-[var(--am-radius)] border border-black/5 shadow-[var(--am-shadow)] transition-all duration-300">
         
         {/* Logo */}
         <BrandLogo size="md" />
@@ -33,8 +33,8 @@ export function TopNav() {
                 key={href}
                 href={localeHref(href)}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-slate-900 dark:hover:text-white",
-                  active ? "text-slate-900 dark:text-white font-semibold" : "text-slate-600 dark:text-slate-400"
+                  "text-sm font-medium transition-colors hover:text-[var(--am-teal)] dark:hover:text-white",
+                  active ? "text-[var(--am-teal)] dark:text-white font-semibold" : "text-[var(--am-teal)] "
                 )}
               >
                 {label}
@@ -45,12 +45,12 @@ export function TopNav() {
 
         {/* Controls */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-black/5 dark:bg-white/10 p-0.5 rounded-full border border-black/5 dark:border-white/10 text-xs font-semibold">
+          <div className="flex items-center bg-black/5 p-0.5 rounded-[var(--am-radius)] border border-black/5 text-xs font-semibold">
             <button
               onClick={() => setLanguage("en")}
               className={cn(
-                "px-3 py-1 rounded-full transition-all",
-                language === "en" ? "bg-[var(--am-ink)] text-white shadow-xs" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                "px-3 py-1 rounded-[var(--am-radius)] transition-all",
+                language === "en" ? "bg-[var(--am-ink)] text-white shadow-xs" : "text-[var(--am-teal)] hover:text-[var(--am-teal)]  dark:hover:text-white"
               )}
             >
               English
@@ -58,8 +58,8 @@ export function TopNav() {
             <button
               onClick={() => setLanguage("vi")}
               className={cn(
-                "px-3 py-1 rounded-full transition-all",
-                language === "vi" ? "bg-[var(--am-ink)] text-white shadow-xs" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                "px-3 py-1 rounded-[var(--am-radius)] transition-all",
+                language === "vi" ? "bg-[var(--am-ink)] text-white shadow-xs" : "text-[var(--am-teal)] hover:text-[var(--am-teal)]  dark:hover:text-white"
               )}
             >
               Tiếng Việt

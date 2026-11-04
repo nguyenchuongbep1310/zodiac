@@ -71,7 +71,7 @@ export const HouseRing = memo(function HouseRing({
               stroke={isAngular ? '#f59e0b' : 'var(--wheel-house-stroke)'}
               strokeWidth={isAngular ? 1.6 : 0.7}
               strokeLinecap="round"
-              className="group-hover:stroke-amber-400 group-hover:stroke-[2px] transition-all"
+              className="group-hover:stroke-[var(--am-gold)] group-hover:stroke-[2px] transition-all"
             />
 
             {/* Roman numeral label */}
@@ -84,7 +84,7 @@ export const HouseRing = memo(function HouseRing({
               fontWeight={isAngular ? '700' : '400'}
               fill={isAngular ? '#f59e0b' : 'var(--wheel-text-dim)'}
               style={{ userSelect: 'none', fontFamily: 'var(--font-sans, sans-serif)' }}
-              className="group-hover:fill-amber-400 transition-colors"
+              className="group-hover:fill-[var(--am-gold)] transition-colors"
             >
               {ROMAN[house.house_number]}
             </text>
@@ -98,7 +98,7 @@ export const HouseRing = memo(function HouseRing({
                 dominantBaseline="central"
                 fontSize="6"
                 fontWeight="700"
-                fill="#f59e0b"
+                fill="var(--am-gold)"
                 fillOpacity={0.85}
                 letterSpacing="0.06em"
                 style={{
@@ -106,7 +106,7 @@ export const HouseRing = memo(function HouseRing({
                   fontFamily: 'var(--font-sans, sans-serif)',
                   textTransform: 'uppercase',
                 }}
-                className="group-hover:fill-amber-300 transition-colors"
+                className="group-hover:fill-[var(--am-gold)] transition-colors"
               >
                 {AXIS_LABEL[house.house_number]}
               </text>

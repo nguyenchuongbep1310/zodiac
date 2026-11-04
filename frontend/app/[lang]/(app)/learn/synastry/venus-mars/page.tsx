@@ -16,31 +16,31 @@ const dynamicsEn: DynamicItem[] = [
     name: "Venus Conjunct Mars",
     keyword: "Instant Magnetic Chemistry",
     summary: "When one person's Venus merges with another's Mars, attraction is immediate, visceral, and passionate. Mars feels intensely validated and drawn in, while Venus is captivated by the direct, confident energy of Mars.",
-    color: "border-rose-400/40 bg-rose-400/5 text-rose-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Venus Square Mars",
     keyword: "High-Voltage Friction",
     summary: "This dynamic square creates intense sexual tension and palpable chemistry. While attraction is undeniable, differing styles of expressing affection and desire require conscious awareness to avoid unnecessary misunderstandings.",
-    color: "border-amber-400/40 bg-amber-400/5 text-amber-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
   {
     name: "Venus Trine Mars",
     keyword: "Effortless Harmony",
     summary: "This harmonious trine fosters a graceful, organic rhythm between romance and passion. Both individuals feel appreciated, understood, and naturally attractive to each other without needing to prove anything.",
-    color: "border-emerald-400/40 bg-emerald-400/5 text-emerald-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-mint)]",
   },
   {
     name: "Venus Opposite Mars",
     keyword: "Polarizing Magnetism",
     summary: "Opposite signs generate an irresistible game of romantic polarity and fascination. The interplay between receptivity and pursuit keeps the connection vibrant and mutually intriguing over time.",
-    color: "border-violet-400/40 bg-violet-400/5 text-violet-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Venus Sextile Mars",
     keyword: "Playful Romance",
     summary: "A lighthearted, cooperative aspect that infuses the relationship with warmth, flirtatious fun, shared creative endeavors, and easy romantic understanding.",
-    color: "border-cyan-400/40 bg-cyan-400/5 text-cyan-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
 ];
 
@@ -49,31 +49,31 @@ const dynamicsVi: DynamicItem[] = [
     name: "Sao Kim Trùng Tụ Sao Hỏa",
     keyword: "Lực Hút Tức Thời & Mãnh Liệt",
     summary: "Khi Sao Kim của người này trùng vị trí với Sao Hỏa của người kia, sự thu hút xảy ra ngay lập tức và đầy đam mê. Người Sao Hỏa cảm thấy được thấu cảm và khao khát, còn Sao Kim bị cuốn hút bởi sự trực diện, tự tin của Sao Hỏa.",
-    color: "border-rose-400/40 bg-rose-400/5 text-rose-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Sao Kim Vuông Góc Sao Hỏa",
     keyword: "Căng Thẳng Đầy Sức Hút",
     summary: "Góc chiếu thách thức này tạo ra lực hút mạnh mẽ và điện áp cảm xúc cao. Sự thu hút rất rõ ràng, nhưng sự khác biệt trong cách bộc lộ tình cảm và ham muốn đòi hỏi cả hai cần kiên nhẫn để tránh những hiểu lầm không đáng có.",
-    color: "border-amber-400/40 bg-amber-400/5 text-amber-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
   {
     name: "Sao Kim Tam Hợp Sao Hỏa",
     keyword: "Hòa Hợp Tự Nhiên & Dịu Êm",
     summary: "Góc chiếu hài hòa tuyệt đẹp tạo ra dòng chảy cảm xúc êm đềm và sự tương thích tự nhiên giữa lãng mạn và đam mê. Cả hai người đều cảm nhận được sự trân trọng và khao khát lẫn nhau mà không cần phải chứng minh điều gì.",
-    color: "border-emerald-400/40 bg-emerald-400/5 text-emerald-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-mint)]",
   },
   {
     name: "Sao Kim Đối Góc Sao Hỏa",
     keyword: "Sức Hút Của Hai Cực Đối Lập",
     summary: "Sự phân cực giữa hai cung đối diện tạo ra trò chơi rượt đuổi lãng mạn đầy cuốn hút. Sự tương phản giữa tính đón nhận và tính chủ động giữ cho ngọn lửa tình cảm luôn sống động theo thời gian.",
-    color: "border-violet-400/40 bg-violet-400/5 text-violet-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Sao Kim Lục Hợp Sao Hỏa",
     keyword: "Đồng Điệu & Vui Tươi",
     summary: "Góc chiếu tạo ra sự thoải mái, vui vẻ và ăn ý trong chuyện tình cảm. Hai bạn dễ dàng tìm thấy tiếng nói chung trong các hoạt động sáng tạo, giải trí và hâm nóng tình cảm đôi lứa.",
-    color: "border-cyan-400/40 bg-cyan-400/5 text-cyan-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
 ];
 
@@ -92,7 +92,7 @@ export default function VenusMarsPage() {
       </Link>
 
       <header className="space-y-4 text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[var(--am-radius)] bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
           <Sparkles className="w-3.5 h-3.5" />
           {language === "vi" ? "Chiêm Tinh Đôi Lứa · Trung Cấp" : "Synastry · Intermediate"}
         </div>
@@ -110,7 +110,7 @@ export default function VenusMarsPage() {
         {dynamics.map((d, idx) => (
           <div
             key={idx}
-            className={`group overflow-hidden rounded-[2rem] border ${d.color} bg-[var(--am-surface)]/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col p-8 justify-between space-y-4`}
+            className={`group overflow-hidden rounded-[var(--am-radius)] border-2 ${d.color} shadow-[var(--am-shadow)] transition-[transform,box-shadow] duration-150 hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] flex flex-col p-8 justify-between space-y-4`}
           >
             <div>
               <div className="flex items-center gap-2 mb-3">

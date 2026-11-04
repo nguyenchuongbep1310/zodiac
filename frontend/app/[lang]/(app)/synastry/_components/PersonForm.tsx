@@ -65,7 +65,7 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
             maxLength={100}
             onChange={(e) => update({ name: e.target.value })}
             placeholder={t("home.hero.name_placeholder")}
-            className={`w-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[var(--am-ink)] placeholder-[var(--am-muted)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[var(--am-primary)]/60 dark:hover:border-white/20`}
+            className={`w-full bg-[var(--am-field)] border-2 border-[var(--am-edge)] rounded-[var(--am-radius)] py-3.5 pl-12 pr-4 text-[var(--am-ink)] placeholder-[var(--am-muted)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[var(--am-primary)]/60`}
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
             value={value.date}
             onChange={(e) => update({ date: e.target.value })}
             required
-            className={`w-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 rounded-2xl py-3.5 pl-4 sm:pl-12 pr-4 text-[var(--am-ink)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[var(--am-primary)]/60 dark:hover:border-white/20`}
+            className={`w-full bg-[var(--am-field)] border-2 border-[var(--am-edge)] rounded-[var(--am-radius)] py-3.5 pl-4 sm:pl-12 pr-4 text-[var(--am-ink)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[var(--am-primary)]/60`}
           />
         </div>
       </div>
@@ -100,7 +100,7 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
             disabled={value.unknownTime}
             onChange={(e) => update({ time: e.target.value })}
             required={!value.unknownTime}
-            className={`w-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 rounded-2xl py-3.5 pl-4 sm:pl-12 pr-4 text-[var(--am-ink)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all disabled:opacity-50 hover:border-[var(--am-primary)]/60 dark:hover:border-white/20`}
+            className={`w-full bg-[var(--am-field)] border-2 border-[var(--am-edge)] rounded-[var(--am-radius)] py-3.5 pl-4 sm:pl-12 pr-4 text-[var(--am-ink)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all disabled:opacity-50 hover:border-[var(--am-primary)]/60`}
           />
         </div>
         <label className="flex items-center gap-2 mt-2.5 cursor-pointer text-sm text-[var(--am-muted)]">
@@ -134,16 +134,16 @@ export function PersonForm({ label, value, onChange, accent }: PersonFormProps) 
             placeholder={t("home.hero.location_placeholder")}
             required
             autoComplete="off"
-            className={`w-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[var(--am-ink)] placeholder-[var(--am-muted)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[var(--am-primary)]/60 dark:hover:border-white/20`}
+            className={`w-full bg-[var(--am-field)] border-2 border-[var(--am-edge)] rounded-[var(--am-radius)] py-3.5 pl-12 pr-4 text-[var(--am-ink)] placeholder-[var(--am-muted)] text-base focus:outline-none focus:ring-2 ${ACCENT_RING[accent]} transition-all hover:border-[var(--am-primary)]/60`}
           />
         </div>
 
         {showDropdown && geoResults.length > 0 && (
-          <ul className="absolute z-50 w-full mt-1 bg-[var(--am-surface)] dark:bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 rounded-2xl shadow-xl overflow-hidden text-left max-h-56 overflow-y-auto">
+          <ul className="absolute z-50 w-full mt-1 bg-[var(--am-surface)] dark:bg-[var(--am-field)] border-2 border-[var(--am-edge)] rounded-[var(--am-radius)] shadow-[var(--am-shadow)] overflow-hidden text-left max-h-56 overflow-y-auto">
             {geoResults.map((result, i) => (
               <li
                 key={i}
-                className="px-5 py-3 hover:bg-[var(--am-field)] dark:hover:bg-white/5 cursor-pointer text-sm text-[var(--am-ink)] border-b border-[var(--am-line)] dark:border-white/5 last:border-0 flex items-start gap-2"
+                className="px-5 py-3 hover:bg-[var(--am-field)] cursor-pointer text-sm text-[var(--am-ink)] border-b border-[var(--am-line)] last:border-0 flex items-start gap-2"
                 onClick={() => {
                   update({ city: result.display_name.split(",")[0] });
                   setShowDropdown(false);

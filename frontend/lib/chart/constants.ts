@@ -46,10 +46,10 @@ export const R = {
 // ─── Colors ─────────────────────────────────────────────────────────────────
 
 export const ELEMENT_FILL: Record<string, { sector: string; glyph: string; border: string }> = {
-  fire:  { sector: 'rgba(239,68,68,0.09)',   glyph: '#f87171', border: 'rgba(239,68,68,0.25)' },
-  earth: { sector: 'rgba(34,197,94,0.09)',   glyph: '#4ade80', border: 'rgba(34,197,94,0.25)' },
-  air:   { sector: 'rgba(96,165,250,0.09)',  glyph: '#93c5fd', border: 'rgba(96,165,250,0.25)' },
-  water: { sector: 'rgba(167,139,250,0.09)', glyph: '#c4b5fd', border: 'rgba(167,139,250,0.25)' },
+  fire:  { sector: 'rgba(217,69,43,0.10)',  glyph: '#c0392b', border: 'rgba(217,69,43,0.30)' },
+  earth: { sector: 'rgba(47,125,79,0.10)',  glyph: '#2f7d4f', border: 'rgba(47,125,79,0.30)' },
+  air:   { sector: 'rgba(217,165,33,0.14)', glyph: '#a67c12', border: 'rgba(217,165,33,0.35)' },
+  water: { sector: 'rgba(47,106,130,0.10)', glyph: '#2f6a82', border: 'rgba(47,106,130,0.30)' },
 };
 
 /** Aspect visual style: color, dash pattern, opacity, stroke width */
@@ -69,7 +69,7 @@ export const ASPECT_STYLE: Record<string, {
   // Gray aspects
   conjunction:    { color: '#9ca3af', dash: '3 3',   opacity: 0.55, width: 1.0, label: 'Conjunction' },
   // Secondary
-  quincunx:       { color: '#a78bfa', dash: '2 4',   opacity: 0.40, width: 0.8, label: 'Quincunx' },
+  quincunx:       { color: '#a0632a', dash: '2 4',   opacity: 0.40, width: 0.8, label: 'Quincunx' },
   semisquare:     { color: '#fb923c', dash: '2 3',   opacity: 0.38, width: 0.8, label: 'Semi-square' },
   sesquiquadrate: { color: '#fb923c', dash: '4 2 1', opacity: 0.38, width: 0.8, label: 'Sesqui-square' },
   semisextile:    { color: '#6b7280', dash: '1 4',   opacity: 0.32, width: 0.7, label: 'Semi-sextile' },
@@ -89,35 +89,35 @@ export interface ZodiacSignMeta {
 }
 
 export const ZODIAC_SIGNS: ZodiacSignMeta[] = [
-  { name: 'Aries',       glyph: '♈', element: 'fire',  startLon: 0   },
-  { name: 'Taurus',      glyph: '♉', element: 'earth', startLon: 30  },
-  { name: 'Gemini',      glyph: '♊', element: 'air',   startLon: 60  },
-  { name: 'Cancer',      glyph: '♋', element: 'water', startLon: 90  },
-  { name: 'Leo',         glyph: '♌', element: 'fire',  startLon: 120 },
-  { name: 'Virgo',       glyph: '♍', element: 'earth', startLon: 150 },
-  { name: 'Libra',       glyph: '♎', element: 'air',   startLon: 180 },
-  { name: 'Scorpio',     glyph: '♏', element: 'water', startLon: 210 },
-  { name: 'Sagittarius', glyph: '♐', element: 'fire',  startLon: 240 },
-  { name: 'Capricorn',   glyph: '♑', element: 'earth', startLon: 270 },
-  { name: 'Aquarius',    glyph: '♒', element: 'air',   startLon: 300 },
-  { name: 'Pisces',      glyph: '♓', element: 'water', startLon: 330 },
+  { name: 'Aries',       glyph: '♈\uFE0E', element: 'fire',  startLon: 0   },
+  { name: 'Taurus',      glyph: '♉\uFE0E', element: 'earth', startLon: 30  },
+  { name: 'Gemini',      glyph: '♊\uFE0E', element: 'air',   startLon: 60  },
+  { name: 'Cancer',      glyph: '♋\uFE0E', element: 'water', startLon: 90  },
+  { name: 'Leo',         glyph: '♌\uFE0E', element: 'fire',  startLon: 120 },
+  { name: 'Virgo',       glyph: '♍\uFE0E', element: 'earth', startLon: 150 },
+  { name: 'Libra',       glyph: '♎\uFE0E', element: 'air',   startLon: 180 },
+  { name: 'Scorpio',     glyph: '♏\uFE0E', element: 'water', startLon: 210 },
+  { name: 'Sagittarius', glyph: '♐\uFE0E', element: 'fire',  startLon: 240 },
+  { name: 'Capricorn',   glyph: '♑\uFE0E', element: 'earth', startLon: 270 },
+  { name: 'Aquarius',    glyph: '♒\uFE0E', element: 'air',   startLon: 300 },
+  { name: 'Pisces',      glyph: '♓\uFE0E', element: 'water', startLon: 330 },
 ];
 
 export const PLANET_GLYPH: Record<string, string> = {
-  Sun:          '☉',
-  Moon:         '☽',
-  Mercury:      '☿',
-  Venus:        '♀',
-  Mars:         '♂',
-  Jupiter:      '♃',
-  Saturn:       '♄',
-  Uranus:       '♅',
-  Neptune:      '♆',
-  Pluto:        '♇',
-  'North Node': '☊',
-  'South Node': '☋',
-  Chiron:       '⚷',
-  Lilith:       '⚸',
+  Sun:          '☉\uFE0E',
+  Moon:         '☽\uFE0E',
+  Mercury:      '☿\uFE0E',
+  Venus:        '♀\uFE0E',
+  Mars:         '♂\uFE0E',
+  Jupiter:      '♃\uFE0E',
+  Saturn:       '♄\uFE0E',
+  Uranus:       '♅\uFE0E',
+  Neptune:      '♆\uFE0E',
+  Pluto:        '♇\uFE0E',
+  'North Node': '☊\uFE0E',
+  'South Node': '☋\uFE0E',
+  Chiron:       '⚷\uFE0E',
+  Lilith:       '⚸\uFE0E',
 };
 
 export const PLANET_ABBR: Record<string, string> = {

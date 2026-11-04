@@ -24,10 +24,10 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
     const title = (
       <div className="flex items-center justify-between w-full pr-2 sm:pr-4 py-1">
         <div className="flex items-center gap-4 sm:gap-5 min-w-0">
-          <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/5 dark:bg-white/[0.03] border border-black/5 dark:border-white/5 shrink-0 shadow-sm">
+          <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-[var(--am-radius)] bg-black/5 border border-black/5 shrink-0 shadow-[var(--am-shadow-sm)]">
             <span className={cn(
               "text-lg sm:text-xl font-display font-medium",
-              isAngular ? "text-amber-600 dark:text-amber-400" : "text-slate-700 dark:text-slate-300"
+              isAngular ? "text-[var(--am-ink)] " : "text-[var(--am-teal)] "
             )}>
               {house.house_number}
             </span>
@@ -35,12 +35,12 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
           <div className="flex flex-col min-w-0 gap-0.5">
             <span className={cn(
               "text-base sm:text-lg font-display font-semibold truncate tracking-wide",
-              isAngular ? "text-amber-700 dark:text-amber-400" : "text-[var(--am-ink)]"
+              isAngular ? "text-[var(--am-ink)] " : "text-[var(--am-ink)]"
             )}>
               {isAngular ? t(`house.${house.house_number}`) : `${t("table.house")} ${house.house_number}`}
             </span>
-            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light truncate">
-              <span className="text-amber-600 dark:text-amber-400 text-sm font-semibold">{ZODIAC_GLYPHS[house.sign]}</span>
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[var(--am-teal)]  font-light truncate">
+              <span className="text-[var(--am-ink)]  text-sm font-semibold">{ZODIAC_GLYPHS[house.sign]}</span>
               <span className="font-medium">{t(`sign.${house.sign.toLowerCase()}`)}</span>
               {isAngular && (
                 <>
@@ -58,28 +58,28 @@ export function HouseTable({ houses, interpretations }: HouseTableProps) {
     );
 
     const content = (
-      <div className="space-y-4 text-slate-700 dark:text-slate-300">
+      <div className="space-y-4 text-[var(--am-teal)] ">
         {!hasInterpretation && (
-          <p className="text-slate-400 dark:text-slate-500 italic text-sm">{t("charts.no_interpretations")}</p>
+          <p className="text-[var(--am-teal)]  italic text-sm">{t("charts.no_interpretations")}</p>
         )}
         
         {houseInterp && (
           <div>
-            <h4 className="font-semibold text-amber-600 dark:text-amber-300 mb-3 flex items-center gap-2">
+            <h4 className="font-semibold text-[var(--am-ink)]  mb-3 flex items-center gap-2">
               {t("table.house")} {house.house_number} {t("misc.in")} {ZODIAC_GLYPHS[house.sign]} {t(`sign.${house.sign.toLowerCase()}`)}
             </h4>
             <div className="space-y-3 text-sm">
               {houseInterp.core_meaning && (
-                <div><span className="font-semibold text-slate-800 dark:text-slate-200">{t("interp.core_meaning")}: </span><span className="text-slate-600 dark:text-slate-400">{houseInterp.core_meaning}</span></div>
+                <div><span className="font-semibold text-[var(--am-teal)] ">{t("interp.core_meaning")}: </span><span className="text-[var(--am-teal)] ">{houseInterp.core_meaning}</span></div>
               )}
               {houseInterp.real_life && (
-                <div><span className="font-semibold text-slate-800 dark:text-slate-200">{t("interp.real_life")}: </span><span className="text-slate-600 dark:text-slate-400">{houseInterp.real_life}</span></div>
+                <div><span className="font-semibold text-[var(--am-teal)] ">{t("interp.real_life")}: </span><span className="text-[var(--am-teal)] ">{houseInterp.real_life}</span></div>
               )}
               {houseInterp.strengths && (
-                <div><span className="font-semibold text-teal-600 dark:text-teal-400">{t("interp.strengths")}: </span><span className="text-slate-600 dark:text-slate-400">{houseInterp.strengths}</span></div>
+                <div><span className="font-semibold text-[var(--am-ink)] ">{t("interp.strengths")}: </span><span className="text-[var(--am-teal)] ">{houseInterp.strengths}</span></div>
               )}
               {houseInterp.challenges && (
-                <div><span className="font-semibold text-rose-600 dark:text-rose-400">{t("interp.challenges")}: </span><span className="text-slate-600 dark:text-slate-400">{houseInterp.challenges}</span></div>
+                <div><span className="font-semibold text-[var(--am-sunset)] dark:text-[var(--am-sunset)]">{t("interp.challenges")}: </span><span className="text-[var(--am-teal)] ">{houseInterp.challenges}</span></div>
               )}
             </div>
           </div>

@@ -70,8 +70,6 @@ export function LearnPageLayout({
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 px-4 md:px-6 lg:px-8 overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-burgundy/5 dark:bg-brand-burgundy/10 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-brand-teal/5 dark:bg-brand-teal/10 rounded-full blur-3xl -z-10" />
 
         <div className="max-w-5xl mx-auto text-center">
           <motion.h1
@@ -96,7 +94,7 @@ export function LearnPageLayout({
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="w-24 h-1 bg-gradient-to-r from-brand-burgundy to-brand-gold mx-auto mb-8"
+            className="w-24 h-1 from-brand-burgundy to-brand-gold mx-auto mb-8"
           />
 
           <motion.p
@@ -170,7 +168,7 @@ export function LearnPageLayout({
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             viewport={{ once: true }}
-            className="mt-20 md:mt-28 max-w-2xl mx-auto bg-gradient-to-r from-brand-burgundy/10 to-brand-teal/10 dark:from-brand-burgundy/20 dark:to-brand-teal/20 rounded-xl p-8 md:p-12 text-center border border-brand-burgundy/20 dark:border-brand-gold/20"
+            className="mt-20 md:mt-28 max-w-2xl mx-auto from-brand-burgundy/10 to-brand-teal/10 dark:from-brand-burgundy/20 dark:to-brand-teal/20 rounded-[var(--am-radius)] p-8 md:p-12 text-center border border-brand-burgundy/20 dark:border-brand-gold/20"
           >
             <h3 className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-brand-dark dark:text-brand-light mb-3">
               {t("home.learn.newsletter_title")}
@@ -183,12 +181,12 @@ export function LearnPageLayout({
               <input
                 type="email"
                 placeholder={t("home.learn.newsletter_placeholder")}
-                className="flex-1 px-4 py-3 rounded-lg bg-white dark:bg-brand-surface-dark border border-brand-gray-light/50 dark:border-brand-burgundy-darker/30 text-brand-dark dark:text-brand-light placeholder-brand-dark/40 dark:placeholder-brand-light/40 focus:outline-none focus:border-brand-burgundy dark:focus:border-brand-gold transition-colors"
+                className="flex-1 px-4 py-3 rounded-[var(--am-radius)] bg-white dark:bg-brand-surface-dark border border-brand-gray-light/50 dark:border-brand-burgundy-darker/30 text-brand-dark dark:text-brand-light placeholder-brand-dark/40 dark:placeholder-brand-light/40 focus:outline-none focus:border-brand-burgundy dark:focus:border-brand-gold transition-colors"
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 rounded-lg font-semibold text-white bg-brand-burgundy hover:bg-brand-burgundy-dark dark:bg-brand-gold dark:text-brand-dark dark:hover:bg-brand-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
+                className="px-8 py-3 rounded-[var(--am-radius)] font-semibold text-white bg-brand-burgundy hover:bg-brand-burgundy-dark dark:bg-brand-gold dark:text-brand-dark dark:hover:bg-brand-gold/90 transition-all duration-300 shadow-[var(--am-shadow)] hover:shadow-[var(--am-shadow)] whitespace-nowrap"
               >
                 {t("home.learn.newsletter_btn")}
               </motion.button>

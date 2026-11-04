@@ -38,7 +38,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
     return (
       <div className="flex flex-col items-center justify-center py-32 gap-4">
         <div className="relative">
-          <div className="absolute inset-0 bg-[var(--am-primary)]/20 blur-2xl rounded-full animate-pulse" />
+          <div className="absolute inset-0 bg-[var(--am-primary)]/20 blur-2xl rounded-[var(--am-radius)] animate-pulse" />
           <Spinner size="lg" />
         </div>
         <p className="text-[var(--am-muted)] text-sm font-light animate-pulse">
@@ -53,9 +53,9 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-[2rem] border border-rose-500/20 bg-rose-500/5 p-12 text-center max-w-lg mx-auto mt-20"
+        className="rounded-[var(--am-radius)] border border-[var(--am-edge)] bg-[var(--am-peach)] p-12 text-center max-w-lg mx-auto mt-20"
       >
-        <p className="text-rose-500 dark:text-rose-400 font-display text-xl mb-3">{t("charts.not_found")}</p>
+        <p className="text-[var(--am-sunset)] dark:text-[var(--am-sunset)] font-display text-xl mb-3">{t("charts.not_found")}</p>
         <Link href={localeHref("/")} className="text-sm text-[var(--am-primary)] hover:text-[var(--am-ink)] hover:underline mt-2 inline-flex items-center gap-1.5 transition-colors">
           <ChevronLeft className="w-4 h-4" />
           {t("nav.back_home")}
@@ -82,8 +82,6 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
     <div className="relative min-h-[100dvh] pb-16">
       {/* Subtle page-level decorative backgrounds */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[var(--am-primary)]/5 to-transparent blur-3xl" />
-        <div className="absolute bottom-0 -left-40 w-[400px] h-[400px] rounded-full bg-gradient-radial from-[var(--am-sunset)]/4 to-transparent blur-3xl" />
       </div>
 
       <div className="relative space-y-8 animate-fade-in">
@@ -106,14 +104,14 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
               {chartTitle}
             </h1>
             <div className="flex flex-wrap items-center gap-2.5 mt-2">
-              <Badge variant="slate" className="bg-[var(--am-field)] text-[var(--am-ink)] border-[var(--am-line)] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
+              <Badge variant="slate" className="bg-[var(--am-field)] text-[var(--am-ink)] border-[var(--am-line)] font-medium px-4 py-1.5 rounded-[var(--am-radius)] text-xs shadow-[var(--am-shadow-sm)]">
                 {t(`system.${chart.house_system}`)} {t("charts.houses_suffix")}
               </Badge>
-              <Badge variant="slate" className="bg-[var(--am-field)] text-[var(--am-ink)] border-[var(--am-line)] dark:border-white/10 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
+              <Badge variant="slate" className="bg-[var(--am-field)] text-[var(--am-ink)] border-[var(--am-line)] font-medium px-4 py-1.5 rounded-[var(--am-radius)] text-xs shadow-[var(--am-shadow-sm)]">
                 {zodiacSystemLabel}
               </Badge>
               {chart.is_rectified && (
-                <Badge variant="slate" className="bg-teal-500/10 text-teal-800 dark:text-teal-200 border-teal-500/20 font-medium px-4 py-1.5 rounded-full text-xs shadow-sm">
+                <Badge variant="slate" className="bg-[var(--am-mint)] text-[var(--am-ink)]  border-[var(--am-edge)] font-medium px-4 py-1.5 rounded-[var(--am-radius)] text-xs shadow-[var(--am-shadow-sm)]">
                   {t("charts.rectified")}
                 </Badge>
               )}
@@ -132,17 +130,17 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.15 }}
-              className="flex gap-2 p-1.5 bg-[var(--am-field)] rounded-full border border-[var(--am-line)] dark:border-white/10 w-fit overflow-x-auto shadow-md"
+              className="flex gap-2 p-1.5 bg-[var(--am-field)] rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] w-fit overflow-x-auto shadow-[var(--am-shadow-sm)]"
             >
               {TABS.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as Tab)}
                   className={cn(
-                    "flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 whitespace-nowrap relative",
+                    "flex items-center gap-2 rounded-[var(--am-radius)] px-5 py-2.5 text-sm font-medium transition-all duration-300 whitespace-nowrap relative",
                     activeTab === tab.id
-                      ? "bg-[var(--am-ink)] text-[var(--am-surface)] shadow-md font-semibold"
-                      : "text-[var(--am-muted)] hover:text-[var(--am-ink)] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]"
+                      ? "bg-[var(--am-ink)] text-[var(--am-surface)] shadow-[var(--am-shadow-sm)] font-semibold"
+                      : "text-[var(--am-muted)] hover:text-[var(--am-ink)] hover:bg-black/[0.03]"
                   )}
                 >
                   <span className={cn(
@@ -164,8 +162,8 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 {activeTab === "planets" && (
-                  <Card className="bg-[var(--am-surface)] border-[var(--am-line)] dark:border-white/5 shadow-lg rounded-[2rem] overflow-hidden hover:shadow-xl transition-shadow duration-500">
-                    <CardHeader className="border-[var(--am-line)] dark:border-white/5 bg-[var(--am-surface)] px-6 py-5">
+                  <Card className="bg-[var(--am-surface)] border-[var(--am-line)] shadow-[var(--am-shadow)] rounded-[var(--am-radius)] overflow-hidden hover:shadow-[var(--am-shadow)] transition-shadow duration-500">
+                    <CardHeader className="border-[var(--am-line)] bg-[var(--am-surface)] px-6 py-5">
                       <div className="flex items-center justify-between">
                         <div>
                           <h2 className="font-display font-bold tracking-tight text-2xl text-[var(--am-ink)]">{t("charts.positions")}</h2>
@@ -173,7 +171,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
                             {chart.planets.length} {t("charts.calculated")}
                           </p>
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-[var(--am-radius)] bg-[var(--am-field)] border-2 border-[var(--am-edge)] flex items-center justify-center">
                           <span className="text-lg text-[var(--am-ink)]">✦</span>
                         </div>
                       </div>
@@ -189,14 +187,14 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
                 )}
 
                 {activeTab === "aspects" && (
-                  <Card className="bg-[var(--am-surface)] border-[var(--am-line)] dark:border-white/5 shadow-lg rounded-[2rem] overflow-hidden hover:shadow-xl transition-shadow duration-500">
-                    <CardHeader className="border-[var(--am-line)] dark:border-white/5 bg-[var(--am-surface)] px-6 py-5">
+                  <Card className="bg-[var(--am-surface)] border-[var(--am-line)] shadow-[var(--am-shadow)] rounded-[var(--am-radius)] overflow-hidden hover:shadow-[var(--am-shadow)] transition-shadow duration-500">
+                    <CardHeader className="border-[var(--am-line)] bg-[var(--am-surface)] px-6 py-5">
                       <div className="flex items-center justify-between">
                         <div>
                           <h2 className="font-display font-bold tracking-tight text-2xl text-[var(--am-ink)]">{t("charts.tabs.aspects")}</h2>
                           <p className="text-xs text-[var(--am-muted)] font-light mt-0.5">{chart.aspects.length} {t("charts.aspects_found")}</p>
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-[var(--am-radius)] bg-[var(--am-field)] border-2 border-[var(--am-edge)] flex items-center justify-center">
                           <span className="text-lg text-[var(--am-ink)]">△</span>
                         </div>
                       </div>
@@ -214,14 +212,14 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
                 )}
 
                 {activeTab === "houses" && (
-                  <Card className="bg-[var(--am-surface)] border-[var(--am-line)] dark:border-white/5 shadow-lg rounded-[2rem] overflow-hidden hover:shadow-xl transition-shadow duration-500">
-                    <CardHeader className="border-[var(--am-line)] dark:border-white/5 bg-[var(--am-surface)] px-6 py-5">
+                  <Card className="bg-[var(--am-surface)] border-[var(--am-line)] shadow-[var(--am-shadow)] rounded-[var(--am-radius)] overflow-hidden hover:shadow-[var(--am-shadow)] transition-shadow duration-500">
+                    <CardHeader className="border-[var(--am-line)] bg-[var(--am-surface)] px-6 py-5">
                       <div className="flex items-center justify-between">
                         <div>
                           <h2 className="font-display font-bold tracking-tight text-2xl text-[var(--am-ink)]">{t("charts.house_cusps")}</h2>
                           <p className="text-xs text-[var(--am-muted)] font-light mt-0.5">{t(`system.${chart.house_system}`)} {t("charts.houses_suffix")}</p>
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-[var(--am-radius)] bg-[var(--am-field)] border-2 border-[var(--am-edge)] flex items-center justify-center">
                           <span className="text-lg text-[var(--am-ink)]">⌂</span>
                         </div>
                       </div>

@@ -21,7 +21,7 @@ export default function SunMoonRisingPage() {
         /* VIETNAMESE VERSION - 100% VI */
         <div className="space-y-8">
           <header className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[var(--am-radius)] bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
               <Sparkles className="w-3.5 h-3.5" /> Bản Đồ Sao Sinh · Cơ Bản
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[var(--am-ink)] leading-tight">
@@ -34,16 +34,16 @@ export default function SunMoonRisingPage() {
 
           <div className="space-y-8">
             {/* Sun Section */}
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-lilac)] flex items-center justify-center text-[var(--am-ink)] ">
                   <Sun className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     Mặt Trời: Bản Ngã Cốt Lõi & Ý Chí Sống
                   </h2>
-                  <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-ink)]  uppercase tracking-wider">
                     Bản Sắc Thực Sự · Con Người Bạn Đang Hướng Đến
                   </span>
                 </div>
@@ -61,16 +61,16 @@ export default function SunMoonRisingPage() {
             </div>
 
             {/* Moon Section */}
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-slate-500/10 flex items-center justify-center text-slate-700 dark:text-slate-300">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-mint)] flex items-center justify-center text-[var(--am-teal)] ">
                   <Moon className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     Mặt Trăng: Thế Giới Cảm Xúc & Tiềm Thức
                   </h2>
-                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-teal)]  uppercase tracking-wider">
                     Trực Giác · Nhu Cầu An Toàn · Bản Năng Tự Nhiên
                   </span>
                 </div>
@@ -87,16 +87,16 @@ export default function SunMoonRisingPage() {
             </div>
 
             {/* Rising Section */}
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-violet-500/10 flex items-center justify-center text-violet-600 dark:text-violet-400">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-peach)] flex items-center justify-center text-[var(--am-primary)] ">
                   <Compass className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     Cung Mọc (Ascendant): Cánh Cổng Ra Thế Giới
                   </h2>
-                  <span className="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-primary)]  uppercase tracking-wider">
                     Ấn Tượng Ban Đầu · Lăng Kính Tiếp Nhận Thực Tại
                   </span>
                 </div>
@@ -116,7 +116,7 @@ export default function SunMoonRisingPage() {
         /* ENGLISH VERSION - 100% EN */
         <div className="space-y-8">
           <header className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[var(--am-radius)] bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
               <Sparkles className="w-3.5 h-3.5" /> Birth Chart · Basics
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[var(--am-ink)] leading-tight">
@@ -129,16 +129,16 @@ export default function SunMoonRisingPage() {
 
           <div className="space-y-8">
             {/* Sun Section */}
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-lilac)] flex items-center justify-center text-[var(--am-ink)] ">
                   <Sun className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     The Sun: Core Ego & Purpose
                   </h2>
-                  <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-ink)]  uppercase tracking-wider">
                     Conscious Identity · The Person You Are Becoming
                   </span>
                 </div>
@@ -155,16 +155,16 @@ export default function SunMoonRisingPage() {
             </div>
 
             {/* Moon Section */}
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-slate-500/10 flex items-center justify-center text-slate-700 dark:text-slate-300">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-mint)] flex items-center justify-center text-[var(--am-teal)] ">
                   <Moon className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     The Moon: Emotions & Subconscious
                   </h2>
-                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-teal)]  uppercase tracking-wider">
                     Instinctual Reactions · Emotional Security · Private Self
                   </span>
                 </div>
@@ -180,16 +180,16 @@ export default function SunMoonRisingPage() {
             </div>
 
             {/* Rising Section */}
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-violet-500/10 flex items-center justify-center text-violet-600 dark:text-violet-400">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-peach)] flex items-center justify-center text-[var(--am-primary)] ">
                   <Compass className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     The Ascendant: Your Portal to the World
                   </h2>
-                  <span className="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-primary)]  uppercase tracking-wider">
                     First Impressions · Physical Demeanor · Life Lens
                   </span>
                 </div>

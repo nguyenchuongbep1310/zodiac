@@ -31,7 +31,7 @@ export default function ContactPage() {
             </header>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-6 text-center shadow-sm space-y-2">
+              <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-6 text-center shadow-[var(--am-shadow-sm)] space-y-2">
                 <Mail className="w-6 h-6 mx-auto text-[var(--am-primary)]" />
                 <h2 className="font-display font-bold tracking-tight font-semibold text-lg text-[var(--am-ink)]">Email</h2>
                 <a
@@ -42,7 +42,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-6 text-center shadow-sm space-y-2">
+              <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-6 text-center shadow-[var(--am-shadow-sm)] space-y-2">
                 <MessageCircle className="w-6 h-6 mx-auto text-[var(--am-primary)]" />
                 <h2 className="font-display font-bold tracking-tight font-semibold text-lg text-[var(--am-ink)]">Góp Ý</h2>
                 <p className="text-sm text-[var(--am-muted)] font-light">
@@ -50,7 +50,7 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-6 text-center shadow-sm space-y-2">
+              <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-6 text-center shadow-[var(--am-shadow-sm)] space-y-2">
                 <Clock className="w-6 h-6 mx-auto text-[var(--am-primary)]" />
                 <h2 className="font-display font-bold tracking-tight font-semibold text-lg text-[var(--am-ink)]">Thời Gian Phản Hồi</h2>
                 <p className="text-sm text-[var(--am-muted)] font-light">
@@ -59,7 +59,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-8 text-center shadow-sm">
+            <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-8 text-center shadow-[var(--am-shadow-sm)]">
               <p className="text-[var(--am-ink)] dark:text-[var(--am-muted)] leading-relaxed font-light">
                 Để nhận được phản hồi nhanh nhất, vui lòng gửi email trực tiếp tới{" "}
                 <a
@@ -85,7 +85,7 @@ export default function ContactPage() {
             </header>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-6 text-center shadow-sm space-y-2">
+              <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-6 text-center shadow-[var(--am-shadow-sm)] space-y-2">
                 <Mail className="w-6 h-6 mx-auto text-[var(--am-primary)]" />
                 <h2 className="font-display font-bold tracking-tight font-semibold text-lg text-[var(--am-ink)]">Email</h2>
                 <a
@@ -96,7 +96,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-6 text-center shadow-sm space-y-2">
+              <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-6 text-center shadow-[var(--am-shadow-sm)] space-y-2">
                 <MessageCircle className="w-6 h-6 mx-auto text-[var(--am-primary)]" />
                 <h2 className="font-display font-bold tracking-tight font-semibold text-lg text-[var(--am-ink)]">Feedback</h2>
                 <p className="text-sm text-[var(--am-muted)] font-light">
@@ -104,7 +104,7 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-6 text-center shadow-sm space-y-2">
+              <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-6 text-center shadow-[var(--am-shadow-sm)] space-y-2">
                 <Clock className="w-6 h-6 mx-auto text-[var(--am-primary)]" />
                 <h2 className="font-display font-bold tracking-tight font-semibold text-lg text-[var(--am-ink)]">Response Time</h2>
                 <p className="text-sm text-[var(--am-muted)] font-light">
@@ -113,7 +113,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 p-8 text-center shadow-sm">
+            <div className="rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] p-8 text-center shadow-[var(--am-shadow-sm)]">
               <p className="text-[var(--am-ink)] dark:text-[var(--am-muted)] leading-relaxed font-light">
                 For the fastest response, email us directly at{" "}
                 <a

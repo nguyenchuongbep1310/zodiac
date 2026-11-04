@@ -79,11 +79,11 @@ export function LearnCategoryFilter({
             whileTap={{ scale: 0.95 }}
             onClick={() => handleSelect(category.value)}
             className={`
-              relative px-6 py-3 rounded-lg font-semibold text-sm md:text-base
+              relative px-6 py-3 rounded-[var(--am-radius)] font-semibold text-sm md:text-base
               transition-all duration-300
               ${
                 selected === category.value
-                  ? `text-white dark:text-brand-dark ${category.color} shadow-lg`
+                  ? `text-white dark:text-brand-dark ${category.color} shadow-[var(--am-shadow)]`
                   : "bg-brand-gray-light/30 dark:bg-brand-burgundy-darker/30 text-brand-dark dark:text-brand-light hover:bg-brand-gray-light/50 dark:hover:bg-brand-burgundy-darker/50"
               }
             `}
@@ -94,7 +94,7 @@ export function LearnCategoryFilter({
             {selected === category.value && (
               <motion.div
                 layoutId="activeCategory"
-                className="absolute inset-0 rounded-lg border-2 border-current"
+                className="absolute inset-0 rounded-[var(--am-radius)] border-2 border-current"
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
               />
             )}

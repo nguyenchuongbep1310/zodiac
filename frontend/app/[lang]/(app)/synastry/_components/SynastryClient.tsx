@@ -197,8 +197,6 @@ export function SynastryClient() {
     <div className="relative min-h-[100dvh] pb-16">
       {/* Ambient background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[var(--am-sunset)]/8 to-transparent blur-3xl" />
-        <div className="absolute -bottom-60 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[var(--am-primary)]/8 to-transparent blur-3xl" />
       </div>
 
       <div className="relative space-y-10 animate-fade-in">
@@ -235,7 +233,7 @@ export function SynastryClient() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-            className="bg-[var(--am-surface)] rounded-[3rem] p-8 sm:p-12 lg:p-16 border border-[var(--am-line)] dark:border-white/5 shadow-xl shadow-[var(--am-ink)]/5 dark:shadow-black/30 max-w-3xl mx-auto"
+            className="bg-[var(--am-surface)] rounded-[var(--am-radius)] p-8 sm:p-12 lg:p-16 border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] dark:shadow-black/30 max-w-3xl mx-auto"
           >
             {/* Step indicator */}
             <div className="flex items-center justify-center gap-3 mb-10">
@@ -245,12 +243,12 @@ export function SynastryClient() {
                     type="button"
                     onClick={() => n === 1 && setStep(1)}
                     className={cn(
-                      "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold border transition-all",
+                      "w-9 h-9 rounded-[var(--am-radius)] flex items-center justify-center text-sm font-semibold border transition-all",
                       step === n
-                        ? "bg-[var(--am-ink)] border-[var(--am-ink)] text-[var(--am-bg)] shadow-md scale-110"
+                        ? "bg-[var(--am-ink)] border-[var(--am-ink)] text-[var(--am-bg)] shadow-[var(--am-shadow-sm)] scale-110"
                         : step > n
-                        ? "bg-[var(--am-line)] border-[var(--am-line)] text-[var(--am-ink)] dark:bg-white/10 dark:border-white/10"
-                        : "border-[var(--am-line)] text-[var(--am-muted)] dark:border-white/15"
+                        ? "bg-[var(--am-line)] border-[var(--am-line)] text-[var(--am-ink)]"
+                        : "border-[var(--am-line)] text-[var(--am-muted)]"
                     )}
                   >
                     {n}
@@ -265,7 +263,7 @@ export function SynastryClient() {
                       ? (language === "vi" ? "Thông Tin Người 1" : "Person 1 Details")
                       : (language === "vi" ? "Thông Tin Người 2" : "Person 2 Details")}
                   </span>
-                  {n === 1 && <div className="w-8 sm:w-16 h-px bg-[var(--am-line)] dark:bg-white/10" />}
+                  {n === 1 && <div className="w-8 sm:w-16 h-px bg-[var(--am-line)]" />}
                 </div>
               ))}
             </div>
@@ -283,7 +281,7 @@ export function SynastryClient() {
                   <PersonForm label={language === "vi" ? "Người 1" : "Person 1"} value={personA} onChange={setPersonA} accent="violet" />
                   <button
                     type="submit"
-                    className="group relative w-full bg-[var(--am-primary)] hover:opacity-90 text-[var(--am-bg)] font-semibold text-lg rounded-full py-4 transition-all shadow-lg hover:shadow-xl cursor-pointer mt-8 overflow-hidden inline-flex items-center justify-center gap-2"
+                    className="group relative w-full bg-[var(--am-primary)] hover:opacity-90 text-[var(--am-bg)] font-semibold text-lg rounded-[var(--am-radius)] py-4 transition-all shadow-[var(--am-shadow)] hover:shadow-[var(--am-shadow)] cursor-pointer mt-8 overflow-hidden inline-flex items-center justify-center gap-2"
                   >
                     <span className="relative z-10">{language === "vi" ? "Tiếp theo: Thông tin Người 2" : "Next: Person 2 Details"}</span>
                     <ChevronRight className="w-5 h-5 relative z-10" />
@@ -303,14 +301,14 @@ export function SynastryClient() {
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="px-6 py-4 rounded-full border border-[var(--am-line)] dark:border-white/15 text-[var(--am-ink)] font-medium hover:bg-[var(--am-field)] dark:hover:bg-white/5 transition-all inline-flex items-center gap-2"
+                      className="px-6 py-4 rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] text-[var(--am-ink)] font-medium hover:bg-[var(--am-field)] transition-all inline-flex items-center gap-2"
                     >
                       <ChevronLeft className="w-5 h-5" /> {language === "vi" ? "Quay lại" : "Back"}
                     </button>
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="group relative flex-1 bg-[var(--am-primary)] hover:opacity-90 text-[var(--am-bg)] font-semibold text-lg rounded-full py-4 transition-all shadow-lg hover:shadow-xl disabled:opacity-60 cursor-pointer overflow-hidden inline-flex items-center justify-center gap-2"
+                      className="group relative flex-1 bg-[var(--am-primary)] hover:opacity-90 text-[var(--am-bg)] font-semibold text-lg rounded-[var(--am-radius)] py-4 transition-all shadow-[var(--am-shadow)] hover:shadow-[var(--am-shadow)] disabled:opacity-60 cursor-pointer overflow-hidden inline-flex items-center justify-center gap-2"
                     >
                       {isLoading ? (
                         <>
@@ -353,7 +351,7 @@ export function SynastryClient() {
             </div>
 
             {/* Pair-mode dashboard toggle */}
-            <div className="flex flex-wrap items-center gap-2 bg-[var(--am-field)] dark:bg-[var(--am-surface)] p-1.5 rounded-full border border-[var(--am-line)] dark:border-white/10 w-fit">
+            <div className="flex flex-wrap items-center gap-2 bg-[var(--am-field)] dark:bg-[var(--am-surface)] p-1.5 rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] w-fit">
               {PAIR_MODES.map((mode) => (
                 <button
                   key={mode.id}
@@ -361,9 +359,9 @@ export function SynastryClient() {
                   disabled={!mode.available}
                   onClick={() => mode.available && setPairMode(mode.id)}
                   className={cn(
-                    "px-4 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all inline-flex items-center gap-1.5",
+                    "px-4 sm:px-5 py-2 rounded-[var(--am-radius)] text-sm font-semibold transition-all inline-flex items-center gap-1.5",
                     pairMode === mode.id
-                      ? "bg-[var(--am-ink)] text-[var(--am-bg)] shadow-sm"
+                      ? "bg-[var(--am-ink)] text-[var(--am-bg)] shadow-[var(--am-shadow-sm)]"
                       : mode.available
                       ? "text-[var(--am-muted)] hover:text-[var(--am-ink)]"
                       : "text-[var(--am-muted)] dark:text-white/20 cursor-not-allowed"
@@ -406,16 +404,16 @@ export function SynastryClient() {
 
             {/* Chart wheel toggle + wheel */}
             <div>
-              <div className="flex items-center gap-2 bg-[var(--am-field)] dark:bg-[var(--am-surface)] p-1.5 rounded-full border border-[var(--am-line)] dark:border-white/10 w-fit mx-auto mb-6">
+              <div className="flex items-center gap-2 bg-[var(--am-field)] dark:bg-[var(--am-surface)] p-1.5 rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] w-fit mx-auto mb-6">
                 {(["A", "B"] as const).map((side) => (
                   <button
                     key={side}
                     type="button"
                     onClick={() => setActiveWheel(side)}
                     className={cn(
-                      "px-5 py-2 rounded-full text-sm font-semibold transition-all",
+                      "px-5 py-2 rounded-[var(--am-radius)] text-sm font-semibold transition-all",
                       activeWheel === side
-                        ? "bg-[var(--am-ink)] text-[var(--am-bg)] shadow-sm"
+                        ? "bg-[var(--am-ink)] text-[var(--am-bg)] shadow-[var(--am-shadow-sm)]"
                         : "text-[var(--am-muted)] hover:text-[var(--am-ink)]"
                     )}
                   >
@@ -487,7 +485,7 @@ export function SynastryClient() {
 
             {/* Inter-chart aspects */}
             <Card>
-              <CardHeader className="border-[var(--am-line)] dark:border-white/5 bg-[var(--am-surface)] px-6 py-5">
+              <CardHeader className="border-[var(--am-line)] bg-[var(--am-surface)] px-6 py-5">
                 <h3 className="font-display text-xl font-semibold text-[var(--am-ink)]">
                   {language === "vi" ? "Góc Chiếu Liên Biểu Đồ" : "Inter-Chart Aspects"}
                 </h3>
@@ -531,7 +529,7 @@ function HouseOverlayTable({
 }) {
   return (
     <Card>
-      <CardHeader className="border-[var(--am-line)] dark:border-white/5 bg-[var(--am-surface)] px-6 py-5">
+      <CardHeader className="border-[var(--am-line)] bg-[var(--am-surface)] px-6 py-5">
         <h4 className="font-display font-semibold text-[var(--am-ink)]">{title}</h4>
       </CardHeader>
       <CardContent className="p-4">
@@ -542,7 +540,7 @@ function HouseOverlayTable({
             return (
               <div
                 key={o.planet}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-[var(--am-radius)] bg-[var(--am-field)] border-2 border-[var(--am-edge)]"
               >
                 <span className="text-[var(--am-primary)] text-lg">{PLANET_GLYPHS[o.planet] ?? o.planet[0]}</span>
                 <span className="text-sm text-[var(--am-ink)] truncate">{pLabel}</span>

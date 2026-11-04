@@ -20,7 +20,7 @@ const aspectsEn: AspectItem[] = [
     degree: "0°",
     keyword: "Fusion & Focus",
     summary: "Two planets occupy the exact same celestial longitude, merging their archetype energies into an indivisible, intensely focused powerhouse.",
-    color: "border-violet-400/40 bg-violet-400/5 text-violet-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Sextile",
@@ -28,7 +28,7 @@ const aspectsEn: AspectItem[] = [
     degree: "60°",
     keyword: "Opportunity & Flow",
     summary: "A harmonious 60-degree angle creating friendly cooperation between complementary elements (Fire-Air or Earth-Water), offering easy opportunities that reward proactive effort.",
-    color: "border-emerald-400/40 bg-emerald-400/5 text-emerald-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-mint)]",
   },
   {
     name: "Square",
@@ -36,7 +36,7 @@ const aspectsEn: AspectItem[] = [
     degree: "90°",
     keyword: "Tension & Catalyst",
     summary: "A dynamic 90-degree friction that sparks internal tension, motivating problem-solving, grit, resilience, and monumental developmental breakthroughs.",
-    color: "border-rose-400/40 bg-rose-400/5 text-rose-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Trine",
@@ -44,7 +44,7 @@ const aspectsEn: AspectItem[] = [
     degree: "120°",
     keyword: "Innate Grace & Talent",
     summary: "The most naturally harmonious aspect, linking planets of the same element to bestow natural gifts, intuitive flow, and effortless creative expression.",
-    color: "border-amber-400/40 bg-amber-400/5 text-amber-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
   {
     name: "Opposition",
@@ -52,7 +52,7 @@ const aspectsEn: AspectItem[] = [
     degree: "180°",
     keyword: "Polarity & Awareness",
     summary: "Planets standing across from each other on the zodiac wheel create an energetic tug-of-war, teaching the master art of compromise, balance, and relational awareness.",
-    color: "border-cyan-400/40 bg-cyan-400/5 text-cyan-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
   {
     name: "Quincunx (Inconjunct)",
@@ -60,7 +60,7 @@ const aspectsEn: AspectItem[] = [
     degree: "150°",
     keyword: "Adjustment & Realignment",
     summary: "Linking signs that share neither element nor modality, the quincunx demands ongoing creative adjustments and psychological fine-tuning.",
-    color: "border-purple-400/40 bg-purple-400/5 text-purple-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
 ];
 
@@ -71,7 +71,7 @@ const aspectsVi: AspectItem[] = [
     degree: "0°",
     keyword: "Hòa Quyện & Tập Trung Cao Độ",
     summary: "Hai hành tinh cùng tọa lạc tại một vị trí, năng lượng của chúng hòa làm một khối thống nhất, tạo nên một sức mạnh nội tâm vô cùng tập trung và đậm nét.",
-    color: "border-violet-400/40 bg-violet-400/5 text-violet-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Lục Hợp (Sextile)",
@@ -79,7 +79,7 @@ const aspectsVi: AspectItem[] = [
     degree: "60°",
     keyword: "Cơ Hội & Dòng Chảy Thuận Lợi",
     summary: "Góc chiếu hài hòa 60 độ kết nối hai yếu tố tương trợ (Lửa-Khí hoặc Đất-Nước), mang đến những cơ hội thuận lợi mà bạn chỉ cần chủ động nắm bắt là sẽ gặt hái thành quả.",
-    color: "border-emerald-400/40 bg-emerald-400/5 text-emerald-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-mint)]",
   },
   {
     name: "Vuông Góc (Square)",
@@ -87,7 +87,7 @@ const aspectsVi: AspectItem[] = [
     degree: "90°",
     keyword: "Căng Thẳng & Động Lực Bứt Phá",
     summary: "Góc chiếu 90 độ tạo ra sự cọ xát và xung đột nội tại. Dù đòi hỏi nỗ lực lớn, đây chính là chất xúc tác mạnh mẽ nhất rèn luyện bản lĩnh, nghị lực và thành công vượt bậc.",
-    color: "border-rose-400/40 bg-rose-400/5 text-rose-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-peach)]",
   },
   {
     name: "Tam Hợp (Trine)",
@@ -95,7 +95,7 @@ const aspectsVi: AspectItem[] = [
     degree: "120°",
     keyword: "Tài Năng Bẩm Sinh & Hài Hòa",
     summary: "Góc chiếu 120 độ êm đềm và may mắn nhất, liên kết các hành tinh cùng nhóm nguyên tố, mang lại năng khiếu tự nhiên, trực giác nhạy bén và dòng chảy cuộc sống mượt mà.",
-    color: "border-amber-400/40 bg-amber-400/5 text-amber-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
   {
     name: "Đối Góc (Opposition)",
@@ -103,7 +103,7 @@ const aspectsVi: AspectItem[] = [
     degree: "180°",
     keyword: "Phân Cực & Nghệ Thuật Cân Bằng",
     summary: "Hai hành tinh đứng ở hai vị trí đối diện nhau tạo ra lực căng bập bênh, giúp bạn nhận thức sâu sắc cả hai mặt của vấn đề và học cách dung hòa các mặt đối lập.",
-    color: "border-cyan-400/40 bg-cyan-400/5 text-cyan-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
   {
     name: "Bất Tương (Quincunx)",
@@ -111,7 +111,7 @@ const aspectsVi: AspectItem[] = [
     degree: "150°",
     keyword: "Điều Chỉnh & Tái Cân Chỉnh",
     summary: "Kết nối hai cung hoàng đạo không có điểm chung về tính chất hay nguyên tố, đòi hỏi sự linh hoạt tinh chỉnh thói quen và thích ứng tâm lý liên tục.",
-    color: "border-purple-400/40 bg-purple-400/5 text-purple-400",
+    color: "border-[var(--am-edge)] bg-[var(--am-lilac)]",
   },
 ];
 
@@ -130,7 +130,7 @@ export default function AspectsPage() {
       </Link>
 
       <header className="space-y-4 text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[var(--am-radius)] bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
           <Sparkles className="w-3.5 h-3.5" />
           {language === "vi" ? "Kỹ Thuật Chiêm Tinh · Cơ Bản Đến Nâng Cao" : "Astrological Techniques · All Levels"}
         </div>
@@ -148,12 +148,12 @@ export default function AspectsPage() {
         {aspects.map((a, idx) => (
           <div
             key={idx}
-            className={`group overflow-hidden rounded-[2rem] border ${a.color} bg-[var(--am-surface)]/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col p-8 justify-between space-y-4`}
+            className={`group overflow-hidden rounded-[var(--am-radius)] border-2 ${a.color} shadow-[var(--am-shadow)] transition-[transform,box-shadow] duration-150 hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] flex flex-col p-8 justify-between space-y-4`}
           >
             <div>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl drop-shadow-sm">{a.symbol}</span>
+                  <span className="text-3xl ">{a.symbol}</span>
                   <div>
                     <h2 className="text-xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                       {a.name}

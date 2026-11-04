@@ -48,11 +48,11 @@ export function AspectGrid({ aspects, interpretations }: AspectGridProps) {
         <div className="flex items-center gap-4 sm:gap-5 min-w-0">
           <div className="flex items-center shrink-0">
             {/* Planet 1 Icon */}
-            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 shrink-0 shadow-sm z-10 relative">
+            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-[var(--am-radius)] bg-[var(--am-field)] border-2 border-[var(--am-edge)] shrink-0 shadow-[var(--am-shadow-sm)] z-10 relative">
               <span className="text-[var(--am-ink)] text-2xl sm:text-3xl">{PLANET_GLYPHS[aspect.planet_1] ?? aspect.planet_1[0]}</span>
             </div>
             {/* Planet 2 Icon */}
-            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 shrink-0 shadow-sm z-0 relative -ml-6 sm:-ml-7">
+            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shrink-0 shadow-[var(--am-shadow-sm)] z-0 relative -ml-6 sm:-ml-7">
               <span className="text-[var(--am-ink)] text-2xl sm:text-3xl">{PLANET_GLYPHS[aspect.planet_2] ?? aspect.planet_2[0]}</span>
             </div>
           </div>

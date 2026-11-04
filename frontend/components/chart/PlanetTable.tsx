@@ -23,7 +23,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
     const title = (
       <div className="flex items-center justify-between w-full pr-2 sm:pr-4 py-1">
         <div className="flex items-center gap-4 sm:gap-5 min-w-0">
-          <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[var(--am-field)] border border-[var(--am-line)] dark:border-white/10 shrink-0 shadow-sm">
+          <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-[var(--am-radius)] bg-[var(--am-field)] border-2 border-[var(--am-edge)] shrink-0 shadow-[var(--am-shadow-sm)]">
             <span className="text-[var(--am-ink)] text-2xl sm:text-3xl">{PLANET_GLYPHS[planet.planet] ?? planet.planet[0]}</span>
           </div>
           <div className="flex flex-col min-w-0 gap-0.5">
@@ -31,7 +31,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
               {t(`planet.${planet.planet.toLowerCase().replace(" ", "_")}`)}
             </span>
             <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[var(--am-muted)] font-light truncate">
-              <span className="text-amber-600 dark:text-amber-400 text-sm font-semibold">{ZODIAC_GLYPHS[planet.sign]}</span>
+              <span className="text-[var(--am-ink)]  text-sm font-semibold">{ZODIAC_GLYPHS[planet.sign]}</span>
               <span className="font-medium">{t(`sign.${planet.sign.toLowerCase()}`)}</span>
               <span className="mx-1 opacity-40">•</span>
               <span>{t("table.house")} {planet.house_number}</span>
@@ -73,7 +73,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
         )}
         
         {houseInterp && (
-          <div className={cn(signInterp ? "pt-4 mt-4 border-t border-[var(--am-line)] dark:border-white/5" : "")}>
+          <div className={cn(signInterp ? "pt-4 mt-4 border-t border-[var(--am-line)]" : "")}>
             <h4 className="font-semibold text-[var(--am-sunset)] mb-2 flex items-center gap-2">
               {PLANET_GLYPHS[planet.planet]} {t(`planet.${planet.planet.toLowerCase().replace(" ", "_")}`)} {t("misc.in")} {t("table.house")} {planet.house_number}
             </h4>

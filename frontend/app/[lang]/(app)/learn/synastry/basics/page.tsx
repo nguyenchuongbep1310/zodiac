@@ -21,7 +21,7 @@ export default function SynastryBasicsPage() {
         /* VIETNAMESE VERSION */
         <div className="space-y-8">
           <header className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[var(--am-radius)] bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
               <Sparkles className="w-3.5 h-3.5" /> Chiêm Tinh Đôi Lứa · Trung Cấp
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[var(--am-ink)] leading-tight">
@@ -33,16 +33,16 @@ export default function SynastryBasicsPage() {
           </header>
 
           <div className="space-y-8">
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-peach)] flex items-center justify-center text-[var(--am-sunset)]">
                   <Heart className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     Phương Pháp So Sánh Bản Đồ Sao (Synastry)
                   </h2>
-                  <span className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-sunset)] dark:text-[var(--am-sunset)] uppercase tracking-wider">
                     Xếp Chồng Biểu Đồ · Phân Tích Tương Tác Năng Lượng
                   </span>
                 </div>
@@ -58,16 +58,16 @@ export default function SynastryBasicsPage() {
               </p>
             </div>
 
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-lilac)] flex items-center justify-center text-[var(--am-ink)] ">
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     Hành Tinh Cá Nhân Trong Động Lực Lứa Đôi
                   </h2>
-                  <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-ink)]  uppercase tracking-wider">
                     Mặt Trời · Mặt Trăng · Sao Kim · Sao Hỏa · Sao Thủy
                   </span>
                 </div>
@@ -84,7 +84,7 @@ export default function SynastryBasicsPage() {
         /* ENGLISH VERSION */
         <div className="space-y-8">
           <header className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[var(--am-radius)] bg-[var(--am-primary)]/15 border border-[var(--am-primary)]/25 text-xs font-semibold tracking-widest text-[var(--am-ink)] uppercase">
               <Sparkles className="w-3.5 h-3.5" /> Synastry · Intermediate
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[var(--am-ink)] leading-tight">
@@ -96,16 +96,16 @@ export default function SynastryBasicsPage() {
           </header>
 
           <div className="space-y-8">
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-peach)] flex items-center justify-center text-[var(--am-sunset)]">
                   <Heart className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     The Mechanics of Synastry
                   </h2>
-                  <span className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-sunset)] dark:text-[var(--am-sunset)] uppercase tracking-wider">
                     Bi-Wheel Comparison · Aspect Geometries
                   </span>
                 </div>
@@ -121,16 +121,16 @@ export default function SynastryBasicsPage() {
               </p>
             </div>
 
-            <div className="p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/5 shadow-lg space-y-4">
+            <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-lilac)] flex items-center justify-center text-[var(--am-ink)] ">
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     The Personal Planet Layers
                   </h2>
-                  <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-ink)]  uppercase tracking-wider">
                     Sun · Moon · Venus · Mars · Mercury
                   </span>
                 </div>

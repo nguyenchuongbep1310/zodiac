@@ -23,7 +23,7 @@ import React, { useCallback, useRef, useState, useMemo } from 'react';
 import type { ChartResponse } from '@/lib/types/api';
 import { buildChartRenderData } from '@/lib/chart/renderer';
 import type { RenderedPlanet, RenderedHouse, RenderedAspect } from '@/lib/chart/renderer';
-import { CX, CY, VIEWBOX_SIZE, R, PLANET_CIRCLE_R } from '@/lib/chart/constants';
+import { ASPECT_STYLE, CX, CY, VIEWBOX_SIZE, R, PLANET_CIRCLE_R } from '@/lib/chart/constants';
 import { fmt } from '@/lib/chart/geometry';
 import { ZodiacRing } from './ZodiacRing';
 import { HouseRing } from './HouseRing';
@@ -269,14 +269,13 @@ export function ChartWheel({
           <defs>
             {/* Radial gradient for center glow */}
             <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stopColor="#7c3aed" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#0a0a1a" stopOpacity="0" />
+              <stop offset="0%"   stopColor="var(--am-gold)" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="var(--am-gold)" stopOpacity="0" />
             </radialGradient>
             {/* Outer glow gradient for zodiac ring */}
             <radialGradient id="ring-bg" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stopColor="#0d0d28" stopOpacity="1" />
-              <stop offset="85%"  stopColor="#0a0a1e" stopOpacity="1" />
-              <stop offset="100%" stopColor="#070714" stopOpacity="1" />
+              <stop offset="0%"   stopColor="var(--am-surface)" stopOpacity="1" />
+              <stop offset="100%" stopColor="var(--am-surface)" stopOpacity="1" />
             </radialGradient>
             {/* Clip to outer circle */}
             <clipPath id="chart-clip">
@@ -313,9 +312,9 @@ export function ChartWheel({
             {/* ── 4. Center circle (over aspects, under planets) ───────────── */}
             <circle
               cx={CX} cy={CY} r={R.CENTER}
-              fill="#060614"
-              stroke="rgba(55,48,163,0.55)"
-              strokeWidth={0.8}
+              fill="var(--wheel-planet-bg)"
+              stroke="var(--wheel-border)"
+              strokeWidth={1.2}
             />
             {/* Center glow */}
             <circle cx={CX} cy={CY} r={R.CENTER} fill="url(#center-glow)" />
@@ -325,7 +324,7 @@ export function ChartWheel({
               textAnchor="middle"
               dominantBaseline="central"
               fontSize="20"
-              fill="rgba(99,102,241,0.45)"
+              fill="var(--wheel-text-dim)"
               style={{ userSelect: 'none', fontFamily: 'serif' }}
             >
               ✦
@@ -348,9 +347,9 @@ export function ChartWheel({
                   width={88}
                   height={16}
                   rx={4}
-                  fill="rgba(15,12,40,0.92)"
-                  stroke="rgba(139,92,246,0.5)"
-                  strokeWidth={0.6}
+                  fill="var(--am-ink)"
+                  stroke="var(--am-edge)"
+                  strokeWidth={0.8}
                 />
                 <text
                   x={fmt(tooltip.x)}
@@ -358,7 +357,7 @@ export function ChartWheel({
                   textAnchor="middle"
                   dominantBaseline="central"
                   fontSize="7.5"
-                  fill="#e2e8f0"
+                  fill="var(--am-bg)"
                   style={{ userSelect: 'none', fontFamily: 'sans-serif' }}
                 >
                   {tooltip.text}
@@ -374,21 +373,21 @@ export function ChartWheel({
             <button
               onClick={zoomIn}
               title={language === "vi" ? "Phóng to" : "Zoom in"}
-              className="w-7 h-7 rounded-lg bg-space-800/80 border border-space-600/60 text-slate-300 hover:text-violet-300 hover:border-violet-500/50 hover:bg-violet-900/20 transition-all text-sm font-bold flex items-center justify-center backdrop-blur-sm shadow-md"
+              className="w-7 h-7 rounded-[var(--am-radius)] bg-[var(--am-surface)] border border-[var(--am-surface)] text-[var(--am-teal)] hover:text-[var(--am-primary)] hover:border-[var(--am-edge)] hover:bg-[var(--am-peach)] transition-all text-sm font-bold flex items-center justify-center shadow-[var(--am-shadow-sm)]"
             >
               +
             </button>
             <button
               onClick={zoomReset}
               title={language === "vi" ? "Đặt lại" : "Reset zoom"}
-              className="w-7 h-7 rounded-lg bg-space-800/80 border border-space-600/60 text-slate-400 hover:text-slate-200 hover:border-space-500 transition-all text-xs flex items-center justify-center backdrop-blur-sm shadow-md"
+              className="w-7 h-7 rounded-[var(--am-radius)] bg-[var(--am-surface)] border border-[var(--am-surface)] text-[var(--am-teal)] hover:text-[var(--am-teal)] hover:border-[var(--am-surface)] transition-all text-xs flex items-center justify-center shadow-[var(--am-shadow-sm)]"
             >
               ↺
             </button>
             <button
               onClick={zoomOut}
               title={language === "vi" ? "Thu nhỏ" : "Zoom out"}
-              className="w-7 h-7 rounded-lg bg-space-800/80 border border-space-600/60 text-slate-300 hover:text-violet-300 hover:border-violet-500/50 hover:bg-violet-900/20 transition-all text-sm font-bold flex items-center justify-center backdrop-blur-sm shadow-md"
+              className="w-7 h-7 rounded-[var(--am-radius)] bg-[var(--am-surface)] border border-[var(--am-surface)] text-[var(--am-teal)] hover:text-[var(--am-primary)] hover:border-[var(--am-edge)] hover:bg-[var(--am-peach)] transition-all text-sm font-bold flex items-center justify-center shadow-[var(--am-shadow-sm)]"
             >
               −
             </button>
@@ -398,17 +397,11 @@ export function ChartWheel({
 
       {/* ── Legend: aspect colors ────────────────────────────────────────────── */}
       <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-2.5 px-2">
-        {[
-          { color: '#819a96', key: 'trine' },
-          { color: '#8fa3b5', key: 'sextile' },
-          { color: '#bc8f8f', key: 'square' },
-          { color: '#d97b7b', key: 'opposition' },
-          { color: '#a67c7e', key: 'conjunction' },
-        ].map(({ color, key }) => (
-          <span key={key} className="flex items-center gap-1.5 text-xs text-[var(--am-ink)] dark:text-slate-300 font-medium">
+        {(['trine', 'sextile', 'square', 'opposition', 'conjunction'] as const).map((key) => (
+          <span key={key} className="flex items-center gap-1.5 text-xs text-[var(--am-ink)]  font-medium">
             <span
-              className="inline-block w-5 h-0.5 rounded-full"
-              style={{ backgroundColor: color }}
+              className="inline-block w-5 h-0.5 rounded-[var(--am-radius)]"
+              style={{ backgroundColor: ASPECT_STYLE[key].color }}
             />
             {t(`aspect.${key}`)}
           </span>

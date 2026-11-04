@@ -179,3 +179,27 @@ test.describe("landing sections: tarot spread and motion rules (light)", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+test.describe("inner pages share the retro look (light)", () => {
+  test.use({ colorScheme: "light" });
+
+  for (const path of ["/learn", "/learn/birth-chart/sun-moon", "/learn/birth-chart/planets", "/synastry", "/contact", "/privacy", "/terms", "/no-such-page"]) {
+    test(`${path} is parchment with no gradient text, blur or rounded-card look`, async ({ page }) => {
+      await page.goto(path);
+      await page.evaluate(() => document.fonts.ready);
+      expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(243, 230, 200)");
+
+      const offenders = await page.evaluate(() =>
+        [...document.querySelectorAll("body *")]
+          .filter((el) => {
+            const s = getComputedStyle(el);
+            const radii = [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomLeftRadius, s.borderBottomRightRadius];
+            const tooRound = radii.some((r) => parseFloat(r) > 24) && !el.classList.contains("stamp");
+            return s.backdropFilter !== "none" || s.backgroundClip === "text" || tooRound;
+          })
+          .map((el) => `${el.tagName.toLowerCase()}.${String(el.getAttribute("class")).slice(0, 80)}`),
+      );
+      expect(offenders).toEqual([]);
+    });
+  }
+});

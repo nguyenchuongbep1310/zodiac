@@ -20,7 +20,7 @@ export default function ChartErrorPage({
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="text-center animate-fade-in max-w-md p-8 rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] dark:border-white/10 shadow-xl">
+      <div className="text-center animate-fade-in max-w-md p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)]">
         <div className="text-4xl mb-4">⚠️</div>
         <h1 className="text-2xl font-display font-extrabold tracking-tight text-[var(--am-ink)] mb-2">
           {language === "vi" ? "Không Thể Hiển Thị Bản Đồ Sao" : "Couldn't Load This Chart"}
@@ -31,11 +31,11 @@ export default function ChartErrorPage({
             : "Something went wrong while loading this chart. Please try again or go back home."}
         </p>
         <div className="flex gap-3 justify-center">
-          <Button onClick={reset} className="rounded-full px-6 py-2.5">
+          <Button onClick={reset} className="rounded-[var(--am-radius)] px-6 py-2.5">
             {language === "vi" ? "Thử lại" : "Try again"}
           </Button>
           <Link href={localeHref("/")}>
-            <Button variant="secondary" className="rounded-full px-6 py-2.5">
+            <Button variant="secondary" className="rounded-[var(--am-radius)] px-6 py-2.5">
               {language === "vi" ? "Trang chủ" : "Go to home"}
             </Button>
           </Link>

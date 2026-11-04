@@ -72,3 +72,30 @@ test.describe("ink-border primitives (light)", () => {
     expect(pressed.shadow).toContain("1px 1px 0px");
   });
 });
+
+test.describe("ticket-bar navbar and parlour footer (light)", () => {
+  test.use({ colorScheme: "light" });
+
+  test("header is a full-width solid bar with a 2px ink rule and no blur", async ({ page }) => {
+    await page.goto("/");
+    const bar = await page.locator("header").first().evaluate((el) => {
+      const s = getComputedStyle(el);
+      const outer = el.getBoundingClientRect();
+      const blurred = [el, ...el.querySelectorAll("*")].filter((n) => getComputedStyle(n).backdropFilter !== "none").length;
+      return { width: outer.width, viewport: window.innerWidth, border: s.borderBottomWidth, radius: parseFloat(s.borderBottomLeftRadius), blurred };
+    });
+    expect(bar.width).toBe(bar.viewport);
+    expect(bar.border).toBe("2px");
+    expect(bar.radius).toBeLessThanOrEqual(6);
+    expect(bar.blurred).toBe(0);
+  });
+
+  test("footer is an ink block with mono link labels", async ({ page }) => {
+    await page.goto("/");
+    const footer = page.locator("footer");
+    await footer.scrollIntoViewIfNeeded();
+    expect(await footer.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe("rgb(28, 20, 16)");
+    const family = await footer.getByRole("link", { name: "Learn" }).first().evaluate((el) => getComputedStyle(el).fontFamily);
+    expect(family).toContain("Space Mono");
+  });
+});

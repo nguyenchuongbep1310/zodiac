@@ -98,9 +98,9 @@ export function FloatingNavbar() {
   ];
 
   const themeIcon = mounted ? (
-    theme === "dark" ? <Sun size={22} /> : <Moon size={22} />
+    theme === "dark" ? <Sun size={20} /> : <Moon size={20} />
   ) : (
-    <span className="block w-[22px] h-[22px]" aria-hidden="true" />
+    <span className="block w-[20px] h-[20px]" aria-hidden="true" />
   );
 
   const themeIconMobile = mounted ? (
@@ -112,26 +112,22 @@ export function FloatingNavbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-          "w-[calc(100%-1.5rem)] md:w-[calc(100%-3rem)] max-w-7xl"
+        className={`fixed inset-x-0 top-0 z-50 border-b-2 border-[var(--am-edge)] bg-[var(--am-surface)] transition-shadow duration-150 ${
+          isScrolled ? "shadow-[var(--am-shadow-sm)]" : ""
         }`}
-        style={{ top: "max(1rem, calc(env(safe-area-inset-top) + 0.5rem))" }}
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
-        <div
-          className={`flex items-center justify-between px-5 md:px-8 py-2.5 md:py-3 rounded-full bg-[var(--am-surface)]/80 backdrop-blur-md border border-[var(--am-line)] transition-shadow duration-500 ${
-            isScrolled ? "shadow-md shadow-black/5" : "shadow-none"
-          }`}
-        >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 md:px-8">
           {/* Logo */}
           <BrandLogo size="sm" />
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-10">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-9">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={localeHref(link.href)}
-                className="text-sm lg:text-base font-semibold text-[var(--am-muted)] hover:text-[var(--am-primary)] dark:hover:text-white transition-colors"
+                className="mono-label font-bold text-[var(--am-ink)] decoration-2 underline-offset-4 hover:text-[var(--am-primary)] hover:underline"
               >
                 {link.label}
               </Link>
@@ -139,38 +135,29 @@ export function FloatingNavbar() {
           </nav>
 
           {/* CTA & Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            {/* 2-Option Language Switcher Pill */}
-            <div className="flex items-center bg-[var(--am-lilac)]/50 p-0.5 rounded-full text-xs font-semibold">
-              <button
-                type="button"
-                onClick={() => setLanguage("en")}
-                aria-pressed={language === "en"}
-                className={`px-3 py-1 rounded-full transition-all ${
-                  language === "en"
-                    ? "bg-[var(--am-primary)] text-[var(--am-primary-ink)] shadow-sm"
-                    : "text-[var(--am-ink)]/70 hover:text-[var(--am-ink)]"
-                }`}
-              >
-                English
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguage("vi")}
-                aria-pressed={language === "vi"}
-                className={`px-3 py-1 rounded-full transition-all ${
-                  language === "vi"
-                    ? "bg-[var(--am-primary)] text-[var(--am-primary-ink)] shadow-sm"
-                    : "text-[var(--am-ink)]/70 hover:text-[var(--am-ink)]"
-                }`}
-              >
-                Tiếng Việt
-              </button>
+          <div className="hidden md:flex items-center gap-3">
+            {/* Two-segment language switch */}
+            <div className="mono-label flex overflow-hidden rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] font-bold">
+              {(["en", "vi"] as const).map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setLanguage(code)}
+                  aria-pressed={language === code}
+                  className={`px-3 py-1.5 transition-colors ${
+                    language === code
+                      ? "bg-[var(--am-ink)] text-[var(--am-bg)]"
+                      : "bg-transparent text-[var(--am-ink)] hover:bg-[var(--am-lilac)]"
+                  }`}
+                >
+                  {code === "en" ? "English" : "Tiếng Việt"}
+                </button>
+              ))}
             </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full hover:bg-[var(--am-lilac)]/50 transition-colors text-[var(--am-primary)] dark:text-[var(--am-ink)]"
+              className="rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] p-1.5 text-[var(--am-ink)] transition-colors hover:bg-[var(--am-lilac)]"
               aria-label="Toggle theme"
             >
               {themeIcon}
@@ -179,12 +166,12 @@ export function FloatingNavbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden -mr-2.5 p-2.5 text-[var(--am-ink)]"
+            className="md:hidden rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] p-1.5 text-[var(--am-ink)]"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileMenuOpen}
           >
-            <Menu size={24} />
+            <Menu size={22} />
           </button>
         </div>
       </header>
@@ -196,7 +183,7 @@ export function FloatingNavbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#17132e]/40 backdrop-blur-sm md:hidden flex justify-end"
+            className="fixed inset-0 z-[60] bg-[#1c1410]/60 md:hidden flex justify-end"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
@@ -204,7 +191,7 @@ export function FloatingNavbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="w-3/4 max-w-sm h-full bg-[var(--am-surface)] border-l border-[var(--am-line)] p-6 flex flex-col shadow-2xl"
+              className="w-3/4 max-w-sm h-full bg-[var(--am-surface)] border-l-2 border-[var(--am-edge)] p-6 flex flex-col shadow-2xl"
               style={{
                 paddingTop: "max(1.5rem, calc(env(safe-area-inset-top) + 1rem))",
                 paddingBottom: "max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem))",
@@ -237,7 +224,7 @@ export function FloatingNavbar() {
 
               <div className="mt-auto flex flex-col gap-4">
                 {/* Mobile Language Switcher */}
-                <div className="flex items-center justify-center bg-[var(--am-field)] p-1 rounded-2xl font-medium text-sm gap-2">
+                <div className="flex items-center justify-center bg-[var(--am-field)] p-1 rounded-[var(--am-radius)] font-medium text-sm gap-2">
                   <button
                     onClick={() => setLanguage("en")}
                     aria-pressed={language === "en"}
@@ -267,7 +254,7 @@ export function FloatingNavbar() {
                     setTheme(theme === "dark" ? "light" : "dark");
                     setMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center gap-2 p-3 rounded-2xl bg-[var(--am-field)] text-[var(--am-ink)] font-medium"
+                  className="flex items-center justify-center gap-2 p-3 rounded-[var(--am-radius)] bg-[var(--am-field)] text-[var(--am-ink)] font-medium"
                 >
                   {themeIconMobile}
                   <span>{t("nav.toggle_theme")}</span>

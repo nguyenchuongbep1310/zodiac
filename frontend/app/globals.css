@@ -51,7 +51,8 @@
 
   /* Fonts */
   --font-sans: var(--font-body), system-ui, sans-serif;
-  --font-display: var(--font-heading), system-ui, sans-serif;
+  --font-display: var(--font-alfa), Georgia, serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
 
   /* Animations */
   --animate-fade-in: fadeIn 0.4s ease-out;
@@ -82,27 +83,27 @@
   :root, .light {
     color-scheme: light;
     /* Ethereal light theme */
-    --bg-main: #f7f5ff;
+    --bg-main: #f3e6c8;
     --bg-grad: none;
-    --text-main: #17132e;
+    --text-main: #1c1410;
     --glass-bg: rgba(0, 0, 0, 0.03);
     --glass-border: rgba(0, 0, 0, 0.08);
-    --scroll-track: #f3f1fb;
-    --scroll-thumb: #cfc6f5;
+    --scroll-track: #ead7a8;
+    --scroll-thumb: #b8975a;
 
     /* Chart Wheel SVG - Warm Editorial Theme */
-    --wheel-zodiac-bg: rgba(255, 255, 255, 0.95);
-    --wheel-border: rgba(109, 74, 255, 0.55);
-    --wheel-border-inner: rgba(109, 74, 255, 0.3);
-    --wheel-tick: rgba(109, 74, 255, 0.6);
-    --wheel-house-outer: rgba(243, 241, 251, 0.7);
-    --wheel-house-inner: rgba(255, 255, 255, 0.85);
-    --wheel-house-stroke: rgba(23, 19, 46, 0.14);
-    --wheel-planet-track-outer: rgba(243, 241, 251, 0.5);
-    --wheel-planet-track-inner: rgba(109, 74, 255, 0.15);
-    --wheel-planet-bg: #ffffff;
-    --wheel-text-glyph: #17132e;
-    --wheel-text-dim: #5d5878;
+    --wheel-zodiac-bg: rgba(251, 244, 224, 0.95);
+    --wheel-border: rgba(28, 20, 16, 0.8);
+    --wheel-border-inner: rgba(28, 20, 16, 0.4);
+    --wheel-tick: rgba(28, 20, 16, 0.7);
+    --wheel-house-outer: rgba(234, 215, 168, 0.5);
+    --wheel-house-inner: rgba(251, 244, 224, 0.9);
+    --wheel-house-stroke: rgba(28, 20, 16, 0.25);
+    --wheel-planet-track-outer: rgba(234, 215, 168, 0.4);
+    --wheel-planet-track-inner: rgba(28, 20, 16, 0.15);
+    --wheel-planet-bg: #fbf4e0;
+    --wheel-text-glyph: #1c1410;
+    --wheel-text-dim: #5e4b3c;
 
     /* Light space colors (warm grays/creams) */
     --theme-space-950: #FFFFFF;
@@ -135,27 +136,27 @@
   .dark {
     color-scheme: dark;
     /* Refined Editorial dark theme */
-    --bg-main: #0f0c1f;
+    --bg-main: #170e0b;
     --bg-grad: none;
-    --text-main: #f3f0ff;
+    --text-main: #f3e6c8;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
-    --scroll-track: #0f0c1f;
-    --scroll-thumb: #3a3266;
+    --scroll-track: #170e0b;
+    --scroll-thumb: #4a3622;
 
     /* Chart Wheel SVG - Refined Neutrals */
-    --wheel-zodiac-bg: rgba(26, 22, 48, 0.9);
-    --wheel-border: rgba(255, 255, 255, 0.15);
-    --wheel-border-inner: rgba(255, 255, 255, 0.1);
-    --wheel-tick: rgba(255, 255, 255, 0.3);
-    --wheel-house-outer: rgba(255, 255, 255, 0.02);
-    --wheel-house-inner: rgba(255, 255, 255, 0.04);
-    --wheel-house-stroke: rgba(255, 255, 255, 0.08);
-    --wheel-planet-track-outer: rgba(255, 255, 255, 0.01);
-    --wheel-planet-track-inner: rgba(255, 255, 255, 0.03);
-    --wheel-planet-bg: #1a1630;
-    --wheel-text-glyph: rgba(255, 255, 255, 0.9);
-    --wheel-text-dim: rgba(255, 255, 255, 0.5);
+    --wheel-zodiac-bg: rgba(36, 23, 19, 0.95);
+    --wheel-border: rgba(232, 211, 160, 0.6);
+    --wheel-border-inner: rgba(232, 211, 160, 0.3);
+    --wheel-tick: rgba(232, 211, 160, 0.5);
+    --wheel-house-outer: rgba(232, 211, 160, 0.04);
+    --wheel-house-inner: rgba(232, 211, 160, 0.06);
+    --wheel-house-stroke: rgba(232, 211, 160, 0.15);
+    --wheel-planet-track-outer: rgba(232, 211, 160, 0.03);
+    --wheel-planet-track-inner: rgba(232, 211, 160, 0.08);
+    --wheel-planet-bg: #241713;
+    --wheel-text-glyph: #f3e6c8;
+    --wheel-text-dim: rgba(243, 230, 200, 0.6);
 
     /* Space colors (midnight blue to deep purple) */
     --theme-space-950: #05050A;
@@ -228,12 +229,13 @@
     border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #7c3aed;
+    background: var(--am-primary);
   }
 
   :focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.7);
+    outline: 3px solid var(--am-primary);
+    outline-offset: 2px;
+    box-shadow: none;
   }
 }
 
@@ -294,36 +296,45 @@
   background: linear-gradient(to right, transparent, rgba(181, 164, 153, 0.3), transparent);
 }
 
-/* ── Landing design system ──────────────────────────────────────────────── */
+/* ── Retro parlour design system ───────────────────────────────────────── */
 
 :root {
-  --am-bg: #f7f5ff;
-  --am-surface: #ffffff;
-  --am-ink: #17132e;
-  --am-muted: #5d5878;
-  --am-primary: #6d4aff;
-  --am-primary-ink: #ffffff;
-  --am-sunset: #ff8a5c;
-  --am-mint: #b9f3d6;
-  --am-lilac: #e4dcff;
-  --am-peach: #ffe1d3;
-  --am-line: rgba(23, 19, 46, 0.1);
-  --am-field: #f3f1fb;
+  --am-bg: #f3e6c8;
+  --am-surface: #fbf4e0;
+  --am-field: #fff8e6;
+  --am-ink: #1c1410;
+  --am-muted: #5e4b3c;
+  --am-primary: #8b1e1e;
+  --am-primary-ink: #fbf4e0;
+  --am-sunset: #d9452b;
+  --am-gold: #d9a521;
+  --am-teal: #1f5148;
+  --am-lilac: #ead7a8;
+  --am-peach: #f0c9b5;
+  --am-mint: #c5d9c0;
+  --am-line: rgba(28, 20, 16, 0.25);
+  --am-edge: #1c1410;
+  --am-radius: 4px;
+  --am-shadow: 4px 4px 0 var(--am-edge);
+  --am-shadow-sm: 2px 2px 0 var(--am-edge);
 }
 
 .dark {
-  --am-bg: #0f0c1f;
-  --am-surface: #1a1630;
-  --am-ink: #f3f0ff;
-  --am-muted: #a8a2c7;
-  --am-primary: #a48bff;
-  --am-primary-ink: #0f0c1f;
-  --am-sunset: #ff9f7a;
-  --am-mint: #1f4a3c;
-  --am-lilac: #2a2350;
-  --am-peach: #46291f;
-  --am-line: rgba(243, 240, 255, 0.12);
-  --am-field: #221d3d;
+  --am-bg: #170e0b;
+  --am-surface: #241713;
+  --am-field: #2d1d17;
+  --am-ink: #f3e6c8;
+  --am-muted: #c4ad8e;
+  --am-primary: #e0a526;
+  --am-primary-ink: #170e0b;
+  --am-sunset: #ef6a4c;
+  --am-gold: #e0a526;
+  --am-teal: #6fb8a6;
+  --am-lilac: #3b2c14;
+  --am-peach: #4a2419;
+  --am-mint: #1d3a33;
+  --am-line: rgba(243, 230, 200, 0.22);
+  --am-edge: #e8d3a0;
 }
 
 .am-page {
@@ -331,11 +342,41 @@
   color: var(--am-ink);
 }
 
-.am-gradient-text {
-  background: linear-gradient(100deg, var(--am-primary) 10%, var(--am-sunset) 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Alfa Slab One has a single weight; never let the browser fake a bold. */
+.font-display {
+  font-synthesis: none;
+}
+
+.ink-border {
+  border: 2px solid var(--am-edge);
+}
+.hard-shadow {
+  box-shadow: var(--am-shadow);
+}
+.hard-shadow-sm {
+  box-shadow: var(--am-shadow-sm);
+}
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Faint paper grain over the whole page (fixed, never intercepts input). */
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.11  0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.dark .paper-grain::before {
+  opacity: 0.05;
+  mix-blend-mode: screen;
 }
 
 /* Infinite zodiac strip; content is duplicated once so -50% loops seamlessly */

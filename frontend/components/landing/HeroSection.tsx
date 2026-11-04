@@ -108,7 +108,7 @@ export function HeroSection() {
             <Sparkles className="w-4 h-4 text-[var(--am-sunset)]" aria-hidden="true" />
             {t("home.hero.eyebrow")}
           </span>
-          <h1 className="font-display font-extrabold tracking-tight text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl text-[var(--am-ink)] mt-6">
+          <h1 className="font-display font-extrabold tracking-tight text-[2.6rem] leading-[1.15] sm:text-6xl lg:text-7xl text-[var(--am-ink)] mt-6">
             {titleLead}
             {titleHighlight && (
               <>

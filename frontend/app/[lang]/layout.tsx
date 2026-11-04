@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Be_Vietnam_Pro } from "next/font/google";
+import { Alfa_Slab_One, Be_Vietnam_Pro, Space_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
@@ -11,9 +11,17 @@ import { LocaleProvider } from "@/lib/hooks/useI18n";
 import { isLocale, locales, type Locale } from "@/lib/i18n/locale";
 import { ogLocale, siteDescriptionByLocale, siteKeywords, siteName, siteTitle, siteUrl } from "@/lib/seo";
 
-const heading = Bricolage_Grotesque({
+const display = Alfa_Slab_One({
   subsets: ["latin", "latin-ext", "vietnamese"],
-  variable: "--font-heading",
+  variable: "--font-alfa",
+  weight: "400",
+  display: "swap",
+});
+
+const mono = Space_Mono({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  variable: "--font-space-mono",
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -32,8 +40,8 @@ export const viewport: Viewport = {
   // insets in globals.css/components keep actual content clear of it.
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5ff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f0c1f" },
+    { media: "(prefers-color-scheme: light)", color: "#f3e6c8" },
+    { media: "(prefers-color-scheme: dark)", color: "#170e0b" },
   ],
 };
 
@@ -100,8 +108,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!isLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${heading.variable} ${body.variable}`} suppressHydrationWarning>
-      <body className="font-sans bg-[var(--bg-main)] text-[var(--text-main)] min-h-[100dvh]">
+    <html lang={lang} className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body className="paper-grain font-sans bg-[var(--bg-main)] text-[var(--text-main)] min-h-[100dvh]">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <LocaleProvider locale={lang}>
             <QueryProvider>

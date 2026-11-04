@@ -64,10 +64,10 @@ export function BrandLogo({ className, iconOnly = false, size = "md", onClick }:
       {/* Brand Text */}
       {!iconOnly && (
         <span className={cn("font-display font-bold tracking-tight transition-colors flex items-center", textSizes[size])}>
-          <span className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 dark:from-amber-300 dark:via-amber-200 dark:to-amber-400 bg-clip-text text-transparent">
+          <span className="text-[var(--am-primary)]">
             Astro
           </span>
-          <span className="text-slate-900 dark:text-white font-medium ml-0.5">
+          <span className="text-[var(--am-ink)] ml-0.5">
             Mind
           </span>
         </span>

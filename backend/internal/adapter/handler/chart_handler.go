@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -11,6 +12,11 @@ import (
 	"github.com/zodiac/backend/internal/app/dto"
 	"github.com/zodiac/backend/internal/app/service"
 	"github.com/zodiac/backend/internal/domain"
+)
+
+const (
+	minBirthYear = 1800
+	maxBirthYear = 2399
 )
 
 // ChartHandler handles natal chart routes.
@@ -40,6 +46,11 @@ func NewChartHandler(chartSvc *service.ChartService, log *zap.Logger) *ChartHand
 func (h *ChartHandler) Calculate(c *gin.Context) {
 	var req dto.CalculateChartRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
+		var tooLarge *http.MaxBytesError
+		if errors.As(err, &tooLarge) {
+			c.Error(domain.ErrPayloadTooLarge())
+			return
+		}
 		c.Error(domain.ErrValidation(err.Error()))
 		return
 	}
@@ -47,6 +58,11 @@ func (h *ChartHandler) Calculate(c *gin.Context) {
 	birthDate, err := time.Parse(time.DateOnly, req.BirthDate)
 	if err != nil {
 		c.Error(domain.ErrValidation("invalid birth_date format, expected YYYY-MM-DD"))
+		return
+	}
+	// The bundled ephemeris files (seas_18 / semo_18 / sepl_18) cover 1800–2399.
+	if birthDate.Year() < minBirthYear || birthDate.Year() > maxBirthYear {
+		c.Error(domain.ErrValidation("birth_date must be between years 1800 and 2399"))
 		return
 	}
 
@@ -66,8 +82,8 @@ func (h *ChartHandler) Calculate(c *gin.Context) {
 		BirthDate:    birthDate,
 		BirthTime:    birthTime,
 		Timezone:     req.Timezone,
-		Latitude:     req.Latitude,
-		Longitude:    req.Longitude,
+		Latitude:     *req.Latitude,
+		Longitude:    *req.Longitude,
 		City:         req.City,
 		HouseSystem:  req.HouseSystem,
 		ZodiacSystem: req.ZodiacSystem,

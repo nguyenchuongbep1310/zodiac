@@ -67,6 +67,22 @@ func ErrValidation(message string) *AppError {
 	}
 }
 
+func ErrPayloadTooLarge() *AppError {
+	return &AppError{
+		Code:       "PAYLOAD_TOO_LARGE",
+		Message:    "request body is too large",
+		StatusCode: http.StatusRequestEntityTooLarge,
+	}
+}
+
+func ErrTooManyRequests() *AppError {
+	return &AppError{
+		Code:       "RATE_LIMITED",
+		Message:    "too many requests, please slow down",
+		StatusCode: http.StatusTooManyRequests,
+	}
+}
+
 func ErrInternal(err error) *AppError {
 	return &AppError{
 		Code:       "INTERNAL_SERVER_ERROR",

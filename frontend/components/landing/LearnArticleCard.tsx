@@ -25,21 +25,16 @@ export function LearnArticleCard({
   href,
   featured = false,
 }: LearnArticleCardProps) {
-  const { t } = useTranslation();
+  const { t, localeHref } = useTranslation();
 
   const categoryColors: Record<string, string> = {
-    basics: "bg-asknova-burgundy/10 text-asknova-burgundy dark:bg-asknova-burgundy/20 dark:text-asknova-gold",
-    intermediate:
-      "bg-asknova-blue/10 text-asknova-blue dark:bg-asknova-blue/20 dark:text-asknova-light",
-    advanced:
-      "bg-asknova-teal/10 text-asknova-teal dark:bg-asknova-teal/20 dark:text-asknova-gold",
-    techniques:
-      "bg-asknova-gold/10 text-asknova-dark dark:bg-asknova-gold/20 dark:text-asknova-gold",
+    basics: "bg-[var(--am-lilac)] text-[var(--am-ink)]",
+    intermediate: "bg-[var(--am-mint)] text-[var(--am-ink)]",
+    advanced: "bg-[var(--am-peach)] text-[var(--am-ink)]",
+    techniques: "bg-[var(--am-gold)] text-[#1c1410]",
   };
 
-  const categoryColor =
-    categoryColors[category] ||
-    "bg-asknova-gray-accent/10 text-asknova-dark dark:bg-asknova-gray-accent/20 dark:text-asknova-light";
+  const categoryColor = categoryColors[category] || "bg-[var(--am-field)] text-[var(--am-ink)]";
 
   const categoryKey = `category.${category}`;
   const translatedCategory = t(categoryKey);
@@ -58,24 +53,21 @@ export function LearnArticleCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8 }}
       className="h-full"
     >
-      <Link href={href}>
+      <Link href={localeHref(href)}>
         <div
           className={`
-            group relative h-full flex flex-col rounded-lg overflow-hidden
-            bg-white dark:bg-asknova-surface-dark
-            border border-asknova-gray-light/50 dark:border-asknova-burgundy-darker/30
-            hover:border-asknova-burgundy dark:hover:border-asknova-gold
-            shadow-sm hover:shadow-md
-            transition-all duration-300 cursor-pointer
+            group relative flex h-full cursor-pointer flex-col overflow-hidden
+            border-2 border-[var(--am-edge)] bg-[var(--am-surface)] shadow-[var(--am-shadow)]
+            transition-[transform,box-shadow] duration-150
+            hover:shadow-[6px_6px_0_var(--am-edge)] motion-safe:hover:[transform:translate(-2px,-2px)]
             ${featured ? "lg:col-span-2" : ""}
           `}
         >
           {/* Image Section */}
           {image && (
-            <div className="relative h-48 overflow-hidden bg-gradient-to-br from-asknova-burgundy/20 to-asknova-blue/20 dark:from-asknova-burgundy/10 dark:to-asknova-blue/10">
+            <div className="relative h-48 overflow-hidden border-b-2 border-[var(--am-edge)] bg-[var(--am-lilac)]">
               <motion.div
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
@@ -96,9 +88,8 @@ export function LearnArticleCard({
               <div className="absolute top-3 right-3">
                 <span
                   className={`
-                    px-3 py-1 rounded-full text-xs font-semibold
+                    mono-label border-2 border-[var(--am-edge)] px-2 py-0.5 font-bold
                     ${categoryColor}
-                    backdrop-blur-sm
                   `}
                 >
                   {categoryLabel}
@@ -112,10 +103,9 @@ export function LearnArticleCard({
             {/* Title */}
             <h3
               className={`
-                font-display italic font-bold leading-tight mb-3
-                text-asknova-dark dark:text-asknova-light
+                font-display leading-tight mb-3 text-[var(--am-ink)]
                 ${featured ? "text-lg md:text-xl" : "text-base md:text-lg"}
-                hover:text-asknova-burgundy dark:hover:text-asknova-gold
+                group-hover:text-[var(--am-primary)]
                 transition-colors
               `}
             >
@@ -125,7 +115,7 @@ export function LearnArticleCard({
             {/* Excerpt */}
             <p
               className={`
-                text-asknova-dark/70 dark:text-asknova-light/70
+                text-[var(--am-muted)]
                 leading-relaxed mb-4 flex-grow
                 ${featured ? "text-sm md:text-base" : "text-sm"}
               `}
@@ -134,11 +124,11 @@ export function LearnArticleCard({
             </p>
 
             {/* Footer: Category & Read Time */}
-            <div className="flex items-center justify-between pt-4 border-t border-asknova-gray-light/30 dark:border-asknova-burgundy-darker/20">
+            <div className="flex items-center justify-between pt-4 border-t-2 border-dashed border-[var(--am-edge)]">
               {!image && (
                 <span
                   className={`
-                    px-3 py-1 rounded-full text-xs font-semibold
+                    mono-label border-2 border-[var(--am-edge)] px-2 py-0.5 font-bold
                     ${categoryColor}
                   `}
                 >
@@ -146,7 +136,7 @@ export function LearnArticleCard({
                 </span>
               )}
 
-              <span className="text-xs text-asknova-dark/60 dark:text-asknova-light/60 font-medium">
+              <span className="mono-label text-[var(--am-muted)]">
                 {readLabel}
               </span>
             </div>
@@ -157,7 +147,7 @@ export function LearnArticleCard({
             <motion.div
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-asknova-burgundy dark:text-asknova-gold"
+              className="text-[var(--am-primary)]"
             >
               →
             </motion.div>

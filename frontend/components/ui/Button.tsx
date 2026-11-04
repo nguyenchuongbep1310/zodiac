@@ -14,21 +14,21 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    "bg-violet-600 hover:bg-violet-500 text-white border border-violet-500/50 shadow-glass dark:shadow-glow hover:shadow-glass dark:hover:shadow-glow-lg",
+    "bg-[var(--am-primary)] text-[var(--am-primary-ink)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] hover:brightness-110",
   secondary:
-    "bg-black/5 dark:bg-space-700 hover:bg-black/10 dark:hover:bg-space-600 text-slate-800 dark:text-slate-200 border border-black/10 dark:border-space-500/50",
+    "bg-[var(--am-surface)] text-[var(--am-ink)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow-sm)] hover:bg-[var(--am-field)]",
   ghost:
-    "bg-transparent hover:bg-black/5 dark:hover:bg-space-700 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-transparent hover:border-black/10 dark:hover:border-space-500/50",
+    "bg-transparent text-[var(--am-muted)] hover:text-[var(--am-ink)] border-2 border-transparent hover:border-[var(--am-edge)]",
   danger:
-    "bg-rose-500/10 dark:bg-rose-500/20 hover:bg-rose-500/20 dark:hover:bg-rose-500/30 text-rose-600 dark:text-rose-400 border border-rose-500/30",
+    "bg-[var(--am-peach)] text-[var(--am-ink)] border-2 border-[var(--am-sunset)] shadow-[var(--am-shadow-sm)] hover:brightness-105",
   gold:
-    "bg-amber-500/10 dark:bg-amber-500/20 hover:bg-amber-500/20 dark:hover:bg-amber-500/30 text-amber-600 dark:text-amber-400 border border-amber-500/30 shadow-glow-amber",
+    "bg-[var(--am-gold)] text-[#1c1410] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] hover:brightness-105",
 };
 
 const sizeStyles: Record<Size, string> = {
-  sm: "px-3 py-1.5 text-xs rounded-lg",
-  md: "px-4 py-2.5 text-sm rounded-xl",
-  lg: "px-6 py-3 text-base rounded-xl",
+  sm: "px-3 py-1.5 text-xs rounded-[var(--am-radius)]",
+  md: "px-4 py-2.5 text-sm rounded-[var(--am-radius)]",
+  lg: "px-6 py-3 text-base rounded-[var(--am-radius)]",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -50,11 +50,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={cn(
-          "inline-flex items-center justify-center gap-2 font-medium",
-          "transition-all duration-200 ease-out",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-space-900",
+          "inline-flex items-center justify-center gap-2 font-semibold",
+          "transition-colors duration-100",
           "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
-          "active:scale-[0.98] hover:scale-[1.02]",
+          // Pressing sinks the button into its own shadow.
+          "active:[transform:translate(3px,3px)] active:shadow-[1px_1px_0_var(--am-edge)]",
           variantStyles[variant],
           sizeStyles[size],
           fullWidth && "w-full",

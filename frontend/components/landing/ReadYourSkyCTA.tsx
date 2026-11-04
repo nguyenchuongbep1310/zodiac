@@ -2,39 +2,31 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { useTranslation } from "@/lib/hooks/useI18n";
+import { Ornament } from "@/components/ui/Ornament";
 
+/** Closing call to action: a full-bleed oxblood (gold in dark) block. */
 export function ReadYourSkyCTA() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative py-28 px-6 overflow-hidden bg-mystic-dark">
-      {/* Decorative glow / stars */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-violet-600/15 to-transparent blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-radial from-amber-500/10 to-transparent blur-3xl" />
-      </div>
-
+    <section className="[--focus-ring:var(--am-bg)] border-t-2 border-[var(--am-edge)] bg-[var(--am-primary)] px-4 py-20 text-[var(--am-primary-ink)] sm:px-6 md:py-28">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="relative max-w-3xl mx-auto text-center"
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mx-auto max-w-4xl text-center"
       >
-        <h2 className="font-display italic text-4xl md:text-6xl text-warm-cream mb-5 tracking-tight">
-          {t("home.cta.title")}
-        </h2>
-        <p className="text-slate-300 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-          {t("home.cta.subtitle")}
-        </p>
+        <Ornament className="mx-auto mb-8 max-w-xs text-current" />
+        <h2 className="font-display text-4xl leading-[1.15] md:text-6xl">{t("home.cta.title")}</h2>
+        <p className="mt-5 text-lg opacity-90 md:text-xl">{t("home.cta.subtitle")}</p>
         <Link
           href="#hero"
-          className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-mystic-dark font-semibold text-lg shadow-glow-amber hover:shadow-glow-lg hover:scale-[1.03] transition-all duration-300"
+          className="mono-label mt-10 inline-flex items-center gap-2 rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] bg-[var(--am-bg)] px-7 py-4 text-sm font-bold text-[var(--am-ink)] shadow-[var(--am-shadow)] transition-colors hover:bg-[var(--am-gold)] hover:text-[#1c1410] active:[transform:translate(3px,3px)] active:shadow-[1px_1px_0_var(--am-edge)]"
         >
           {t("home.cta.button")}
-          <ArrowRight className="w-5 h-5" />
+          <span aria-hidden="true">→</span>
         </Link>
       </motion.div>
     </section>

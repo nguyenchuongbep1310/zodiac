@@ -93,10 +93,10 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover, onClick }: 
     statusText,
   ].join(' · ');
 
-  const glyphColor = isRetrograde ? '#f59e0b' : '#c4b5fd';
+  const glyphColor = isRetrograde ? 'var(--am-sunset)' : 'var(--wheel-text-glyph)';
   const borderColor = isRetrograde
-    ? 'rgba(245,158,11,0.75)'
-    : 'rgba(139,92,246,0.75)';
+    ? 'var(--am-sunset)'
+    : 'var(--wheel-border)';
 
   return (
     <g
@@ -144,7 +144,7 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover, onClick }: 
         fill="var(--wheel-planet-bg)"
         stroke={borderColor}
         strokeWidth={1.0}
-        className="group-hover:drop-shadow-[0_0_4px_rgba(167,139,250,0.8)] transition-all"
+        className="transition-all"
       />
 
       {/* Planet glyph */}
@@ -167,7 +167,7 @@ const PlanetGlyph = memo(function PlanetGlyph({ rp, dimmed, onHover, onClick }: 
           x={fmt(glyphCenter.x + PLANET_CIRCLE_R * 0.65)}
           y={fmt(glyphCenter.y - PLANET_CIRCLE_R * 0.65)}
           fontSize="5.5"
-          fill="#f59e0b"
+          fill="var(--am-sunset)"
           fillOpacity={0.95}
           style={{ userSelect: 'none', fontFamily: 'serif' }}
         >

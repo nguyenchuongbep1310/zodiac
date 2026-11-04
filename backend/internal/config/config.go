@@ -16,6 +16,7 @@ type Config struct {
 	Redis    RedisConfig
 	JWT      JWTConfig
 	Log      LogConfig
+	Security SecurityConfig
 }
 
 type AppConfig struct {
@@ -49,6 +50,24 @@ type JWTConfig struct {
 	Secret          string        `mapstructure:"secret"`
 	AccessTokenTTL  time.Duration `mapstructure:"access_token_ttl"`
 	RefreshTokenTTL time.Duration `mapstructure:"refresh_token_ttl"`
+}
+
+// SecurityConfig groups HTTP hardening settings.
+// Env overrides: ZODIAC_SECURITY_ALLOWED_ORIGINS="https://a.com,https://b.com", etc.
+type SecurityConfig struct {
+	// AllowedOrigins is the CORS allowlist. "*" is accepted only outside production.
+	AllowedOrigins []string `mapstructure:"allowed_origins"`
+	// TrustedProxies lists proxy IPs/CIDRs whose X-Forwarded-For header is
+	// honoured when resolving the client IP. Empty means trust none.
+	TrustedProxies []string `mapstructure:"trusted_proxies"`
+	// MaxBodyBytes caps the size of any request body.
+	MaxBodyBytes int64 `mapstructure:"max_body_bytes"`
+	// Per-client-IP limits (requests per minute + burst) for all /api/v1 routes
+	// and, separately and more strictly, for chart calculation.
+	RateLimitPerMinute          int `mapstructure:"rate_limit_per_minute"`
+	RateLimitBurst              int `mapstructure:"rate_limit_burst"`
+	CalculateRateLimitPerMinute int `mapstructure:"calculate_rate_limit_per_minute"`
+	CalculateRateLimitBurst     int `mapstructure:"calculate_rate_limit_burst"`
 }
 
 type LogConfig struct {
@@ -116,6 +135,14 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("jwt.access_token_ttl", "15m")
 	v.SetDefault("jwt.refresh_token_ttl", "168h") // 7 days
 
+	v.SetDefault("security.allowed_origins", []string{"http://localhost:3000"})
+	v.SetDefault("security.trusted_proxies", []string{})
+	v.SetDefault("security.max_body_bytes", 64*1024)
+	v.SetDefault("security.rate_limit_per_minute", 120)
+	v.SetDefault("security.rate_limit_burst", 30)
+	v.SetDefault("security.calculate_rate_limit_per_minute", 10)
+	v.SetDefault("security.calculate_rate_limit_burst", 5)
+
 	v.SetDefault("log.level", "info")
 	v.SetDefault("log.format", "json")
 }
@@ -129,6 +156,23 @@ func validate(cfg *Config) error {
 	}
 	if len(cfg.JWT.Secret) < 32 {
 		return fmt.Errorf("JWT secret must be at least 32 characters")
+	}
+	if cfg.App.Environment != "development" && strings.HasPrefix(cfg.JWT.Secret, "change-me") {
+		return fmt.Errorf("JWT secret is still the placeholder value; set ZODIAC_JWT_SECRET")
+	}
+	if cfg.App.Environment == "production" {
+		for _, o := range cfg.Security.AllowedOrigins {
+			if o == "*" {
+				return fmt.Errorf("security.allowed_origins must not contain \"*\" in production")
+			}
+		}
+	}
+	if cfg.Security.MaxBodyBytes <= 0 {
+		return fmt.Errorf("security.max_body_bytes must be positive")
+	}
+	if cfg.Security.RateLimitPerMinute <= 0 || cfg.Security.RateLimitBurst <= 0 ||
+		cfg.Security.CalculateRateLimitPerMinute <= 0 || cfg.Security.CalculateRateLimitBurst <= 0 {
+		return fmt.Errorf("security rate limits must be positive")
 	}
 	return nil
 }

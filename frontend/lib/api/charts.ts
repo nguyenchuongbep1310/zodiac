@@ -12,12 +12,14 @@ export const chartsApi = {
   },
 
   getById: async (id: string): Promise<ChartResponse> => {
-    const res = await apiClient.get<ChartResponse>(`/v1/charts/${id}`);
+    const res = await apiClient.get<ChartResponse>(`/v1/charts/${encodeURIComponent(id)}`);
     return res.data;
   },
 
   getInterpretations: async (id: string, lang: string = "en"): Promise<ChartInterpretationResponse> => {
-    const res = await apiClient.get<ChartInterpretationResponse>(`/v1/charts/${id}/interpretations?lang=${lang}`);
+    const res = await apiClient.get<ChartInterpretationResponse>(
+      `/v1/charts/${encodeURIComponent(id)}/interpretations?lang=${encodeURIComponent(lang)}`
+    );
     return res.data;
   },
 };

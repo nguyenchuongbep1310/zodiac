@@ -11,7 +11,7 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
   return (
     <div
       className={cn(
-        "animate-spin rounded-full border-2 border-space-600 border-t-violet-500",
+        "animate-spin rounded-full border-2 border-[var(--am-edge)] border-t-[var(--am-primary)]",
         sizeMap[size],
         className
       )}
@@ -23,7 +23,7 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
 
 export function PageLoader() {
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center bg-space-gradient">
+    <div className="flex min-h-[100dvh] items-center justify-center bg-[var(--am-bg)]">
       <div className="flex flex-col items-center gap-4">
         <div className="relative">
           <Spinner size="lg" />
@@ -31,7 +31,7 @@ export function PageLoader() {
             ✦
           </div>
         </div>
-        <p className="text-sm text-slate-400 animate-pulse">Loading…</p>
+        <p className="text-sm text-[var(--am-muted)] animate-pulse">Loading…</p>
       </div>
     </div>
   );

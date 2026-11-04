@@ -28,31 +28,31 @@ export function LearnCategoryFilter({
       value: "all",
       label: t("category.all"),
       description: t("category.all_desc"),
-      color: "bg-asknova-dark dark:bg-asknova-light",
+      color: "bg-brand-dark dark:bg-brand-light",
     },
     {
       value: "basics",
       label: t("category.basics"),
       description: t("category.basics_desc"),
-      color: "bg-asknova-burgundy dark:bg-asknova-gold",
+      color: "bg-brand-burgundy dark:bg-brand-gold",
     },
     {
       value: "intermediate",
       label: t("category.intermediate"),
       description: t("category.intermediate_desc"),
-      color: "bg-asknova-blue dark:bg-asknova-blue/70",
+      color: "bg-brand-blue dark:bg-brand-blue/70",
     },
     {
       value: "advanced",
       label: t("category.advanced"),
       description: t("category.advanced_desc"),
-      color: "bg-asknova-teal dark:bg-asknova-teal/70",
+      color: "bg-brand-teal dark:bg-brand-teal/70",
     },
     {
       value: "techniques",
       label: t("category.techniques"),
       description: t("category.techniques_desc"),
-      color: "bg-asknova-gold dark:bg-asknova-gold/70",
+      color: "bg-brand-gold dark:bg-brand-gold/70",
     },
   ];
 
@@ -79,12 +79,12 @@ export function LearnCategoryFilter({
             whileTap={{ scale: 0.95 }}
             onClick={() => handleSelect(category.value)}
             className={`
-              relative px-6 py-3 rounded-lg font-semibold text-sm md:text-base
+              relative px-6 py-3 rounded-[var(--am-radius)] font-semibold text-sm md:text-base
               transition-all duration-300
               ${
                 selected === category.value
-                  ? `text-white dark:text-asknova-dark ${category.color} shadow-lg`
-                  : "bg-asknova-gray-light/30 dark:bg-asknova-burgundy-darker/30 text-asknova-dark dark:text-asknova-light hover:bg-asknova-gray-light/50 dark:hover:bg-asknova-burgundy-darker/50"
+                  ? `text-white dark:text-brand-dark ${category.color} shadow-[var(--am-shadow)]`
+                  : "bg-brand-gray-light/30 dark:bg-brand-burgundy-darker/30 text-brand-dark dark:text-brand-light hover:bg-brand-gray-light/50 dark:hover:bg-brand-burgundy-darker/50"
               }
             `}
           >
@@ -94,7 +94,7 @@ export function LearnCategoryFilter({
             {selected === category.value && (
               <motion.div
                 layoutId="activeCategory"
-                className="absolute inset-0 rounded-lg border-2 border-current"
+                className="absolute inset-0 rounded-[var(--am-radius)] border-2 border-current"
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
               />
             )}
@@ -107,7 +107,7 @@ export function LearnCategoryFilter({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        className="text-center text-sm text-asknova-dark/60 dark:text-asknova-light/60"
+        className="text-center text-sm text-brand-dark/60 dark:text-brand-light/60"
       >
         {selected === "all" && t("category.all_info")}
         {selected === "basics" && t("category.basics_info")}

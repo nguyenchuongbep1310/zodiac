@@ -29,3 +29,17 @@ jwt:
 log:
   level: debug
   format: console
+
+security:
+  # Browsers allowed to call the API directly. Set explicitly in production
+  # (ZODIAC_SECURITY_ALLOWED_ORIGINS="https://your-frontend.example").
+  allowed_origins:
+    - "http://localhost:3000"
+  # Reverse-proxy IPs/CIDRs whose X-Forwarded-For is trusted. Leave empty when
+  # the API is exposed directly; otherwise client IPs (and rate limits) are spoofable.
+  trusted_proxies: []
+  max_body_bytes: 65536
+  rate_limit_per_minute: 120
+  rate_limit_burst: 30
+  calculate_rate_limit_per_minute: 10
+  calculate_rate_limit_burst: 5

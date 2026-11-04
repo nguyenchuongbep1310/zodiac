@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/lib/hooks/useI18n";
 
 interface BrandLogoProps {
   className?: string;
@@ -11,63 +12,41 @@ interface BrandLogoProps {
   onClick?: () => void;
 }
 
-export function BrandLogo({ className, iconOnly = false, size = "md", onClick }: BrandLogoProps) {
-  const iconSizes = {
-    sm: "w-7 h-7",
-    md: "w-9 h-9",
-    lg: "w-11 h-11",
-  };
+const RAYS = Array.from({ length: 12 }, (_, i) => {
+  const a = (i * 30 * Math.PI) / 180;
+  const point = (r: number) => [(24 + r * Math.cos(a)).toFixed(2), (24 + r * Math.sin(a)).toFixed(2)] as const;
+  return { from: point(15), to: point(i % 2 === 0 ? 23 : 20) };
+});
 
-  const textSizes = {
-    sm: "text-lg",
-    md: "text-xl sm:text-2xl",
-    lg: "text-2xl sm:text-3xl",
-  };
+/**
+ * Sun-and-eye emblem plus the AstroMind wordmark. Draws in `currentColor`, so a
+ * parent can recolour it; set `--brand-accent` to recolour "Astro".
+ */
+export function BrandLogo({ className, iconOnly = false, size = "md", onClick }: BrandLogoProps) {
+  const { localeHref } = useTranslation();
+
+  const iconSizes = { sm: "w-8 h-8", md: "w-10 h-10", lg: "w-12 h-12" };
+  const textSizes = { sm: "text-xl", md: "text-2xl", lg: "text-3xl" };
 
   return (
-    <Link href="/" onClick={onClick} className={cn("inline-flex items-center gap-2.5 group select-none", className)}>
-      {/* Enhanced AstroMind Emblem Icon */}
-      <div className={cn("relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105", iconSizes[size])}>
-        {/* Glowing background ring */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500/20 via-purple-500/20 to-indigo-500/20 blur-sm group-hover:blur-md transition-all duration-300" />
-        
-        {/* Emblem Container */}
-        <div className="relative w-full h-full rounded-full bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 dark:from-slate-800 dark:via-slate-900 dark:to-black p-1.5 border border-amber-500/30 dark:border-amber-400/40 shadow-md shadow-amber-950/20 flex items-center justify-center overflow-hidden">
-          {/* Celestial background dots/stars */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-400/10 via-transparent to-transparent" />
-          
-          {/* Custom AstroMind SVG Mark */}
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full relative z-10 text-amber-400">
-            {/* Orbital Ring */}
-            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 2.5" opacity="0.6" />
-            
-            {/* 8-point Sparkle Star */}
-            <path d="M12 2L13.8 8.2L20 10L13.8 11.8L12 18L10.2 11.8L4 10L10.2 8.2L12 2Z" fill="url(#astroMindGrad)" stroke="currentColor" strokeWidth="0.5" />
-            
-            {/* Mind Dot / Inner Core */}
-            <circle cx="12" cy="10" r="1.5" fill="#FFF" />
-            <circle cx="17.5" cy="5.5" r="1" fill="currentColor" className="animate-pulse" />
-            
-            <defs>
-              <linearGradient id="astroMindGrad" x1="4" y1="2" x2="20" y2="18" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#F59E0B" />
-                <stop offset="0.5" stopColor="#FCD34D" />
-                <stop offset="1" stopColor="#E0E7FF" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
+    <Link
+      href={localeHref("/")}
+      onClick={onClick}
+      className={cn("inline-flex items-center gap-2.5 select-none text-[var(--am-ink)]", className)}
+    >
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" className={cn("shrink-0", iconSizes[size])}>
+        {RAYS.map((r, i) => (
+          <line key={i} x1={r.from[0]} y1={r.from[1]} x2={r.to[0]} y2={r.to[1]} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        ))}
+        <circle cx="24" cy="24" r="12" fill="var(--am-gold)" stroke="currentColor" strokeWidth="2" />
+        <path d="M13.5 24 Q24 15 34.5 24 Q24 33 13.5 24Z" fill="var(--am-surface)" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="24" cy="24" r="4" fill="var(--am-primary)" stroke="currentColor" strokeWidth="1.4" />
+      </svg>
 
-      {/* Brand Text */}
       {!iconOnly && (
-        <span className={cn("font-display font-bold tracking-tight transition-colors flex items-center", textSizes[size])}>
-          <span className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 dark:from-amber-300 dark:via-amber-200 dark:to-amber-400 bg-clip-text text-transparent">
-            Astro
-          </span>
-          <span className="text-slate-900 dark:text-white font-medium ml-0.5">
-            Mind
-          </span>
+        <span className={cn("font-display tracking-tight", textSizes[size])}>
+          <span className="text-[var(--brand-accent,var(--am-primary))]">Astro</span>
+          <span>Mind</span>
         </span>
       )}
     </Link>

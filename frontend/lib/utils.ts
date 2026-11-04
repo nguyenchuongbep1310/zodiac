@@ -24,7 +24,11 @@ export function degreesToDMS(deg: number): string {
   return `${d}°${m}'${s}"`;
 }
 
-export const PLANET_GLYPHS: Record<string, string> = {
+/** U+FE0E asks for the text glyph; without it iOS/macOS draw coloured emoji for ♀ ♂ and the signs. */
+const asText = (glyphs: Record<string, string>): Record<string, string> =>
+  Object.fromEntries(Object.entries(glyphs).map(([k, g]) => [k, `${g}\uFE0E`]));
+
+export const PLANET_GLYPHS: Record<string, string> = asText({
   Sun: "☉",
   Moon: "☽",
   Mercury: "☿",
@@ -38,9 +42,9 @@ export const PLANET_GLYPHS: Record<string, string> = {
   "North Node": "☊",
   "South Node": "☋",
   Chiron: "⚷",
-};
+});
 
-export const ZODIAC_GLYPHS: Record<string, string> = {
+export const ZODIAC_GLYPHS: Record<string, string> = asText({
   Aries: "♈",
   Taurus: "♉",
   Gemini: "♊",
@@ -53,7 +57,7 @@ export const ZODIAC_GLYPHS: Record<string, string> = {
   Capricorn: "♑",
   Aquarius: "♒",
   Pisces: "♓",
-};
+});
 
 export const ASPECT_COLORS: Record<string, string> = {
   conjunction: "#a67c7e", // Dusty Rose

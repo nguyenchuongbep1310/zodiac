@@ -6,13 +6,15 @@ import "time"
 //
 //	@Description	Trigger a natal chart calculation for a birth profile
 type CalculateChartRequest struct {
-	Name         string  `json:"name" binding:"required"`
-	BirthDate    string  `json:"birth_date" binding:"required"` // e.g. "2000-01-01"
-	BirthTime    string  `json:"birth_time" binding:"required"` // e.g. "12:00:00"
-	Timezone     string  `json:"timezone" binding:"required"`
-	Latitude     float64 `json:"latitude" binding:"required"`
-	Longitude    float64 `json:"longitude" binding:"required"`
-	City         string  `json:"city"`
+	Name      string `json:"name" binding:"required,max=100"`
+	BirthDate string `json:"birth_date" binding:"required,max=10"` // e.g. "2000-01-01"
+	BirthTime string `json:"birth_time" binding:"required,max=8"`  // e.g. "12:00:00"
+	Timezone  string `json:"timezone" binding:"required,max=50"`
+	// Latitude/Longitude are pointers so that a legitimate value of 0 (equator,
+	// prime meridian) is not mistaken for a missing field by "required".
+	Latitude  *float64 `json:"latitude" binding:"required,gte=-90,lte=90"`
+	Longitude *float64 `json:"longitude" binding:"required,gte=-180,lte=180"`
+	City      string   `json:"city" binding:"max=255"`
 	// HouseSystem selects the house division method.
 	// Allowed values: "placidus" (default), "koch", "whole_sign", "equal".
 	HouseSystem string `json:"house_system" binding:"omitempty,oneof=placidus koch whole_sign equal"`

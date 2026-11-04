@@ -203,3 +203,21 @@ test.describe("inner pages share the retro look (light)", () => {
     });
   }
 });
+
+test.describe("install and share metadata use the parlour palette", () => {
+  test("web manifest carries the oxblood theme colour on parchment", async ({ request }) => {
+    const manifest = await (await request.get("/manifest.webmanifest")).json();
+    expect(manifest.theme_color).toBe("#8b1e1e");
+    expect(manifest.background_color).toBe("#f3e6c8");
+  });
+
+  test("social image is still a 1200x630 PNG", async ({ request }) => {
+    const res = await request.get("/opengraph-image");
+    expect(res.status()).toBe(200);
+    expect(res.headers()["content-type"]).toContain("image/png");
+    const png = await res.body();
+    // PNG IHDR: width and height are big-endian u32 at bytes 16 and 20.
+    expect(png.readUInt32BE(16)).toBe(1200);
+    expect(png.readUInt32BE(20)).toBe(630);
+  });
+});

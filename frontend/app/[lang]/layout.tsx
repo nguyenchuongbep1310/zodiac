@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { FloatingNavbar } from "@/components/landing/FloatingNavbar";
 import { FooterEnhanced } from "@/components/landing/FooterEnhanced";
 import { LocaleProvider } from "@/lib/hooks/useI18n";
+import { MotionProvider } from "@/components/motion-provider";
 import { isLocale, locales, type Locale } from "@/lib/i18n/locale";
 import { ogLocale, siteDescriptionByLocale, siteKeywords, siteName, siteTitle, siteUrl } from "@/lib/seo";
 
@@ -112,6 +113,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       <body className="paper-grain font-sans bg-[var(--bg-main)] text-[var(--text-main)] min-h-[100dvh]">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <LocaleProvider locale={lang}>
+            <MotionProvider>
             <QueryProvider>
               <ToastProvider>
                 <div className="relative z-10 flex flex-col min-h-[100dvh]">
@@ -121,6 +123,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
                 </div>
               </ToastProvider>
             </QueryProvider>
+          </MotionProvider>
           </LocaleProvider>
         </ThemeProvider>
       </body>

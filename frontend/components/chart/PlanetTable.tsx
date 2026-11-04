@@ -66,7 +66,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
                 <div><span className="font-semibold text-[var(--am-primary)]">{t("interp.strengths")}: </span><span className="text-[var(--am-muted)]">{signInterp.strengths}</span></div>
               )}
               {signInterp.challenges && (
-                <div><span className="font-semibold text-[var(--am-sunset)]">{t("interp.challenges")}: </span><span className="text-[var(--am-muted)]">{signInterp.challenges}</span></div>
+                <div><span className="font-semibold text-[var(--am-primary)]">{t("interp.challenges")}: </span><span className="text-[var(--am-muted)]">{signInterp.challenges}</span></div>
               )}
             </div>
           </div>
@@ -74,7 +74,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
         
         {houseInterp && (
           <div className={cn(signInterp ? "pt-4 mt-4 border-t border-[var(--am-line)]" : "")}>
-            <h4 className="font-semibold text-[var(--am-sunset)] mb-2 flex items-center gap-2">
+            <h4 className="font-semibold text-[var(--am-primary)] mb-2 flex items-center gap-2">
               {PLANET_GLYPHS[planet.planet]} {t(`planet.${planet.planet.toLowerCase().replace(" ", "_")}`)} {t("misc.in")} {t("table.house")} {planet.house_number}
             </h4>
             <div className="space-y-3 text-sm">
@@ -88,7 +88,7 @@ export function PlanetTable({ planets, interpretations }: PlanetTableProps) {
                 <div><span className="font-semibold text-[var(--am-primary)]">{t("interp.strengths")}: </span><span className="text-[var(--am-muted)]">{houseInterp.strengths}</span></div>
               )}
               {houseInterp.challenges && (
-                <div><span className="font-semibold text-[var(--am-sunset)]">{t("interp.challenges")}: </span><span className="text-[var(--am-muted)]">{houseInterp.challenges}</span></div>
+                <div><span className="font-semibold text-[var(--am-primary)]">{t("interp.challenges")}: </span><span className="text-[var(--am-muted)]">{houseInterp.challenges}</span></div>
               )}
             </div>
           </div>

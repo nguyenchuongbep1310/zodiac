@@ -13,7 +13,7 @@ export default function ProgressionsPage() {
         href={localeHref("/learn")}
         className="inline-flex items-center text-sm font-medium text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors mb-8 group"
       >
-        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-0.5 transition-transform" />
+        <ArrowLeft className="w-4 h-4 mr-2 motion-safe:group-hover:-translate-x-0.5 transition-transform" />
         {language === "vi" ? "Quay lại danh mục Học Chiêm Tinh" : "Back to Learn"}
       </Link>
 
@@ -35,14 +35,14 @@ export default function ProgressionsPage() {
           <div className="space-y-8">
             <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-mint)] flex items-center justify-center text-[var(--am-sunset)]">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-mint)] flex items-center justify-center text-[var(--am-primary)]">
                   <Sprout className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     Nguyên Lý &ldquo;Một Ngày Tương Đương Một Năm&rdquo;
                   </h2>
-                  <span className="text-xs font-semibold text-[var(--am-sunset)] dark:text-[var(--am-sunset)] uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-primary)] dark:text-[var(--am-primary)] uppercase tracking-wider">
                     Tiến Triển Thứ Cấp (Secondary Progressions)
                   </span>
                 </div>
@@ -98,14 +98,14 @@ export default function ProgressionsPage() {
           <div className="space-y-8">
             <div className="p-8 rounded-[var(--am-radius)] bg-[var(--am-surface)] border-2 border-[var(--am-edge)] shadow-[var(--am-shadow)] space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-mint)] flex items-center justify-center text-[var(--am-sunset)]">
+                <div className="w-12 h-12 rounded-[var(--am-radius)] bg-[var(--am-mint)] flex items-center justify-center text-[var(--am-primary)]">
                   <Sprout className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold tracking-tight text-[var(--am-ink)]">
                     The &ldquo;Day-for-a-Year&rdquo; Formula
                   </h2>
-                  <span className="text-xs font-semibold text-[var(--am-sunset)] dark:text-[var(--am-sunset)] uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-[var(--am-primary)] dark:text-[var(--am-primary)] uppercase tracking-wider">
                     Symbolic Time · Internal Maturation
                   </span>
                 </div>

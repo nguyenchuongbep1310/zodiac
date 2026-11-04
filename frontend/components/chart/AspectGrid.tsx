@@ -98,7 +98,7 @@ export function AspectGrid({ aspects, interpretations }: AspectGridProps) {
                 <div><span className="font-semibold text-[var(--am-primary)]">{t("interp.strengths")}: </span><span className="text-[var(--am-muted)]">{interp.strengths}</span></div>
               )}
               {interp.challenges && (
-                <div><span className="font-semibold text-[var(--am-sunset)]">{t("interp.challenges")}: </span><span className="text-[var(--am-muted)]">{interp.challenges}</span></div>
+                <div><span className="font-semibold text-[var(--am-primary)]">{t("interp.challenges")}: </span><span className="text-[var(--am-muted)]">{interp.challenges}</span></div>
               )}
             </div>
           </div>

@@ -13,7 +13,7 @@ export default function SunMoonRisingPage() {
         href={localeHref("/learn")}
         className="inline-flex items-center text-sm font-medium text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors mb-8 group"
       >
-        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-0.5 transition-transform" />
+        <ArrowLeft className="w-4 h-4 mr-2 motion-safe:group-hover:-translate-x-0.5 transition-transform" />
         {language === "vi" ? "Quay lại danh mục Học Chiêm Tinh" : "Back to Learn"}
       </Link>
 

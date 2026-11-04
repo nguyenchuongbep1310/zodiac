@@ -13,7 +13,7 @@ export function Card({ glow, hover, className, children, ...props }: CardProps) 
         "rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] bg-[var(--am-surface)]",
         "transition-[transform,box-shadow] duration-150 ease-out",
         glow && "shadow-[var(--am-shadow)]",
-        hover && "hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] cursor-pointer",
+        hover && "motion-safe:hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] cursor-pointer",
         className
       )}
       {...props}

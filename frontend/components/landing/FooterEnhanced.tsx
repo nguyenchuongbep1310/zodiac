@@ -31,7 +31,7 @@ export function FooterEnhanced() {
 
   return (
     <footer
-      className="relative border-t-2 border-[var(--am-edge)] bg-[#1c1410] px-6 pb-16 pt-12 text-[#f3e6c8] md:pb-20 md:pt-14"
+      className="[--focus-ring:#d9a521] relative border-t-2 border-[var(--am-edge)] bg-[#1c1410] px-6 pb-16 pt-12 text-[#f3e6c8] md:pb-20 md:pt-14"
       style={{ "--brand-accent": "#d9a521" } as CSSProperties}
     >
       <Ornament className="mx-auto mb-10 max-w-7xl text-[#d9a521]" />
@@ -116,7 +116,7 @@ export function FooterEnhanced() {
       </div>
 
       <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 text-center">
-        <p className="text-[#f3e6c8]/45 text-sm">
+        <p className="text-[#f3e6c8]/60 text-sm">
           © {new Date().getFullYear()} AstroMind Astrology. {t("footer.rights")}
         </p>
       </div>

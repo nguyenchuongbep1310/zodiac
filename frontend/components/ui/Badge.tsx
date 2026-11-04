@@ -20,7 +20,7 @@ export function Badge({ variant = "slate", className, children }: BadgeProps) {
   return (
     <span
       className={cn(
-        "mono-label inline-flex items-center gap-1 rounded-[var(--am-radius)] border px-2 py-0.5 !text-[10px]",
+        "mono-label inline-flex items-center gap-1 rounded-[var(--am-radius)] border px-2 py-0.5 text-[10px]",
         variantStyles[variant],
         className
       )}

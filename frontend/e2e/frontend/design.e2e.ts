@@ -221,3 +221,143 @@ test.describe("install and share metadata use the parlour palette", () => {
     expect(png.readUInt32BE(20)).toBe(630);
   });
 });
+
+// ── Review fixes ────────────────────────────────────────────────────────────
+
+/** Browser-side WCAG contrast between two `rgb()/rgba()` strings. */
+const contrastScript = `
+  (a, b) => {
+    const lum = (c) => {
+      const [r, g, b] = c.match(/[\\d.]+/g).slice(0, 3).map((v) => {
+        v = Number(v) / 255;
+        return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+`;
+
+test.describe("utility classes respect Tailwind (light)", () => {
+  test.use({ colorScheme: "light" });
+
+  test("a text size next to .mono-label still applies (utilities are layered)", async ({ page }) => {
+    await page.goto("/");
+    const size = await page.locator("#how-it-works .stamp").first().evaluate((el) => getComputedStyle(el).fontSize);
+    expect(size).toBe("20px"); // text-xl; an unlayered .mono-label would pin it to 12px
+  });
+});
+
+for (const scheme of ["light", "dark"] as const) {
+  test.describe(`keyboard focus is visible on dark and coloured blocks (${scheme})`, () => {
+    test.use({ colorScheme: scheme });
+
+    for (const [name, selector, container] of [
+      ["CTA link", 'section a[href="#hero"]', "section"],
+      ["footer link", "footer a", "footer"],
+    ] as const) {
+      test(`${name} focus ring has at least 3:1 against its surroundings`, async ({ page }) => {
+        await page.goto("/");
+        await page.waitForLoadState("networkidle"); // hydration can steal focus if it lands mid-test
+        const target = page.locator(selector).first();
+        await target.scrollIntoViewIfNeeded();
+        await page.keyboard.press("Tab"); // switch to keyboard modality so :focus-visible applies
+        const ringContrast = async () => {
+          await target.focus();
+          return target.evaluate(
+            (el, { script, container }) => {
+              const ring = getComputedStyle(el).outlineColor;
+              const bg = getComputedStyle(el.closest(container)!).backgroundColor;
+              return (eval(script) as (a: string, b: string) => number)(ring, bg);
+            },
+            { script: contrastScript, container },
+          );
+        };
+        // transition-colors animates outline-color for 150ms, so wait for the settled value.
+        await expect.poll(ringContrast, { timeout: 3000 }).toBeGreaterThanOrEqual(3);
+      });
+    }
+  });
+}
+
+test.describe("mobile drawer in dark mode", () => {
+  test.use({ colorScheme: "dark", viewport: { width: 375, height: 812 } });
+
+  test("is square, flat and readable", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: "Open menu" }).click();
+    await expect(page.getByRole("button", { name: "Tiếng Việt" }).last()).toBeVisible();
+
+    const offenders = await page.evaluate(() =>
+      [...document.querySelectorAll("body *")]
+        .filter((el) => {
+          const s = getComputedStyle(el);
+          const radii = [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomLeftRadius, s.borderBottomRightRadius];
+          return s.backdropFilter !== "none" || (radii.some((r) => parseFloat(r) > 24) && !el.classList.contains("stamp"));
+        })
+        .map((el) => `${el.tagName.toLowerCase()}.${String(el.getAttribute("class")).slice(0, 70)}`),
+    );
+    expect(offenders).toEqual([]);
+
+    const ratio = await page.locator('[aria-pressed="true"]').last().evaluate((el, script) => {
+      const s = getComputedStyle(el);
+      return (eval(script) as (a: string, b: string) => number)(s.color, s.backgroundColor);
+    }, contrastScript);
+    expect(ratio).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+test.describe("Vietnamese headline on a phone (light)", () => {
+  test.use({ colorScheme: "light", viewport: { width: 375, height: 812 } });
+
+  test("keeps its line-height and does not overflow its own box", async ({ page }) => {
+    await page.goto("/vi");
+    await page.evaluate(() => document.fonts.ready);
+    const h1 = await page.locator("h1").first().evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { ratio: parseFloat(s.lineHeight) / parseFloat(s.fontSize), overflow: el.scrollHeight - el.clientHeight };
+    });
+    expect(h1.ratio).toBeGreaterThanOrEqual(1.15);
+    expect(h1.overflow).toBeLessThanOrEqual(1);
+  });
+});
+
+test.describe("a 100-character name on the smallest phone (light)", () => {
+  test.use({ colorScheme: "light", viewport: { width: 320, height: 640 } });
+
+  test("keeps the ticket inside the viewport", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#hero-name").fill("x".repeat(100));
+    const box = await page.locator("#hero-name").evaluate((el) => ({
+      ticketRight: el.closest(".ink-border")!.getBoundingClientRect().right,
+      viewport: window.innerWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(box.ticketRight).toBeLessThanOrEqual(box.viewport);
+    expect(box.scrollWidth).toBeLessThanOrEqual(box.viewport);
+  });
+});
+
+test.describe("hover motion respects reduced-motion (light, desktop)", () => {
+  test.use({ colorScheme: "light", viewport: { width: 1280, height: 800 } });
+
+  const cardTransform = async (page: import("@playwright/test").Page) => {
+    const card = page.locator("#learn .group").first();
+    await card.scrollIntoViewIfNeeded();
+    await card.hover();
+    await page.waitForTimeout(300);
+    return card.evaluate((el) => getComputedStyle(el).transform);
+  };
+
+  test("article cards lift on hover normally", async ({ page }) => {
+    await page.goto("/");
+    expect(await cardTransform(page)).not.toBe("none");
+  });
+
+  test("and stay still when the user asks for reduced motion", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    expect(await cardTransform(page)).toBe("none");
+  });
+});

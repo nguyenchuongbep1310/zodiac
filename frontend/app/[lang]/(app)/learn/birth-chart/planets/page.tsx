@@ -190,7 +190,7 @@ export default function PlanetsPage() {
         href={localeHref("/learn")}
         className="inline-flex items-center text-sm font-medium text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors group"
       >
-        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-0.5 transition-transform" />
+        <ArrowLeft className="w-4 h-4 mr-2 motion-safe:group-hover:-translate-x-0.5 transition-transform" />
         {language === "vi" ? "Quay lại danh mục Học Chiêm Tinh" : "Back to Learn"}
       </Link>
 
@@ -213,14 +213,14 @@ export default function PlanetsPage() {
         {planets.map((planet) => (
           <div
             key={planet.name}
-            className={`group overflow-hidden rounded-[var(--am-radius)] border-2 ${planet.color} shadow-[var(--am-shadow)] transition-[transform,box-shadow] duration-150 hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] flex flex-col`}
+            className={`group overflow-hidden rounded-[var(--am-radius)] border-2 ${planet.color} shadow-[var(--am-shadow)] transition-[transform,box-shadow] duration-150 motion-safe:hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] flex flex-col`}
           >
             <div className="relative h-48 w-full overflow-hidden">
               <Image
                 src={planet.image}
                 alt={planet.name}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
               />
               <div className="absolute inset-0" />
               <span className="absolute bottom-3 left-4 grid h-12 w-12 place-items-center border-2 border-[var(--am-edge)] bg-[var(--am-surface)] text-3xl text-[var(--am-ink)]">{planet.symbol}</span>

@@ -103,7 +103,7 @@ export function HeroSection() {
           <p className="mono-label inline-block border-y-2 border-dashed border-[var(--am-edge)] py-1 font-bold text-[var(--am-ink)]">
             {t("home.hero.eyebrow")}
           </p>
-          <h1 className="font-display mt-6 text-[2.4rem] leading-[1.15] text-[var(--am-ink)] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display mt-6 text-[2.4rem] leading-[1.3] text-[var(--am-ink)] sm:text-5xl lg:text-6xl">
             {titleLead}
             {titleHighlight && (
               <>

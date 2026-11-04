@@ -64,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </button>
           )}
         </div>
-        {error && <p className="text-xs text-[var(--am-sunset)]">{error}</p>}
+        {error && <p className="text-xs text-[var(--am-primary)]">{error}</p>}
         {hint && !error && <p className="text-xs text-[var(--am-muted)]">{hint}</p>}
       </div>
     );

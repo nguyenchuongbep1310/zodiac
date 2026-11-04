@@ -191,7 +191,7 @@ export function FloatingNavbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="w-3/4 max-w-sm h-full bg-[var(--am-surface)] border-l-2 border-[var(--am-edge)] p-6 flex flex-col shadow-2xl"
+              className="w-3/4 max-w-sm h-full bg-[var(--am-surface)] border-l-2 border-[var(--am-edge)] p-6 flex flex-col"
               style={{
                 paddingTop: "max(1.5rem, calc(env(safe-area-inset-top) + 1rem))",
                 paddingBottom: "max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem))",
@@ -202,7 +202,7 @@ export function FloatingNavbar() {
                 <BrandLogo size="md" onClick={() => setMobileMenuOpen(false)} />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="-mr-2.5 p-2.5 rounded-full hover:bg-[var(--am-field)]"
+                  className="-mr-1 rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] p-1.5 hover:bg-[var(--am-lilac)]"
                   aria-label="Close menu"
                 >
                   <X size={24} className="text-[var(--am-ink)]" />
@@ -215,7 +215,7 @@ export function FloatingNavbar() {
                     key={link.href}
                     href={localeHref(link.href)}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-lg font-medium text-[var(--am-ink)]"
+                    className="mono-label text-base font-bold text-[var(--am-ink)]"
                   >
                     {link.label}
                   </Link>
@@ -224,13 +224,13 @@ export function FloatingNavbar() {
 
               <div className="mt-auto flex flex-col gap-4">
                 {/* Mobile Language Switcher */}
-                <div className="flex items-center justify-center bg-[var(--am-field)] p-1 rounded-[var(--am-radius)] font-medium text-sm gap-2">
+                <div className="mono-label flex overflow-hidden rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] font-bold">
                   <button
                     onClick={() => setLanguage("en")}
                     aria-pressed={language === "en"}
-                    className={`flex-1 py-2 rounded-lg transition-all ${
+                    className={`flex-1 py-2 transition-colors ${
                       language === "en"
-                        ? "bg-[var(--am-ink)] text-white shadow-sm font-semibold"
+                        ? "bg-[var(--am-ink)] text-[var(--am-bg)]"
                         : "text-[var(--am-muted)]"
                     }`}
                   >
@@ -239,9 +239,9 @@ export function FloatingNavbar() {
                   <button
                     onClick={() => setLanguage("vi")}
                     aria-pressed={language === "vi"}
-                    className={`flex-1 py-2 rounded-lg transition-all ${
+                    className={`flex-1 py-2 transition-colors ${
                       language === "vi"
-                        ? "bg-[var(--am-ink)] text-white shadow-sm font-semibold"
+                        ? "bg-[var(--am-ink)] text-[var(--am-bg)]"
                         : "text-[var(--am-muted)]"
                     }`}
                   >
@@ -254,7 +254,7 @@ export function FloatingNavbar() {
                     setTheme(theme === "dark" ? "light" : "dark");
                     setMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center gap-2 p-3 rounded-[var(--am-radius)] bg-[var(--am-field)] text-[var(--am-ink)] font-medium"
+                  className="flex items-center justify-center gap-2 rounded-[var(--am-radius)] border-2 border-[var(--am-edge)] bg-[var(--am-field)] p-3 font-semibold text-[var(--am-ink)]"
                 >
                   {themeIconMobile}
                   <span>{t("nav.toggle_theme")}</span>

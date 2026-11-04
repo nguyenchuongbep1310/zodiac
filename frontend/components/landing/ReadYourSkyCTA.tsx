@@ -10,7 +10,7 @@ export function ReadYourSkyCTA() {
   const { t } = useTranslation();
 
   return (
-    <section className="border-t-2 border-[var(--am-edge)] bg-[var(--am-primary)] px-4 py-20 text-[var(--am-primary-ink)] sm:px-6 md:py-28">
+    <section className="[--focus-ring:var(--am-bg)] border-t-2 border-[var(--am-edge)] bg-[var(--am-primary)] px-4 py-20 text-[var(--am-primary-ink)] sm:px-6 md:py-28">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -61,7 +61,7 @@ export function LearnArticleCard({
             group relative flex h-full cursor-pointer flex-col overflow-hidden
             border-2 border-[var(--am-edge)] bg-[var(--am-surface)] shadow-[var(--am-shadow)]
             transition-[transform,box-shadow] duration-150
-            hover:shadow-[6px_6px_0_var(--am-edge)] hover:[transform:translate(-2px,-2px)]
+            hover:shadow-[6px_6px_0_var(--am-edge)] motion-safe:hover:[transform:translate(-2px,-2px)]
             ${featured ? "lg:col-span-2" : ""}
           `}
         >

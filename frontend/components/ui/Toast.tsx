@@ -24,7 +24,7 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 
 const icons: Record<ToastType, React.ReactNode> = {
   success: <CheckCircle className="h-5 w-5 text-[var(--am-teal)]" />,
-  error: <XCircle className="h-5 w-5 text-[var(--am-sunset)]" />,
+  error: <XCircle className="h-5 w-5 text-[var(--am-primary)]" />,
   info: <Info className="h-5 w-5 text-[var(--am-primary)]" />,
 };
 

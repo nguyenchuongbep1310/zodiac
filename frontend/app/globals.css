@@ -233,7 +233,7 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--am-primary);
+    outline: 3px solid var(--focus-ring, var(--am-primary));
     outline-offset: 2px;
     box-shadow: none;
   }
@@ -347,20 +347,23 @@
   font-synthesis: none;
 }
 
-.ink-border {
-  border: 2px solid var(--am-edge);
-}
-.hard-shadow {
-  box-shadow: var(--am-shadow);
-}
-.hard-shadow-sm {
-  box-shadow: var(--am-shadow-sm);
-}
-.mono-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+/* In @layer components so Tailwind utilities (text-xl, shadow-none...) can still override them. */
+@layer components {
+  .ink-border {
+    border: 2px solid var(--am-edge);
+  }
+  .hard-shadow {
+    box-shadow: var(--am-shadow);
+  }
+  .hard-shadow-sm {
+    box-shadow: var(--am-shadow-sm);
+  }
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 }
 
 /* Faint paper grain over the whole page (fixed, never intercepts input). */

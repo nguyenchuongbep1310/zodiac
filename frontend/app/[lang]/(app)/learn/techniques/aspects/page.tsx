@@ -125,7 +125,7 @@ export default function AspectsPage() {
         href={localeHref("/learn")}
         className="inline-flex items-center text-sm font-medium text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors group"
       >
-        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-0.5 transition-transform" />
+        <ArrowLeft className="w-4 h-4 mr-2 motion-safe:group-hover:-translate-x-0.5 transition-transform" />
         {language === "vi" ? "Quay lại danh mục Học Chiêm Tinh" : "Back to Learn"}
       </Link>
 
@@ -148,7 +148,7 @@ export default function AspectsPage() {
         {aspects.map((a, idx) => (
           <div
             key={idx}
-            className={`group overflow-hidden rounded-[var(--am-radius)] border-2 ${a.color} shadow-[var(--am-shadow)] transition-[transform,box-shadow] duration-150 hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] flex flex-col p-8 justify-between space-y-4`}
+            className={`group overflow-hidden rounded-[var(--am-radius)] border-2 ${a.color} shadow-[var(--am-shadow)] transition-[transform,box-shadow] duration-150 motion-safe:hover:[transform:translate(-2px,-2px)] hover:shadow-[6px_6px_0_var(--am-edge)] flex flex-col p-8 justify-between space-y-4`}
           >
             <div>
               <div className="flex items-center justify-between mb-4">

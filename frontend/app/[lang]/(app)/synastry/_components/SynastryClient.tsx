@@ -206,7 +206,7 @@ export function SynastryClient() {
             href={localeHref("/")}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors group"
           >
-            <ChevronLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+            <ChevronLeft className="h-4 w-4 motion-safe:group-hover:-translate-x-0.5 transition-transform" />
             {t("nav.back_home")}
           </Link>
         </div>

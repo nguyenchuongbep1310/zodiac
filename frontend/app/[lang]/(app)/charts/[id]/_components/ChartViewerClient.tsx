@@ -55,7 +55,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
         animate={{ opacity: 1, y: 0 }}
         className="rounded-[var(--am-radius)] border border-[var(--am-edge)] bg-[var(--am-peach)] p-12 text-center max-w-lg mx-auto mt-20"
       >
-        <p className="text-[var(--am-sunset)] dark:text-[var(--am-sunset)] font-display text-xl mb-3">{t("charts.not_found")}</p>
+        <p className="text-[var(--am-primary)] dark:text-[var(--am-primary)] font-display text-xl mb-3">{t("charts.not_found")}</p>
         <Link href={localeHref("/")} className="text-sm text-[var(--am-primary)] hover:text-[var(--am-ink)] hover:underline mt-2 inline-flex items-center gap-1.5 transition-colors">
           <ChevronLeft className="w-4 h-4" />
           {t("nav.back_home")}
@@ -97,7 +97,7 @@ export function ChartViewerClient({ id }: ChartViewerClientProps) {
               href={localeHref("/")}
               className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--am-muted)] hover:text-[var(--am-ink)] transition-colors mb-4 group"
             >
-              <ChevronLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+              <ChevronLeft className="h-4 w-4 motion-safe:group-hover:-translate-x-0.5 transition-transform" />
               {t("profiles.back")}
             </Link>
             <h1 className="font-display font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl text-[var(--am-ink)] tracking-tight mb-3">

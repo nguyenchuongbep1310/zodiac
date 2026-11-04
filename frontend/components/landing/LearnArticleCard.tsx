@@ -28,18 +28,13 @@ export function LearnArticleCard({
   const { t, localeHref } = useTranslation();
 
   const categoryColors: Record<string, string> = {
-    basics: "bg-brand-burgundy/10 text-brand-burgundy dark:bg-brand-burgundy/20 dark:text-brand-gold",
-    intermediate:
-      "bg-brand-blue/10 text-brand-blue dark:bg-brand-blue/20 dark:text-brand-light",
-    advanced:
-      "bg-brand-teal/10 text-brand-teal dark:bg-brand-teal/20 dark:text-brand-gold",
-    techniques:
-      "bg-brand-gold/10 text-brand-dark dark:bg-brand-gold/20 dark:text-brand-gold",
+    basics: "bg-[var(--am-lilac)] text-[var(--am-ink)]",
+    intermediate: "bg-[var(--am-mint)] text-[var(--am-ink)]",
+    advanced: "bg-[var(--am-peach)] text-[var(--am-ink)]",
+    techniques: "bg-[var(--am-gold)] text-[#1c1410]",
   };
 
-  const categoryColor =
-    categoryColors[category] ||
-    "bg-brand-gray-accent/10 text-brand-dark dark:bg-brand-gray-accent/20 dark:text-brand-light";
+  const categoryColor = categoryColors[category] || "bg-[var(--am-field)] text-[var(--am-ink)]";
 
   const categoryKey = `category.${category}`;
   const translatedCategory = t(categoryKey);
@@ -58,24 +53,21 @@ export function LearnArticleCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8 }}
       className="h-full"
     >
       <Link href={localeHref(href)}>
         <div
           className={`
-            group relative h-full flex flex-col rounded-lg overflow-hidden
-            bg-white dark:bg-brand-surface-dark
-            border border-brand-gray-light/50 dark:border-brand-burgundy-darker/30
-            hover:border-brand-burgundy dark:hover:border-brand-gold
-            shadow-sm hover:shadow-md
-            transition-all duration-300 cursor-pointer
+            group relative flex h-full cursor-pointer flex-col overflow-hidden
+            border-2 border-[var(--am-edge)] bg-[var(--am-surface)] shadow-[var(--am-shadow)]
+            transition-[transform,box-shadow] duration-150
+            hover:shadow-[6px_6px_0_var(--am-edge)] hover:[transform:translate(-2px,-2px)]
             ${featured ? "lg:col-span-2" : ""}
           `}
         >
           {/* Image Section */}
           {image && (
-            <div className="relative h-48 overflow-hidden bg-gradient-to-br from-brand-burgundy/20 to-brand-blue/20 dark:from-brand-burgundy/10 dark:to-brand-blue/10">
+            <div className="relative h-48 overflow-hidden border-b-2 border-[var(--am-edge)] bg-[var(--am-lilac)]">
               <motion.div
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
@@ -96,9 +88,8 @@ export function LearnArticleCard({
               <div className="absolute top-3 right-3">
                 <span
                   className={`
-                    px-3 py-1 rounded-full text-xs font-semibold
+                    mono-label border-2 border-[var(--am-edge)] px-2 py-0.5 font-bold
                     ${categoryColor}
-                    backdrop-blur-sm
                   `}
                 >
                   {categoryLabel}
@@ -112,10 +103,9 @@ export function LearnArticleCard({
             {/* Title */}
             <h3
               className={`
-                font-display font-extrabold tracking-tight leading-tight mb-3
-                text-brand-dark dark:text-brand-light
+                font-display leading-tight mb-3 text-[var(--am-ink)]
                 ${featured ? "text-lg md:text-xl" : "text-base md:text-lg"}
-                hover:text-brand-burgundy dark:hover:text-brand-gold
+                group-hover:text-[var(--am-primary)]
                 transition-colors
               `}
             >
@@ -125,7 +115,7 @@ export function LearnArticleCard({
             {/* Excerpt */}
             <p
               className={`
-                text-brand-dark/70 dark:text-brand-light/70
+                text-[var(--am-muted)]
                 leading-relaxed mb-4 flex-grow
                 ${featured ? "text-sm md:text-base" : "text-sm"}
               `}
@@ -134,11 +124,11 @@ export function LearnArticleCard({
             </p>
 
             {/* Footer: Category & Read Time */}
-            <div className="flex items-center justify-between pt-4 border-t border-brand-gray-light/30 dark:border-brand-burgundy-darker/20">
+            <div className="flex items-center justify-between pt-4 border-t-2 border-dashed border-[var(--am-edge)]">
               {!image && (
                 <span
                   className={`
-                    px-3 py-1 rounded-full text-xs font-semibold
+                    mono-label border-2 border-[var(--am-edge)] px-2 py-0.5 font-bold
                     ${categoryColor}
                   `}
                 >
@@ -146,7 +136,7 @@ export function LearnArticleCard({
                 </span>
               )}
 
-              <span className="text-xs text-brand-dark/60 dark:text-brand-light/60 font-medium">
+              <span className="mono-label text-[var(--am-muted)]">
                 {readLabel}
               </span>
             </div>
@@ -157,7 +147,7 @@ export function LearnArticleCard({
             <motion.div
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-brand-burgundy dark:text-brand-gold"
+              className="text-[var(--am-primary)]"
             >
               →
             </motion.div>

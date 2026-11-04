@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
 import { useTranslation } from "@/lib/hooks/useI18n";
 
 interface FaqItemProps {
@@ -20,22 +19,18 @@ function FaqItem({ question, answer, isOpen, onToggle, index }: FaqItemProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="rounded-2xl bg-[var(--am-surface)] border border-[var(--am-line)] px-5 sm:px-6"
+      className="border-b-2 border-[var(--am-edge)]"
     >
       <button
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="flex w-full items-center justify-between py-5 text-left focus:outline-none group"
+        className="group flex w-full items-center justify-between py-5 text-left"
       >
-        <span className="text-base sm:text-lg font-semibold text-[var(--am-ink)] group-hover:text-[var(--am-primary)] transition-colors pr-4">
+        <span className="font-display pr-4 text-base text-[var(--am-ink)] transition-colors group-hover:text-[var(--am-primary)] sm:text-lg">
           {question}
         </span>
-        <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${
-          isOpen
-            ? "bg-[var(--am-primary)] border-[var(--am-primary)] text-[var(--am-primary-ink)]"
-            : "bg-transparent border-[var(--am-line)] text-[var(--am-muted)] group-hover:border-[var(--am-primary)]"
-        }`}>
-          {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+        <span aria-hidden="true" className="font-display flex-shrink-0 text-2xl text-[var(--am-primary)]">
+          {isOpen ? "−" : "+"}
         </span>
       </button>
       <AnimatePresence initial={false}>
@@ -121,13 +116,13 @@ export function FaqAccordion() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-10"
           >
-            <h2 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--am-ink)] mb-3">
+            <h2 className="font-display mb-3 text-4xl text-[var(--am-ink)] md:text-5xl">
               {t("home.faq.title")}
             </h2>
             <p className="text-[var(--am-muted)] text-lg">{t("home.faq.subtitle")}</p>
           </motion.div>
 
-          <div className="space-y-3">
+          <div className="border-t-2 border-[var(--am-edge)]">
             {faqs.map((faq, index) => (
               <FaqItem
                 key={index}

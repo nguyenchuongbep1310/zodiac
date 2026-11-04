@@ -2,30 +2,35 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/hooks/useI18n";
+import { Stamp } from "@/components/ui/Stamp";
+
+const NUMERALS = ["I", "II", "III"];
 
 export function HowItWorks() {
   const { t } = useTranslation();
 
   return (
-    <section id="how-it-works" className="py-20 md:py-24 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto rounded-[2rem] bg-[var(--am-surface)] border border-[var(--am-line)] p-6 sm:p-10 md:p-14">
-        <h2 className="font-display text-3xl md:text-5xl font-extrabold tracking-tight text-[var(--am-ink)] mb-10 md:mb-12">
-          {t("home.steps.title")}
-        </h2>
-        <ol className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-          {[1, 2, 3].map((n, i) => (
+    <section id="how-it-works" className="border-y-2 border-[var(--am-edge)] bg-[var(--am-surface)] px-4 py-16 sm:px-6 md:py-20">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="font-display mb-12 text-center text-3xl text-[var(--am-ink)] md:text-5xl">{t("home.steps.title")}</h2>
+        <ol className="relative grid grid-cols-1 gap-10 md:grid-cols-3">
+          {/* Dashed route linking the three stamps */}
+          <div
+            aria-hidden="true"
+            className="absolute left-[16%] right-[16%] top-8 hidden border-t-2 border-dashed border-[var(--am-edge)] md:block"
+          />
+          {NUMERALS.map((numeral, i) => (
             <motion.li
-              key={n}
+              key={numeral}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="relative text-center"
             >
-              <span className="font-display text-5xl font-extrabold am-gradient-text" aria-hidden="true">
-                0{n}
-              </span>
-              <h3 className="mt-3 text-xl font-bold text-[var(--am-ink)]">{t(`home.steps.s${n}.title`)}</h3>
-              <p className="mt-2 text-[var(--am-muted)] leading-relaxed">{t(`home.steps.s${n}.desc`)}</p>
+              <Stamp className="mx-auto h-16 w-16 bg-[var(--am-surface)] text-xl font-bold">{numeral}</Stamp>
+              <h3 className="font-display mt-5 text-xl text-[var(--am-ink)]">{t(`home.steps.s${i + 1}.title`)}</h3>
+              <p className="mx-auto mt-2 max-w-xs leading-relaxed text-[var(--am-muted)]">{t(`home.steps.s${i + 1}.desc`)}</p>
             </motion.li>
           ))}
         </ol>

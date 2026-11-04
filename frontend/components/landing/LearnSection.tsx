@@ -112,7 +112,7 @@ export function LearnSection({
   };
 
   return (
-    <section id="learn" className="w-full py-20 md:py-24">
+    <section id="learn" className="w-full border-y-2 border-[var(--am-edge)] bg-[var(--am-surface)] py-20 md:py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -122,12 +122,12 @@ export function LearnSection({
           className="mb-10 md:mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4"
         >
           <div>
-            <h2 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--am-ink)]">
+            <h2 className="font-display text-4xl text-[var(--am-ink)] md:text-5xl">
               {sectionTitle}
             </h2>
             <p className="mt-3 text-lg text-[var(--am-muted)]">{sectionSubtitle}</p>
           </div>
-          <a href={localeHref("/learn")} className="text-[var(--am-primary)] font-semibold hover:underline underline-offset-4 shrink-0">
+          <a href={localeHref("/learn")} className="mono-label shrink-0 font-bold text-[var(--am-primary)] underline decoration-2 underline-offset-4">
             {t("home.learn.explore_all")} →
           </a>
         </motion.div>

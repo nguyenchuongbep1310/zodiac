@@ -133,3 +133,49 @@ test.describe("hero: tarot card and ticket form (light, desktop)", () => {
     expect(overflow).toBeLessThanOrEqual(0);
   });
 });
+
+test.describe("landing sections: tarot spread and motion rules (light)", () => {
+  test.use({ colorScheme: "light" });
+
+  const transforms = (page: import("@playwright/test").Page, selector: string) =>
+    page.locator(selector).evaluateAll((els) => els.map((el) => getComputedStyle(el).transform));
+
+  test("features are five tarot cards, tilted on desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+    expect(await page.locator("#features [data-tarot]").count()).toBe(5);
+    const t = await transforms(page, "#features [data-tarot]");
+    expect(t.some((v) => v !== "none")).toBe(true);
+  });
+
+  test("cards are not tilted on a phone", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 800 });
+    await page.goto("/");
+    expect(new Set(await transforms(page, "[data-tarot]"))).toEqual(new Set(["none"]));
+  });
+
+  test("reduced motion stops the ticker and removes card tilt", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+    expect(new Set(await transforms(page, "[data-tarot]"))).toEqual(new Set(["none"]));
+    const animation = await page.locator("[data-marquee]").evaluate((el) => getComputedStyle(el).animationName);
+    expect(animation).toBe("none");
+  });
+
+  test("no backdrop blur and no radius above 24px except stamps", async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    const offenders = await page.evaluate(() =>
+      [...document.querySelectorAll("body *")]
+        .filter((el) => {
+          const s = getComputedStyle(el);
+          const radii = [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomLeftRadius, s.borderBottomRightRadius];
+          const tooRound = radii.some((r) => parseFloat(r) > 24) && !el.classList.contains("stamp");
+          return s.backdropFilter !== "none" || tooRound;
+        })
+        .map((el) => `${el.tagName.toLowerCase()}.${String(el.getAttribute("class")).slice(0, 70)}`),
+    );
+    expect(offenders).toEqual([]);
+  });
+});

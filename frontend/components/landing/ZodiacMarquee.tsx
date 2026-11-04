@@ -17,35 +17,38 @@ const SIGNS = [
   { key: "pisces", glyph: "♓" },
 ];
 
+/** A ticker band of the twelve signs, like a marquee over a fortune-teller's door. */
 export function ZodiacMarquee() {
   const { t } = useTranslation();
 
   // Rendered twice so the -50% keyframe loops without a visible seam; the
   // second copy is hidden from assistive tech to avoid reading the list twice.
   const row = (hidden: boolean) => (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center gap-3 pr-3">
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
       {SIGNS.map((sign) => (
-        <li
-          key={sign.key}
-          className="flex items-center gap-2 rounded-full border border-[var(--am-line)] bg-[var(--am-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--am-ink)] whitespace-nowrap"
-        >
-          <span className="text-lg text-[var(--am-primary)]" aria-hidden="true">
-            {sign.glyph}
+        <li key={sign.key} className="mono-label flex items-center gap-3 whitespace-nowrap px-5 font-bold">
+          <span className="text-base text-[#d9a521]" aria-hidden="true">
+            {/* U+FE0E asks for the text glyph; without it iOS/macOS draw coloured emoji. */}
+            {sign.glyph}&#xFE0E;
           </span>
           {t(`sign.${sign.key}`)}
+          <span className="pl-2 text-[#d9a521]" aria-hidden="true">
+            ✦
+          </span>
         </li>
       ))}
     </ul>
   );
 
   return (
-    <section aria-label={t("home.marquee.label")} className="relative py-6 overflow-hidden">
-      <div className="flex w-max am-marquee">
+    <section
+      aria-label={t("home.marquee.label")}
+      className="overflow-hidden border-y-2 border-[var(--am-edge)] bg-[#1c1410] py-3 text-[#f3e6c8]"
+    >
+      <div data-marquee className="am-marquee flex w-max">
         {row(false)}
         {row(true)}
       </div>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[var(--am-bg)] to-transparent" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[var(--am-bg)] to-transparent" />
     </section>
   );
 }

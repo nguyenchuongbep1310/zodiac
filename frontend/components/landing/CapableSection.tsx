@@ -1,42 +1,40 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Layers, Target, SlidersHorizontal } from "lucide-react";
 import { useTranslation } from "@/lib/hooks/useI18n";
+import { Ornament } from "@/components/ui/Ornament";
 
-const ICONS = [GraduationCap, Layers, Target, SlidersHorizontal];
-
+/** "Why AstroMind" as a service menu: name, dotted leader, price tag, small print. */
 export function CapableSection() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  const price = language === "vi" ? "0đ" : "FREE";
 
   return (
-    <section id="astrology" className="py-20 md:py-24 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--am-ink)]">
-            {t("home.capable.title")}
-          </h2>
-          <p className="mt-4 text-lg text-[var(--am-muted)]">{t("home.capable.subtitle")}</p>
-        </div>
+    <section id="astrology" className="px-4 py-20 sm:px-6 md:py-24">
+      <div className="ink-border hard-shadow mx-auto max-w-3xl bg-[var(--am-surface)] px-5 py-10 sm:px-12">
+        <p className="mono-label text-center font-bold text-[var(--am-muted)]">— MENU —</p>
+        <h2 className="font-display mt-3 text-center text-3xl text-[var(--am-ink)] md:text-4xl">{t("home.capable.title")}</h2>
+        <p className="mx-auto mt-3 max-w-md text-center text-[var(--am-muted)]">{t("home.capable.subtitle")}</p>
+        <Ornament className="my-8" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {ICONS.map((Icon, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
+        <ul className="space-y-7">
+          {[1, 2, 3, 4].map((n, i) => (
+            <motion.li
+              key={n}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="rounded-[1.5rem] bg-[var(--am-surface)] border border-[var(--am-line)] p-6 hover:-translate-y-1 hover:shadow-lg transition"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
             >
-              <span className="grid place-items-center w-11 h-11 rounded-xl bg-[var(--am-lilac)] text-[var(--am-primary)]">
-                <Icon className="w-5 h-5" aria-hidden="true" />
-              </span>
-              <h3 className="mt-5 text-lg font-bold text-[var(--am-ink)]">{t(`home.capable.card${i + 1}.title`)}</h3>
-              <p className="mt-2 text-[var(--am-muted)] leading-relaxed">{t(`home.capable.card${i + 1}.desc`)}</p>
-            </motion.div>
+              <div className="flex items-baseline gap-3">
+                <h3 className="font-display text-lg text-[var(--am-ink)] sm:text-xl">{t(`home.capable.card${n}.title`)}</h3>
+                <span aria-hidden="true" className="min-w-6 flex-1 border-b-2 border-dotted border-[var(--am-edge)]" />
+                <span className="mono-label font-bold text-[var(--am-primary)]">{price}</span>
+              </div>
+              <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-[var(--am-muted)]">{t(`home.capable.card${n}.desc`)}</p>
+            </motion.li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
